@@ -501,7 +501,7 @@ def dump_ast(path: str) -> None:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('path', help='file or directory to scan')
+    parser.add_argument('path', help='python file to scan')
     parser.add_argument('-d', '--dump', help='dump ast to stdout', action='store_true')
     args = parser.parse_args()
 
