@@ -21,11 +21,25 @@ PYTHON310 = (3, 10, 0)
 PYTHON311 = (3, 11, 0)
 
 
+""" TODO list:
+
+    1. Check type annotations (Python 3.6 - PEP 526)
+    2. Underscores in numeric literals (Python 3.6 - PEP 515)
+    3. Asynchronous Generators (Python 3.6 - PEP 525)
+    4. ModuleNotFoundError exception (Python 3.6)
+    5. breakpoint() function (Python 3.7)
+    6. positional only arguments (Python 3.8 - PEP 570)
+    7. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
+    8. type hinting generics in standard collections (Python 3.9 - PEP 585)
+    9. structural pattern matching aka match statement (Python 3.10 - PEP 634)
+"""
+
+
 # Module additions across every Python 3 version
 MODULE_CHANGES = {
     # Python 3.1
     PYTHON31: {
-        'collection': ['counter'],
+        'collection': ['OrderedDict', 'counter'],
         'importlib': []
     },
 
@@ -42,13 +56,14 @@ MODULE_CHANGES = {
         'html': ['escape'],
         'itertools': ['accumulate'],
         'math': ['isfinite', 'expm1', 'erf', 'erfc', 'gamma', 'lgamma'],
-        'os': ['environb', 'fsencode', 'fsdecode', 'getenvb',
-               'get_exec_path', 'supports_bytes_environ'],
+        'os': ['environb', 'fsencode', 'fsdecode', 'getenvb', 'get_exec_path',
+               'supports_bytes_environ'],
         'reprlib': ['recursive_repr'],
         'shutil': ['make_archive', 'unpack_archive'],
-        'socket': ['detach'],
-        'ssl': ['SSLContext', 'match_hostname', 'OPENSSL_VERSION',
-                'OPENSSL_VERSION_INFO', 'OPENSSL_VERSION_NUMBER'],
+        'socket': ['SOCK_CLOEXEC', 'SOCK_NONBLOCK', 'detach'],
+        'ssl': ['SSLContext', 'match_hostname', 'OPENSSL_VERSION', 'OPENSSL_VERSION_INFO',
+                'OPENSSL_VERSION_NUMBER'],
+        'sys': ['hash_info'],
         'sysconfig': [],
         'threading': ['Barrier'],
     },
@@ -56,13 +71,23 @@ MODULE_CHANGES = {
     # Python 3.3
     PYTHON33: {
         'collections.abc': ['abc', 'ChainMap'],
+        'crypt': ['METHOD_SHA256', 'METHOD_SHA512', 'METHOD_MD5', 'METHOD_CRYPT',
+                  'methods', 'mksalt'],
         'faulthandler': [],
         'ipaddress': [],
         'inspect': ['signature', 'Signature', 'Parameter', 'BoundArguments'],
         'lzma': [],
         'math': ['log2'],
+        'os': ['SF_NODISKIO', 'SF_MNOWAIT', 'SF_SYNC', 'readv', 'writev' 'pread', 'pwrite',
+               'sendfile'],
         'select': ['devpoll'],
-        'sys': ['implementation'],
+        'signal': ['pthread_kill'],
+        'socket': ['CMSG_LEN', 'CMSG_SPACE', 'fromshare', 'if_nameindex', 'if_nametoindex',
+                   'if_indextoname', 'recvmsg', 'recvmsg_into', 'sendmsg', 'sethostname',
+                   'share'],
+        'sys': ['implementation', '_debugmallocstats'],
+        'threading': ['get_ident'],
+        'time': ['CLOCK_REALTIME', 'clock_settime'],
         'typing': ['SimpleNamespace'],
         'unittest': ['mock'],
         'venv': []
@@ -87,15 +112,16 @@ MODULE_CHANGES = {
         'importlib': ['reload'],
         'inspect': ['unwrap'],
         'operator': ['length_hint'],
-        'os': ['cpu_count', 'get_inheritable', 'set_inheritable',
-               'get_handle_inheritable', 'set_handle_inheritable'],
+        'os': ['cpu_count', 'get_inheritable', 'set_inheritable', 'get_handle_inheritable',
+               'set_handle_inheritable'],
         'pathlib': [],
-        'plistlib': ['load', 'loads', 'dump', 'dumps'],
+        'plistlib': ['FMT_BINARY', 'FMT_XML', 'load', 'loads', 'dump', 'dumps'],
         're': ['fullmatch'],
         'resource': ['prlimit'],
         'selectors': [],
-        'ssl': ['create_default_context', "get_default_verify_paths",
-                'enum_certificates', 'enum_crls'],
+        'ssl': ['create_default_context', 'get_default_verify_paths', 'enum_certificates',
+                'enum_crls'],
+        'socket': ['AF_LINK', 'set_inheritable', 'get_inheritable'],
         'stats': ['S_IFDOOR', 'S_IFPORT', 'S_IFWHT'],
         'statistics': [],
         'struct': ['iter_unpack'],
@@ -109,45 +135,141 @@ MODULE_CHANGES = {
 
     # Python 3.5
     PYTHON35: {
+        'collections.abc': ['AsyncIterable', 'AsyncIterator', 'Awaitable', 'Coroutine',
+                            'Generator'],
         'contextlib': ['redirect_stderr'],
-        'os': ['scandir'],
+        'html': ['HTTPStatus'],
+        'math': ['inf', 'nan'],
+        'os': ['DirEntry', 'scandir'],
+        'socket': ['CAN_RAW_FD_FRAMES', 'sendfile'],
         'subprocess': ['run'],
-        'traceback': ['walk_stack', 'walk_tb', 'TracebackException',
-                      'StackSummary', 'FrameSummary'],
-        'types': ['coroutine', 'CoroutineType'],
+        'traceback': ['TracebackException', 'StackSummary', 'FrameSummary', 'walk_stack',
+                      'walk_tb'],
+        'types': ['CoroutineType', 'coroutine'],
         'urllib.request': ['HTTPPasswordMgrWithPriorAuth'],
     },
 
     # Python 3.6
     PYTHON36: {
+        'ast': ['Constant'],
+        'asyncio': ['run_coroutine_threadsafe', 'loop.shutdown_asyncgens'],
+        'cmath': ['tau', 'inf', 'infj', 'nan', 'nanj'],
+        'collections.abc': ['AsyncGenerator', 'Collection', 'Reversible'],
+        'contextlib': ['AbstractContextManager'],
+        'enum': ['Flag', 'IntFlag'],
+        'hashlib': ['blake2b', 'blake2s', 'sha3_224', 'sha3_256', 'sha3_384', 'sha3_512',
+                    'shake_128', 'shake_256', 'scrypt'],
+        'math': ['tau'],
         'os': ['fspath', 'PathLike'],
+        'random': ['choices'],
+        'readline': ['set_auto_history'],
         'secrets': [],
+        'socket': ['AF_ALG', 'SO_DOMAIN', 'SO_PROTOCOL', 'SO_PEERSEC', 'SO_PASSSEC',
+                   'TCP_USER_TIMEOUT', 'TCP_CONGESTION', 'sendmsg_afalg'],
+        'statistics': ['harmonic_mean'],
+        'sys': ['_enablelegacywindowsfsencoding', 'getfilesystemencodeerrors',
+                'get_asyncgen_hooks', 'set_asyncgen_hooks'],
+        'tracemalloc': ['DomainFilter'],
+        'typing': ['TYPE_CHECKING', 'ClassVar', 'Collection', 'ContextManager', 'NewType'],
+        'winreg': ['REG_QWORD', 'REG_QWORD_LITTLE_ENDIAN'],
+
     },
 
     # Python 3.7
     PYTHON37: {
-
+        'asyncio': ['BufferedProtocol', 'all_tasks', 'create_task', 'current_task',
+                    'get_running_loop', 'run'],
+        'contextlib': ['AbstractAsyncContextManager', 'AsyncExitStack', 'asynccontextmanager',
+                       'nullcontext'],
+        'contextvars': [],
+        'crypt': ['METHOD_BLOWFISH'],
+        'dataclasses': [],
+        'datetime': ['datetime.fromisoformat'],
+        'gc': ['freeze', 'unfreeze', 'get_freeze_count'],
+        'http.server': ['ThreadingHTTPServer'],
+        'importlib.resources': [],
+        'math': ['remainder'],
+        'os': ['RWF_NOWAIT', 'RWF_HIPRI', 'RWF_DSYNC', 'RWF_SYNC', 'preadv', 'pwritev',
+               'register_at_fork'],
+        'queue': ['SimpleQueue'],
+        'socket': ['AF_VSOCK', 'CAN_ISOTP', 'TCP_NOTSENT_LOWAT', 'close', 'getblocking'],
+        'sys': ['breakpointhook', 'getandroidapilevel', 'get_coroutine_origin_tracking_depth',
+                'set_coroutine_origin_tracking_depth'],
+        'time': ['CLOCK_BOOTTIME', 'CLOCK_PROF', 'CLOCK_UPTIM', 'clock_gettime_ns',
+                 'clock_settime_ns', 'monotonic_ns', 'perf_counter_ns', 'process_time_ns',
+                 'time_ns', 'thread_time', 'thread_time_ns', 'pthread_getcpuclockid'],
+        'unittest.mock': ['seal'],
+        'uuid': ['UUID.is_safe'],
     },
 
     # Python 3.8
     PYTHON38: {
-
+        'ast': ['PyCF_ALLOW_TOP_LEVEL_AWAIT', 'PyCF_TYPE_COMMENTS', 'get_source_segment'],
+        'datetime': ['date.fromisocalendar', 'datetime.fromisocalendar'],
+        'curses': ['ncurses_version'],
+        'functools': ['cached_property', 'singledispatchmethod'],
+        'gettext': ['pgettext', 'dpgettext', 'npgettext', 'dnpgettext'],
+        'gzip': ['BadGzipFile'],
+        'importlib.metadata': [],
+        'math': ['dist', 'prod', 'perm', 'comb', 'isqrt'],
+        'multiprocessing': ['shared_memory'],
+        'os': ['add_dll_directory', 'memfd_create'],
+        'plistlib': ['UID'],
+        'pprint': ['pp'],
+        'shlex': ['join'],
+        'socket': ['AF_QIPCRTR', 'create_server', 'has_dualstack_ipv6'],
+        'statistics': ['NormalDist', 'fmean', 'geometric_mean', 'multimode', 'quantiles'],
+        'sys': ['unraisablehook'],
+        'threading': ['excepthook', 'get_native_id'],
+        'time': ['CLOCK_UPTIME_RAW'],
+        'types': ['CellType', 'ClassMethodDescriptorType', 'MethodDescriptorType',
+                  'MethodWrapperType', 'WrapperDescriptorType', 'resolve_bases',],
+        'typing': ['Final', 'Literal', 'Protocol', 'SupportsIndex', 'TypedDict', 'final',
+                   'get_args', 'get_origin', 'runtime_checkable'],
+        'unicodedata': ['is_normalized'],
+        'unittest': ['IsolatedAsyncioTestCase', 'addModuleCleanup', 'doModuleCleanups'],
+        'unittest.mock': ['AsyncMock'],
     },
 
     # Python 3.9
     PYTHON39: {
-
+        'ast': ['unparse'],
+        'asyncio': ['PidfdChildWatcher', 'loop.shutdown_default_executor', 'to_thread'],
+        'curses': ['get_escdelay', 'set_escdelay', 'get_tabsize', 'set_tabsize'],
+        'fcntl': ['F_OFD_GETLK', 'F_OFD_SETLK', 'F_OFD_SETLKW'],
+        'gc': ['is_finalized'],
+        'graphlib': [],
+        'importlib': ['resources.files', 'resources.as_file'],
+        'math': ['lcm', 'nextafter', 'ulp'],
+        'os': ['CLD_KILLED', 'CLD_STOPPED', 'pidfd_open', 'putenv', 'unsetenv',
+               'waitstatus_to_exitcode'],
+        'random': ['random.randbytes'],
+        'signal': ['pidfd_send_signal'],
+        'socket': ['CAN_RAW_JOIN_FILTERS', 'CAN_J1939', 'IPPROTO_UDPLITE',
+                   'send_fds', 'recv_fds'],
+        'sys': ['platlibdir'],
+        'tracemalloc': ['reset_peak'],
+        'typing': ['Annotated'],
+        'zoneinfo': [],
     },
 
     # Python 3.10
     PYTHON310: {
-
+        'os': ['RWF_APPEND'],
+        'threading': ['__excepthook__'],
+        'types': ['NoneType', 'NotImplementedType'],
+        'typing': ['is_typeddict'],
     },
 
     # Python 3.11
     PYTHON311: {
         'hashlib': ['file_digest'],
+        'math': ['cbrt', 'exp2'],
+        'os': ['SF_NOCACHE'],
+        'socket': ['SCM_CREDS2', 'LOCAL_CREDS', 'LOCAL_CREDS_PERSISTENT',
+                   'SO_INCOMING_CPU'],
         'tomllib': [],
+        'typing': ['NotRequired'],
     },
 }
 
@@ -156,6 +278,14 @@ class Analyzer(ast.NodeVisitor):
     def __init__(self):
         self.min_version = PYTHON3
         self.requirements = set()
+
+    def generic_visit(self, node):
+        if type(node).__name__ == 'Match':
+            # Structural pattern matching was added in Python 3.10
+            # Currently there is no visit_Match equivalent so this is a workaround
+            self.update_requirements('match statement', PYTHON310)
+
+        super().generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
         # Async function was added in Python 3.5
@@ -181,6 +311,9 @@ class Analyzer(ast.NodeVisitor):
 
         self.generic_visit(node)
 
+    def visit_MatMult(self, node: ast.MatMult):
+        print('visit_MatMult:', node.lineno)
+
     def visit_ImportFrom(self, node: ast.ImportFrom):
         """ Scan from ... import ... statement for specific modules. """
         for alias in node.names:
@@ -196,6 +329,10 @@ class Analyzer(ast.NodeVisitor):
         if isinstance(node.test, ast.NamedExpr):
             self.update_requirements('assignment expression', PYTHON38)
 
+        self.generic_visit(node)
+
+    def visit_ExceptHandler(self, node: ast.ExceptHandler):
+        print('ExceptHandler:', node.name, node.body)
         self.generic_visit(node)
 
     def visit_IfExp(self, node: ast.IfExp):
