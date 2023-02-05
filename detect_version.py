@@ -42,7 +42,7 @@ MODULE_CHANGES = {
         'html': ['escape'],
         'itertools': ['accumulate'],
         'math': ['isfinite', 'expm1', 'erf', 'erfc', 'gamma', 'lgamma'],
-        'os': ['environb', 'fscencode', 'fsdecode', 'getenvb',
+        'os': ['environb', 'fsencode', 'fsdecode', 'getenvb',
                'get_exec_path', 'supports_bytes_environ'],
         'reprlib': ['recursive_repr'],
         'shutil': ['make_archive', 'unpack_archive'],
