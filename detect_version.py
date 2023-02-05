@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 # Copyright (c) 2019-2023  Mike Cunningham
 
-
-import os
-import sys
 import ast
 import argparse
+import sys
+
 
 # Major release numbers
 PYTHON3 = (3, 0, 0)
@@ -22,7 +21,7 @@ PYTHON310 = (3, 10, 0)
 PYTHON311 = (3, 11, 0)
 
 
-# Module additions across different Python versions
+# Module additions across every Python 3 version
 MODULE_CHANGES = {
     # Python 3.1
     PYTHON31: {
@@ -155,21 +154,19 @@ MODULE_CHANGES = {
 
 class Analyzer(ast.NodeVisitor):
     def __init__(self):
-        self._min_version = PYTHON3
-
-    def generic_visit(self, node):
-        #print(type(node).__name__)
-        ast.NodeVisitor.generic_visit(self, node)
+        self.min_version = PYTHON3
+        self.requirements = set()
 
     def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
         # Async function was added in Python 3.5
-        print_requirement('async function', PYTHON35)
-        self.min_version = PYTHON35
+        self.update_requirements('async function', PYTHON35)
 
     def visit_AsyncFor(self, node: ast.AsyncFor):
         # Async for loop was added in Python 3.5
-        print_requirement('async for loop', PYTHON35)
-        self.min_version = PYTHON35
+        self.update_requirements('async for loop', PYTHON35)
+
+    def visit_AsyncWith(self, node: ast.AsyncWith):
+        print('AsyncWith:', node.items)
 
     def visit_Import(self, node: ast.Import):
         """ Scan import statement for specific modules. """
@@ -177,11 +174,10 @@ class Analyzer(ast.NodeVisitor):
             for version, changes in MODULE_CHANGES.items():
                 for module, additions in changes.items():
                     if module == alias.name and not additions:
-                        print_requirement(f'{module} module', version)
-                        self.min_version = version
+                        self.update_requirements(f'{module} module', version)
+
                     elif alias.name in additions:
-                        print_requirement(f'{module}.{alias.name}', version)
-                        self.min_version = version
+                        self.update_requirements(f'{module}.{alias.name}', version)
 
         self.generic_visit(node)
 
@@ -191,16 +187,14 @@ class Analyzer(ast.NodeVisitor):
             for version, changes in MODULE_CHANGES.items():
                 for module, additions in changes.items():
                     if node.module == module and alias.name in additions:
-                        print_requirement(f'{module}.{alias.name}', version)
-                        self.min_version = version
+                        self.update_requirements(f'{module}.{alias.name}', version)
 
         self.generic_visit(node)
 
     def visit_If(self, node: ast.If):
         # Assigned expression aka walrus operator was added in Python 3.8
         if isinstance(node.test, ast.NamedExpr):
-            print_requirement('assignment expression', PYTHON38)
-            self.min_version = PYTHON38
+            self.update_requirements('assignment expression', PYTHON38)
 
         self.generic_visit(node)
 
@@ -210,15 +204,14 @@ class Analyzer(ast.NodeVisitor):
 
     def visit_JoinedStr(self, node: ast.JoinedStr):
         """ Scan for fstrings which were added in Python 3.6 """
-        print_requirement('fstring', PYTHON36)
-        self.min_version = PYTHON36
+        self.update_requirements('fstring', PYTHON36)
         self.generic_visit(node)
 
     def visit_Call(self, node: ast.Call):
         #print('visit_Call', node.func, node.args)
 
         if isinstance(node.func, ast.Name):
-            print('Name:', node.func.id)
+            pass
         elif isinstance(node.func, ast.Attribute):
             #print('visit_Call attribute:', node.func.value.id, node.func.attr)
             pass
@@ -226,15 +219,22 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute):
-        self.check_attribute(node)
+        if isinstance(node.value, ast.Name):
+            self.check_attribute(node.value.id, node.attr)
+        elif isinstance(node.value, ast.Attribute):
+            if not hasattr(node.value, 'id'):
+                if hasattr(node.value, 'value'):
+                    self.check_attribute(node.value.value, node.attr)
+            else:
+                self.check_attribute(node.value.id, node.attr)
+
         self.generic_visit(node)
 
-    def check_attribute(self, node: ast.Attribute):
+    def check_attribute(self, name, attr):
         for version, changes in MODULE_CHANGES.items():
             for module, additions in changes.items():
-                if node.value.id == module and node.attr in additions:
-                    print_requirement(f'{node.value.id}.{node.attr}', version)
-                    self.min_version = version
+                if name == module and attr in additions:
+                    self.update_requirements(f'{name}.{attr}', version)
 
     def visit_Expr(self, node: ast.Expr):
         #print('visit_Expr', node.value)
@@ -247,50 +247,40 @@ class Analyzer(ast.NodeVisitor):
     def visit_With(self, node: ast.With):
         """ Support for multiple with statements was added in Python 3.1 """
         if len(node.items) > 1:
-            print_requirement('multiple "with" clauses', PYTHON31)
-            self.min_version = PYTHON31
+            self.update_requirements('multiple "with" clauses', PYTHON31)
         self.generic_visit(node)
 
     def visit_YieldFrom(self, node: ast.YieldFrom):
         """ Scan for "yield from" statements which were added in Python 3.3 """
-        print_requirement('"yield from" statement', PYTHON33)
-        self.min_version = PYTHON33
+        self.update_requirements('"yield from" statement', PYTHON33)
         self.generic_visit(node)
 
     def visit_Str(self, node: ast.Str):
         if node.kind == 'u':
             # Explicit unicode literals were added in Python 3.3
-            print_requirement('unicode literal', PYTHON33)
-            self.min_version = PYTHON33
+            self.update_requirements('unicode literal', PYTHON33)
         self.generic_visit(node)
 
-    @property
-    def min_version(self):
-        return self._min_version
-
-    @min_version.setter
-    def min_version(self, value):
-        if value > self._min_version:
-            self._min_version = value
+    def update_requirements(self, feature, version):
+        """ Update script requirements. """
+        self.requirements.add(f'{feature} requires {format_version(version)}')
+        self.min_version = max(self.min_version, version)
 
     def report(self, path):
+        """ Print a final report. """
         print(f'{path}: requires {format_version(self.min_version)}')
+        for requirement in self.requirements:
+            print(f'  {requirement}')
 
 
 def detect_version(path: str) -> None:
-    """ Detect minimum required version of a script. """
+    """ Detect minimum version required to run script. """
     with open(path, 'r') as source:
         tree = ast.parse(source.read())
 
     analyzer = Analyzer()
     analyzer.visit(tree)
     analyzer.report(path)
-
-
-def dump_ast(path: str) -> None:
-    """ Display full syntax tree. """
-    with open(path, 'r') as source:
-        print(ast.dump(ast.parse(source.read()), indent=4))
 
 
 def format_version(version: tuple) -> str:
@@ -302,17 +292,11 @@ def format_version(version: tuple) -> str:
         return f'Python {major}.{minor}'
 
 
-def print_requirement(feature, version):
-    print(f'{feature} requires {format_version(version)}')
-
-
-def _find_pyfiles(path: str) -> list[str]:
-    python_files = []
-    for root, _, files in os.walk(path):
-        for filename in files:
-            if filename.endswith('.py'):
-                python_files.append(os.path.join(root, filename))
-    return python_files
+def dump_ast(path: str) -> None:
+    """ Print ast to stdout. """
+    with open(path, 'r') as source:
+        tree = ast.parse(source.read())
+        print(ast.dump(tree, indent=4))
 
 
 def main():
@@ -325,17 +309,7 @@ def main():
         if args.dump:
             dump_ast(args.path)
         else:
-            if os.path.isfile(args.path):
-                detect_version(args.path)
-            elif os.path.isdir(args.path):
-                files = _find_pyfiles(args.path)
-                if not files:
-                    print(f'Error: Found 0 python files in the directory {args.path}', file=sys.stderr)
-                else:
-                    for filename in files:
-                        detect_version(filename)
-            else:
-                parser.error(f'Invalid path {args.path!r}')
+            detect_version(args.path)
     except OSError as e:
         print(f'Error reading {e.filename} ({e.strerror})', file=sys.stderr)
 
