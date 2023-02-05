@@ -500,8 +500,9 @@ def dump_ast(path: str) -> None:
 
 
 def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('path', help='python file to scan')
+    desc = 'Detect the minimum required version of a Python script.'
+    parser = argparse.ArgumentParser(description=desc)
+    parser.add_argument('path', help='python script to scan')
     parser.add_argument('-d', '--dump', help='dump ast to stdout', action='store_true')
     args = parser.parse_args()
 
