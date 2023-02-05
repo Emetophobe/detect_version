@@ -6,6 +6,19 @@ import argparse
 import sys
 
 
+""" TODO list:
+    1. Check type annotations (Python 3.6 - PEP 526)
+    2. Underscores in numeric literals (Python 3.6 - PEP 515)
+    3. Asynchronous Generators (Python 3.6 - PEP 525)
+    4. positional only arguments (Python 3.8 - PEP 570)
+    5. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
+    6. type hinting generics in standard collections (Python 3.9 - PEP 585)
+    7. new built-in async functions 'aiter', and 'anext' (Python 3.10)
+    8. ExceptionGroup added (Python 3.11 - PEP 654)
+    9. Exceptions can be enriched with notes (Python 3.11 - PEP 678)
+"""
+
+
 # Major release numbers
 PYTHON3 = (3, 0, 0)
 PYTHON31 = (3, 1, 0)
@@ -22,28 +35,12 @@ PYTHON311 = (3, 11, 0)
 PYTHON312 = (3, 12, 0)
 
 
-""" TODO list:
-
-    0. RecursionError added (Python 3.5)
-    1. Check type annotations (Python 3.6 - PEP 526)
-    2. Underscores in numeric literals (Python 3.6 - PEP 515)
-    3. Asynchronous Generators (Python 3.6 - PEP 525)
-    4. ModuleNotFoundError exception (Python 3.6)
-    5. breakpoint() function (Python 3.7)
-    6. positional only arguments (Python 3.8 - PEP 570)
-    7. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
-    8. type hinting generics in standard collections (Python 3.9 - PEP 585)
-    9. structural pattern matching aka match statement (Python 3.10 - PEP 634)
-    10. new built-in async functions 'aiter', and 'anext' (Python 3.10)
-    11. ExceptionGroup added (Python 3.11 - PEP 654)
-    12. Exceptions can be enriched with notes (Python 3.11 - PEP 678)
-"""
-
-
 # Module additions across every Python 3 version
 MODULE_CHANGES = {
     # Python 3.1
     PYTHON31: {
+        'bytes': ['maketrans'],
+        'bytearray': ['maketrans'],
         'collection': ['OrderedDict', 'counter'],
         'importlib': []
     },
@@ -342,125 +339,6 @@ class Analyzer(ast.NodeVisitor):
         self.min_version = PYTHON3
         self.requirements = set()
 
-    def generic_visit(self, node):
-        if type(node).__name__ == 'Match':
-            # Structural pattern matching was added in Python 3.10
-            # Currently there is no visit_Match equivalent so this is a workaround
-            self.update_requirements('match statement', PYTHON310)
-
-        super().generic_visit(node)
-
-    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef):
-        # Async function was added in Python 3.5
-        self.update_requirements('async function', PYTHON35)
-
-    def visit_AsyncFor(self, node: ast.AsyncFor):
-        # Async for loop was added in Python 3.5
-        self.update_requirements('async for loop', PYTHON35)
-
-    def visit_AsyncWith(self, node: ast.AsyncWith):
-        print('AsyncWith:', node.items)
-
-    def visit_Import(self, node: ast.Import):
-        """ Scan import statement for specific modules. """
-        for alias in node.names:
-            for version, changes in MODULE_CHANGES.items():
-                for module, additions in changes.items():
-                    if module == alias.name and not additions:
-                        self.update_requirements(f'{module} module', version)
-
-                    elif alias.name in additions:
-                        self.update_requirements(f'{module}.{alias.name}', version)
-
-        self.generic_visit(node)
-
-    def visit_MatMult(self, node: ast.MatMult):
-        print('visit_MatMult:', node.lineno)
-
-    def visit_ImportFrom(self, node: ast.ImportFrom):
-        """ Scan from ... import ... statement for specific modules. """
-        for alias in node.names:
-            for version, changes in MODULE_CHANGES.items():
-                for module, additions in changes.items():
-                    if node.module == module and alias.name in additions:
-                        self.update_requirements(f'{module}.{alias.name}', version)
-
-        self.generic_visit(node)
-
-    def visit_If(self, node: ast.If):
-        # Assigned expression aka walrus operator was added in Python 3.8
-        if isinstance(node.test, ast.NamedExpr):
-            self.update_requirements('assignment expression', PYTHON38)
-
-        self.generic_visit(node)
-
-    def visit_ExceptHandler(self, node: ast.ExceptHandler):
-        print('ExceptHandler:', node.name, node.body)
-        self.generic_visit(node)
-
-    def visit_IfExp(self, node: ast.IfExp):
-        # print(f'visit_IfExp: {node.test=}')
-        self.generic_visit(node)
-
-    def visit_JoinedStr(self, node: ast.JoinedStr):
-        """ Scan for fstrings which were added in Python 3.6 """
-        self.update_requirements('fstring', PYTHON36)
-        self.generic_visit(node)
-
-    def visit_Call(self, node: ast.Call):
-        #print('visit_Call', node.func, node.args)
-
-        if isinstance(node.func, ast.Name):
-            pass
-        elif isinstance(node.func, ast.Attribute):
-            #print('visit_Call attribute:', node.func.value.id, node.func.attr)
-            pass
-
-        self.generic_visit(node)
-
-    def visit_Attribute(self, node: ast.Attribute):
-        if isinstance(node.value, ast.Name):
-            self.check_attribute(node.value.id, node.attr)
-        elif isinstance(node.value, ast.Attribute):
-            if not hasattr(node.value, 'id'):
-                if hasattr(node.value, 'value'):
-                    self.check_attribute(node.value.value, node.attr)
-            else:
-                self.check_attribute(node.value.id, node.attr)
-
-        self.generic_visit(node)
-
-    def check_attribute(self, name, attr):
-        for version, changes in MODULE_CHANGES.items():
-            for module, additions in changes.items():
-                if name == module and attr in additions:
-                    self.update_requirements(f'{name}.{attr}', version)
-
-    def visit_Expr(self, node: ast.Expr):
-        #print('visit_Expr', node.value)
-        self.generic_visit(node)
-
-    def visit_Expression(self, node: ast.Expression):
-        #print('visit_Expression', node.body)
-        self.generic_visit(node)
-
-    def visit_With(self, node: ast.With):
-        """ Support for multiple with statements was added in Python 3.1 """
-        if len(node.items) > 1:
-            self.update_requirements('multiple "with" clauses', PYTHON31)
-        self.generic_visit(node)
-
-    def visit_YieldFrom(self, node: ast.YieldFrom):
-        """ Scan for "yield from" statements which were added in Python 3.3 """
-        self.update_requirements('"yield from" statement', PYTHON33)
-        self.generic_visit(node)
-
-    def visit_Str(self, node: ast.Str):
-        if node.kind == 'u':
-            # Explicit unicode literals were added in Python 3.3
-            self.update_requirements('unicode literal', PYTHON33)
-        self.generic_visit(node)
-
     def update_requirements(self, feature, version):
         """ Update script requirements. """
         self.requirements.add(f'{feature} requires {format_version(version)}')
@@ -471,6 +349,92 @@ class Analyzer(ast.NodeVisitor):
         print(f'{path}: requires {format_version(self.min_version)}')
         for requirement in self.requirements:
             print(f'  {requirement}')
+
+    def generic_visit(self, node: ast.AST):
+        """ Check for async/awaitables which were added in Python 3.5. """
+        if isinstance(node, (ast.AsyncFunctionDef, ast.AsyncFor, ast.AsyncWith, ast.Await)):
+            self.update_requirements('async/await coroutines', PYTHON35)
+
+        super().generic_visit(node)
+
+    def visit_Import(self, node: ast.Import):
+        """ Scan import statements for specific modules. """
+        for version, module, additions in get_changes():
+            for alias in node.names:
+                if module == alias.name and not additions:
+                    self.update_requirements(f'{module} module', version)
+                elif alias.name in additions:
+                    self.update_requirements(f'{module}.{alias.name}', version)
+
+        self.generic_visit(node)
+
+    def visit_ImportFrom(self, node: ast.ImportFrom):
+        """ Scan import from statements for specific modules. """
+        for version, module, additions in get_changes():
+            if node.module == module:
+                for alias in node.names:
+                    if alias.name in additions:
+                        self.update_requirements(f'{module}.{alias.name}', version)
+                    elif not additions and alias.name == '*':  # handle from module import *
+                        self.update_requirements(f'{module} module', version)
+
+        self.generic_visit(node)
+
+    def visit_Raise(self, node: ast.Raise):
+        """ Check raised exceptions. """
+        self._check_exception(node.exc.id)
+        self.generic_visit(node)
+
+    def visit_ExceptHandler(self, node: ast.ExceptHandler):
+        """ Check caught exceptions. """
+        self._check_exception(node.type.id)
+        self.generic_visit(node)
+
+    def _check_exception(self, name):
+        if name == 'RecursionError':
+            self.update_requirements('RecursionError exception', PYTHON35)
+        elif name == 'ModuleNotFoundError':
+            self.update_requirements('ModuleNotFoundError exception', PYTHON36)
+
+    def visit_Attribute(self, node: ast.Attribute):
+        """ Check attribute accesses. """
+        if isinstance(node.value, ast.Name):
+            self._check_attribute(node.value.id, node.attr)
+        elif isinstance(node.value, ast.Attribute):
+            self._check_attribute(node.value.value, node.attr)
+        self.generic_visit(node)
+
+    def _check_attribute(self, name, attr):
+        for version, module, additions in get_changes():
+            if name == module and attr in additions:
+                self.update_requirements(f'{name}.{attr}', version)
+
+    def visit_Str(self, node: ast.Str):
+        """ Unicode literals were added in Python 3.3 """
+        if node.kind == 'u':
+            self.update_requirements('unicode literal', PYTHON33)
+        self.generic_visit(node)
+
+    def visit_JoinedStr(self, node: ast.JoinedStr):
+        """ Fstrings were added in Python 3.6 """
+        self.update_requirements('fstring', PYTHON36)
+        self.generic_visit(node)
+
+    def visit_Match(self, node: ast.Match):
+        """ Match statements were added in Python 3.10 """
+        self.update_requirements('match statement', PYTHON310)
+        self.generic_visit(node)
+
+    def visit_With(self, node: ast.With):
+        """ Multiple context managers (in a single with statement) were added in Python 3.1 """
+        if len(node.items) > 1:
+            self.update_requirements('multiple with clauses', PYTHON31)
+        self.generic_visit(node)
+
+    def visit_YieldFrom(self, node: ast.YieldFrom):
+        """ Yield from statement was added in Python 3.3 """
+        self.update_requirements('yield from statement', PYTHON33)
+        self.generic_visit(node)
 
 
 def detect_version(path: str) -> None:
@@ -490,6 +454,14 @@ def format_version(version: tuple) -> str:
         return f'Python {major}.{minor}.{micro}'
     else:
         return f'Python {major}.{minor}'
+
+
+def get_changes(minversion=PYTHON3, maxversion=PYTHON311):
+    """ Get changes between specific Python versions. """
+    for version, changes in MODULE_CHANGES.items():
+        if minversion < version < maxversion:
+            for module, additions in changes.items():
+                yield version, module, additions
 
 
 def dump_ast(path: str) -> None:
