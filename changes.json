@@ -6,11 +6,15 @@
         "bytearray": [
             "maketrans"
         ],
-        "collection": [
-            "OrderedDict",
-            "counter"
+        "collections": [
+            "Counter",
+            "OrderedDict"
         ],
-        "importlib": []
+        "importlib": [],
+        "itertools": [
+            "combinations_with_replacement",
+            "compress"
+        ]
     },
     "Python 3.2": {
         "abc": [
@@ -18,14 +22,20 @@
             "abstractstaticmethod"
         ],
         "argparse": [],
+        "cmath": [
+            "isfinite"
+        ],
         "concurrent": [
             "futures"
         ],
         "contextlib": [
             "ContextDecorator"
         ],
+        "csv": [
+            "unix_dialect"
+        ],
         "datetime": [
-            "timezone"
+            "datetime.timezone"
         ],
         "dis": [
             "DELETE_DEREF",
@@ -33,7 +43,9 @@
             "show_code"
         ],
         "functools": [
-            "lru_cache"
+            "cmp_to_key",
+            "lru_cache",
+            "total_ordering"
         ],
         "gzip": [
             "compress",
@@ -63,14 +75,25 @@
             "fsdecode",
             "getenvb",
             "get_exec_path",
+            "getresuid",
+            "setresuid",
+            "getresgid",
+            "setresgid",
+            "initgroups",
             "supports_bytes_environ"
         ],
         "reprlib": [
             "recursive_repr"
         ],
         "shutil": [
+            "get_archive_formats",
+            "get_unpack_formats",
             "make_archive",
-            "unpack_archive"
+            "register_archive_format",
+            "register_unpack_format",
+            "unpack_archive",
+            "unregister_archive_format",
+            "unregister_unpack_format"
         ],
         "socket": [
             "SOCK_CLOEXEC",
@@ -88,15 +111,21 @@
             "hash_info"
         ],
         "sysconfig": [],
+        "tempfile": [
+            "TemporaryDirectory"
+        ],
         "threading": [
             "Barrier"
         ]
     },
     "Python 3.3": {
-        "collections.abc": [
-            "abc",
+        "bz2": [
+            "open"
+        ],
+        "collections": [
             "ChainMap"
         ],
+        "collections.abc": [],
         "crypt": [
             "METHOD_SHA256",
             "METHOD_SHA512",
@@ -105,7 +134,13 @@
             "methods",
             "mksalt"
         ],
+        "datetime": [
+            "datetime.timestamp"
+        ],
         "faulthandler": [],
+        "hmac": [
+            "compare_digest"
+        ],
         "ipaddress": [],
         "inspect": [
             "signature",
@@ -118,23 +153,103 @@
             "log2"
         ],
         "os": [
+            "CLD_EXITED",
+            "CLD_KILLED",
+            "CLD_DUMPED",
+            "CLD_TRAPPED",
+            "CLD_STOPPED",
+            "CLD_CONTINUED",
+            "F_LOCK",
+            "F_TLOCK",
+            "F_ULOCK",
+            "F_TEST",
+            "POSIX_FADV_NORMAL",
+            "POSIX_FADV_SEQUENTIAL",
+            "POSIX_FADV_RANDOM",
+            "POSIX_FADV_NOREUSE",
+            "POSIX_FADV_WILLNEED",
+            "POSIX_FADV_DONTNEED",
+            "PRIO_PROCESS",
+            "PRIO_PGRP",
+            "PRIO_USER",
+            "P_ALL",
+            "P_PID",
+            "P_PGID",
+            "RTLD_LAZY",
+            "RTLD_NOW",
+            "RTLD_GLOBAL",
+            "RTLD_LOCAL",
+            "RTLD_NODELETE",
+            "RTLD_NOLOAD",
+            "RTLD_DEEPBIND",
+            "SCHED_OTHER",
+            "SCHED_BATCH",
+            "SCHED_IDLE",
+            "SCHED_SPORADIC",
+            "SCHED_FIFO",
+            "SCHED_RR",
+            "SCHED_RESET_ON_FORK",
+            "SEEK_DATA",
+            "SEEK_HOLE",
             "SF_NODISKIO",
             "SF_MNOWAIT",
             "SF_SYNC",
+            "WEXITED",
+            "WSTOPPED",
+            "WNOWAIT",
             "XATTR_SIZE_MAX",
             "XATTR_CREATE",
             "XATTR_REPLACE",
-            "readv",
-            "writevpread",
-            "pwrite",
-            "sendfile",
+            "getgrouplist",
+            "getpriority",
+            "setpriority",
             "getxattr",
+            "setxattr",
             "listxattr",
             "removexattr",
-            "setxattr"
+            "get_terminal_size",
+            "terminal_size",
+            "fwalk",
+            "lockf",
+            "pipe2",
+            "posix_fallocate",
+            "posix_fadvise",
+            "pread",
+            "pwrite",
+            "readv",
+            "writev",
+            "replace",
+            "rmdir",
+            "sched_param",
+            "sched_get_priority_min",
+            "sched_get_priority_max",
+            "sched_setscheduler",
+            "sched_getscheduler",
+            "sched_setparam",
+            "sched_getparam",
+            "sched_rr_get_interval",
+            "sched_yield",
+            "sched_setaffinity",
+            "sched_getaffinity",
+            "sendfile",
+            "supports_dir_fd",
+            "supports_effective_ids",
+            "supports_fd",
+            "supports_follow_symlinks",
+            "sync",
+            "truncate",
+            "unlink",
+            "waitid"
         ],
         "select": [
             "devpoll"
+        ],
+        "shutil": [
+            "chown",
+            "disk_usage",
+            "get_terminal_size",
+            "rmtree.avoids_symlink_attacks",
+            "which"
         ],
         "signal": [
             "pthread_kill"
@@ -152,10 +267,16 @@
             "sethostname",
             "share"
         ],
+        "stat": [
+            "filemode"
+        ],
         "sys": [
             "_debugmallocstats",
             "implementation",
             "thread_info"
+        ],
+        "textwrap": [
+            "indent"
         ],
         "threading": [
             "get_ident"
@@ -164,13 +285,23 @@
             "CLOCK_REALTIME",
             "clock_settime"
         ],
-        "typing": [
-            "SimpleNamespace"
+        "types": [
+            "MappingProxyType",
+            "SimpleNamespace",
+            "new_class",
+            "prepare_class"
         ],
         "unittest": [
             "mock"
         ],
-        "venv": []
+        "venv": [],
+        "zipfile": [
+            "ZIP_BZIP2",
+            "ZIP_LZMA"
+        ],
+        "zlib": [
+            "ZLIB_RUNTIME_VERSION"
+        ]
     },
     "Python 3.4": {
         "abc": [
@@ -197,8 +328,8 @@
         "ensurepip": [],
         "enum": [],
         "filecmp": [
-            "clear_cache",
-            "DEFAULT_IGNORES"
+            "DEFAULT_IGNORES",
+            "clear_cache"
         ],
         "functools": [
             "partialmethod",
@@ -212,6 +343,10 @@
         ],
         "hashlib": [
             "pbkdf2_hmac"
+        ],
+        "hmac": [
+            "block_size",
+            "name"
         ],
         "html": [
             "unescape"
@@ -248,21 +383,27 @@
             "prlimit"
         ],
         "selectors": [],
-        "ssl": [
-            "create_default_context",
-            "get_default_verify_paths",
-            "enum_certificates",
-            "enum_crls"
+        "shutil": [
+            "SameFileError"
         ],
         "socket": [
             "AF_LINK",
             "set_inheritable",
             "get_inheritable"
         ],
-        "stats": [
+        "ssl": [
+            "create_default_context",
+            "get_default_verify_paths",
+            "enum_certificates",
+            "enum_crls"
+        ],
+        "stat": [
             "S_IFDOOR",
             "S_IFPORT",
-            "S_IFWHT"
+            "S_IFWHT",
+            "S_ISDOOR",
+            "S_ISPORT",
+            "S_ISWHT"
         ],
         "statistics": [],
         "struct": [
@@ -270,6 +411,9 @@
         ],
         "sys": [
             "getallocatedblocks"
+        ],
+        "textwrap": [
+            "shorten"
         ],
         "traceback": [
             "clear_frames"
@@ -287,6 +431,12 @@
         ]
     },
     "Python 3.5": {
+        "cmath": [
+            "isclose"
+        ],
+        "codecs": [
+            "namereplace_errors"
+        ],
         "collections.abc": [
             "AsyncIterable",
             "AsyncIterator",
@@ -304,20 +454,61 @@
             "iscoroutine",
             "isawaitable"
         ],
+        "linecache": [
+            "lazycache"
+        ],
         "math": [
+            "gcd",
             "inf",
-            "nan"
+            "nan",
+            "isclose"
+        ],
+        "operator": [
+            "imatmul",
+            "matmul"
         ],
         "os": [
             "DirEntry",
-            "scandir"
+            "scandir",
+            "get_blocking",
+            "set_blocking",
+            "path.commonpath"
+        ],
+        "os.path": [
+            "commonpath"
+        ],
+        "readline": [
+            "append_history_file"
         ],
         "socket": [
             "CAN_RAW_FD_FRAMES",
             "sendfile"
         ],
+        "stat": [
+            "FILE_ATTRIBUTE_ARCHIVE",
+            "FILE_ATTRIBUTE_COMPRESSED",
+            "FILE_ATTRIBUTE_DEVICE",
+            "FILE_ATTRIBUTE_DIRECTORY",
+            "FILE_ATTRIBUTE_ENCRYPTED",
+            "FILE_ATTRIBUTE_HIDDEN",
+            "FILE_ATTRIBUTE_INTEGRITY_STREAM",
+            "FILE_ATTRIBUTE_NORMAL",
+            "FILE_ATTRIBUTE_NOT_CONTENT_INDEXED",
+            "FILE_ATTRIBUTE_NO_SCRUB_DATA",
+            "FILE_ATTRIBUTE_OFFLINE",
+            "FILE_ATTRIBUTE_READONLY",
+            "FILE_ATTRIBUTE_REPARSE_POINT",
+            "FILE_ATTRIBUTE_SPARSE_FILE",
+            "FILE_ATTRIBUTE_SYSTEM",
+            "FILE_ATTRIBUTE_TEMPORARY",
+            "FILE_ATTRIBUTE_VIRTUAL"
+        ],
         "subprocess": [
             "run"
+        ],
+        "tempfile": [
+            "gettempdirb",
+            "gettempprefixb"
         ],
         "traceback": [
             "TracebackException",
@@ -365,7 +556,8 @@
         ],
         "enum": [
             "Flag",
-            "IntFlag"
+            "IntFlag",
+            "auto"
         ],
         "hashlib": [
             "blake2b",
@@ -386,8 +578,11 @@
             "tau"
         ],
         "os": [
+            "GRND_NONBLOCK",
+            "GRND_RANDOM",
+            "PathLike",
             "fspath",
-            "PathLike"
+            "getrandom"
         ],
         "random": [
             "choices"
@@ -417,6 +612,9 @@
         ],
         "tracemalloc": [
             "DomainFilter"
+        ],
+        "types": [
+            "AsyncGeneratorType"
         ],
         "typing": [
             "TYPE_CHECKING",
@@ -460,6 +658,9 @@
             "freeze",
             "unfreeze",
             "get_freeze_count"
+        ],
+        "hmac": [
+            "digest"
         ],
         "http.server": [
             "ThreadingHTTPServer"
@@ -506,6 +707,14 @@
             "thread_time",
             "thread_time_ns",
             "pthread_getcpuclockid"
+        ],
+
+        "types": [
+            "ClassMethodDescriptorType",
+            "MethodDescriptorType",
+            "MethodWrapperType",
+            "WrapperDescriptorType",
+            "resolve_bases"
         ],
         "unittest.mock": [
             "seal"
@@ -560,8 +769,31 @@
             "shared_memory"
         ],
         "os": [
+            "MFD_CLOEXEC",
+            "MFD_ALLOW_SEALING",
+            "MFD_HUGETLB",
+            "MFD_HUGE_SHIFT",
+            "MFD_HUGE_MASK",
+            "MFD_HUGE_64KB",
+            "MFD_HUGE_512KB",
+            "MFD_HUGE_1MB",
+            "MFD_HUGE_2MB",
+            "MFD_HUGE_8MB",
+            "MFD_HUGE_16MB",
+            "MFD_HUGE_32MB",
+            "MFD_HUGE_256MB",
+            "MFD_HUGE_512MB",
+            "MFD_HUGE_1GB",
+            "MFD_HUGE_2GB",
+            "MFD_HUGE_16GB",
             "add_dll_directory",
-            "memfd_create"
+            "copy_file_range",
+            "memfd_create",
+            "posix_spawn",
+            "posix_spawnp"
+        ],
+        "pickle": [
+            "PickleBuffer"
         ],
         "plistlib": [
             "UID"
@@ -576,6 +808,11 @@
             "AF_QIPCRTR",
             "create_server",
             "has_dualstack_ipv6"
+        ],
+        "stat": [
+            "IO_REPARSE_TAG_SYMLINK",
+            "IO_REPARSE_TAG_MOUNT_POINT",
+            "IO_REPARSE_TAG_APPEXECLIN"
         ],
         "statistics": [
             "NormalDist",
@@ -595,12 +832,7 @@
             "CLOCK_UPTIME_RAW"
         ],
         "types": [
-            "CellType",
-            "ClassMethodDescriptorType",
-            "MethodDescriptorType",
-            "MethodWrapperType",
-            "WrapperDescriptorType",
-            "resolve_bases"
+            "CellType"
         ],
         "typing": [
             "Final",
@@ -623,6 +855,9 @@
         ],
         "unittest.mock": [
             "AsyncMock"
+        ],
+        "zipfile": [
+            "Path"
         ]
     },
     "Python 3.9": {
@@ -646,6 +881,9 @@
             "F_OFD_SETLK",
             "F_OFD_SETLKW"
         ],
+        "functools": [
+            "cache"
+        ],
         "gc": [
             "is_finalized"
         ],
@@ -662,13 +900,14 @@
         "os": [
             "CLD_KILLED",
             "CLD_STOPPED",
+            "P_PIDFD",
             "pidfd_open",
             "putenv",
             "unsetenv",
             "waitstatus_to_exitcode"
         ],
         "random": [
-            "random.randbytes"
+            "randbytes"
         ],
         "signal": [
             "pidfd_send_signal"
@@ -685,6 +924,9 @@
         ],
         "tracemalloc": [
             "reset_peak"
+        ],
+        "types": [
+            "GenericAlias"
         ],
         "typing": [
             "Annotated"
@@ -799,7 +1041,9 @@
             "Positions"
         ],
         "enum": [
+            "EnumCheck",
             "EnumType",
+            "FlagBoundary",
             "ReprEnum",
             "StrEnum",
             "global_enum",
@@ -834,7 +1078,8 @@
             "call"
         ],
         "os": [
-            "SF_NOCACHE"
+            "SF_NOCACHE",
+            "login_tty"
         ],
         "socket": [
             "SCM_CREDS2",
@@ -889,6 +1134,10 @@
             "PIDFD_NONBLOCK",
             "path.isjunction",
             "path.splitroot"
+        ],
+        "os.path":[
+            "isjunction",
+            "splitroot"
         ],
         "sys": [
             "activate_stack_trampoline",
