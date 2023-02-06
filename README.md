@@ -18,7 +18,7 @@ Things that are checked:
 
 Things that currently are not checked:
 
-* Class method changes. For example the `str` class added the `format_map()` method in Python 3.2 and the `case_fold()` method in Python 3.3. There are many hundreds (or thousands?) of method changes over the years to hundreds of classes and checking them all would be non-trivial. This may change in the future if I figure it out.
+* Class method changes. For example the `str` class added the `format_map()` method in Python 3.2 and the `case_fold()` method in Python 3.3. There have been hundreds (or thousands?) of method changes to the built-in classes over the years, doing that type of code analysis would be non-trivial. This may change in the future if I figure it out.
 
 * Module deprecations or removals (this may be a future feature as well)
 
