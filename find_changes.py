@@ -8,16 +8,18 @@ from detect_version import load_changes
 
 def find_changes(module_name, attribute=None, list_all=False):
     """ Find and print module changes. """
-    for (version, module, additions) in load_changes():
-        if module_name == module:
-            if not attribute:
-                if not additions:
-                    print(f'Added {module} module in {version}')
-                elif additions and list_all:
-                    for addition in additions:
-                        print(f'Added {module}.{addition} in {version}')
-            elif attribute and attribute in additions:
-                print(f'Added {module}.{attribute} in {version}')
+    version_history = load_changes()
+    for version, changes in version_history.items():
+        for module, additions in changes.items():
+            if module_name == module:
+                if not attribute:
+                    if not additions:
+                        print(f'Added {module} module in {version}')
+                    elif additions and list_all:
+                        for addition in additions:
+                            print(f'Added {module}.{addition} in {version}')
+                elif attribute and attribute in additions:
+                    print(f'Added {module}.{attribute} in {version}')
 
 
 def main():
