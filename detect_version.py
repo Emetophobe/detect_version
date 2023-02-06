@@ -30,21 +30,21 @@ class Analyzer(ast.NodeVisitor):
     def __init__(self):
         self.min_version = PYTHON3
         self.requirements = set()
-        self._load_changes()
+        self.changes = load_changes()
+
+    def report(self, path):
+        """ Print version report. """
+        print(f'{path}: requires {self.min_version}')
+        for requirement in self.requirements:
+            print(f'  {requirement}')
 
     def update_requirements(self, feature, version):
         """ Update script requirements. """
         self.requirements.add(f'{feature} requires {version}')
         self.min_version = max(self.min_version, version)
 
-    def report(self, path):
-        """ Print a final report. """
-        print(f'{path}: requires {self.min_version}')
-        for requirement in self.requirements:
-            print(f'  {requirement}')
-
     def generic_visit(self, node: ast.AST):
-        """ Called for nodes with no explicit visitor method. """
+        """ Check ast node types not covered by a specific visitor method. """
         if isinstance(node, (ast.AsyncFunctionDef, ast.AsyncFor, ast.AsyncWith, ast.Await)):
             # Check for async/await which were added in Python 3.5
             self.update_requirements('async/await coroutines', PYTHON35)
@@ -131,38 +131,39 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def get_changes(self):
-        """ Convenience method to yield version changes. """
+        """ Convenience method to yield tuples of module changes. """
         for version, changes in self.changes.items():
             for module, additions in changes.items():
                 yield version, module, additions
 
-    def _load_changes(self) -> dict:
-        """ Load dictionary of version changes. """
-        with open('changes.json', 'r', encoding='utf-8') as infile:
-            self.changes = json.load(infile)
-
     def _check_exception(self, name):
-        """ Basic exception checking for new exception classes. """
+        """ Check for new exception classes. """
         if name == 'RecursionError':
             self.update_requirements('RecursionError exception', PYTHON35)
         elif name == 'ModuleNotFoundError':
             self.update_requirements('ModuleNotFoundError exception', PYTHON36)
 
     def _check_attribute(self, name, attr):
-        """ Check for attributes which were added. """
+        """ Check for module additions. """
         for version, module, additions in self.get_changes():
             if name == module and attr in additions:
                 self.update_requirements(f'{name}.{attr}', version)
 
 
 def detect_version(path: str) -> None:
-    """ Detect minimum version required to run script. """
+    """ Detect minimum version required to run a script. """
     with open(path, 'r') as source:
         tree = ast.parse(source.read())
 
     analyzer = Analyzer()
     analyzer.visit(tree)
     analyzer.report(path)
+
+
+def load_changes():
+    """ Load the dictionary of changes from file. """
+    with open('changes.json', 'r', encoding='utf-8') as infile:
+        return json.load(infile)
 
 
 def dump_ast(path: str) -> None:
