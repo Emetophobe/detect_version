@@ -74,11 +74,23 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute):
-        """ Check attribute accesses for new API features. """
+        """ Check attribute accesses for API changes. """
         if isinstance(node.value, ast.Name):
             self._check_attribute(node.value.id, node.attr)
         elif isinstance(node.value, ast.Attribute):
             self._check_attribute(node.value.value, node.attr)
+        self.generic_visit(node)
+
+    def visit_Call(self, node: ast.Call):
+        """ Check function calls for API changes. """
+        if isinstance(node.func, ast.Name):
+            if node.func.id == 'callable':
+                self.update_requirements('callable function', PYTHON32)
+            if node.func.id == 'breakpoint':
+                self.update_requirements('breakpoint function', PYTHON37)
+            elif node.func.id in ('aiter', 'anext'):
+                self.update_requirements('aiter/anext function', PYTHON310)
+
         self.generic_visit(node)
 
     def visit_Raise(self, node: ast.Raise):
