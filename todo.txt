@@ -1,0 +1,11 @@
+TODO checklist:
+
+1. Check type annotations (Python 3.6 - PEP 526)
+2. Underscores in numeric literals (Python 3.6 - PEP 515)
+3. Asynchronous Generators (Python 3.6 - PEP 525)
+4. positional only arguments (Python 3.8 - PEP 570)
+5. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
+6. type hinting generics in standard collections (Python 3.9 - PEP 585)
+7. new built-in async functions 'aiter', and 'anext' (Python 3.10)
+8. ExceptionGroup added (Python 3.11 - PEP 654)
+9. Exceptions can be enriched with notes (Python 3.11 - PEP 678)

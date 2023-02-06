@@ -8,18 +8,6 @@ import json
 import argparse
 
 
-""" TODO list:
-    1. Check type annotations (Python 3.6 - PEP 526)
-    2. Underscores in numeric literals (Python 3.6 - PEP 515)
-    3. Asynchronous Generators (Python 3.6 - PEP 525)
-    4. positional only arguments (Python 3.8 - PEP 570)
-    5. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
-    6. type hinting generics in standard collections (Python 3.9 - PEP 585)
-    7. new built-in async functions 'aiter', and 'anext' (Python 3.10)
-    8. ExceptionGroup added (Python 3.11 - PEP 654)
-    9. Exceptions can be enriched with notes (Python 3.11 - PEP 678)
-"""
-
 # Major Python releases
 PYTHON3 = 'Python 3.0'
 PYTHON31 = 'Python 3.1'
@@ -85,6 +73,14 @@ class Analyzer(ast.NodeVisitor):
 
         self.generic_visit(node)
 
+    def visit_Attribute(self, node: ast.Attribute):
+        """ Check attribute accesses for new API features. """
+        if isinstance(node.value, ast.Name):
+            self._check_attribute(node.value.id, node.attr)
+        elif isinstance(node.value, ast.Attribute):
+            self._check_attribute(node.value.value, node.attr)
+        self.generic_visit(node)
+
     def visit_Raise(self, node: ast.Raise):
         """ Check raised exceptions for new exceptions types. """
         self._check_exception(node.exc.id)
@@ -93,14 +89,6 @@ class Analyzer(ast.NodeVisitor):
     def visit_ExceptHandler(self, node: ast.ExceptHandler):
         """ Check caught exceptions for new exceptions types."""
         self._check_exception(node.type.id)
-        self.generic_visit(node)
-
-    def visit_Attribute(self, node: ast.Attribute):
-        """ Check attribute accesses for new API features. """
-        if isinstance(node.value, ast.Name):
-            self._check_attribute(node.value.id, node.attr)
-        elif isinstance(node.value, ast.Attribute):
-            self._check_attribute(node.value.value, node.attr)
         self.generic_visit(node)
 
     def visit_Str(self, node: ast.Str):
