@@ -9,7 +9,7 @@ Uses the built-in ast module to parse the Python scripts.
 Note: This is an early alpha version. Use at your own risk.
 
 ### Requirements:
-    Python 3.11 (this may change in the future)
+    Python 3.6 (this may change in the future)
 
 ### Installation:
 
