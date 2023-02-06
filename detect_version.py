@@ -132,8 +132,8 @@ class Analyzer(ast.NodeVisitor):
 
     def get_changes(self):
         """ Convenience method to yield tuples of module changes. """
-        for version, changes in self.changes.items():
-            for module, additions in changes.items():
+        for version, history in self.changes.items():
+            for module, additions in history.items():
                 yield version, module, additions
 
     def _check_exception(self, name):
