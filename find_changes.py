@@ -5,8 +5,15 @@
 import argparse
 from detect_version import load_changes
 
+from typing import Optional
 
-def find_changes(module_name, attribute=None, list_all=False):
+
+def find_changes(
+        module_name: str,
+        attribute: Optional[str] = None,
+        list_all: Optional[bool] = False
+        ) -> None:
+
     """ Find and print module changes. """
     version_history = load_changes()
     for version, changes in version_history.items():

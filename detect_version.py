@@ -7,6 +7,9 @@ import sys
 import json
 import argparse
 
+from os import PathLike
+from typing import Generator
+
 
 # Major Python releases
 PYTHON3 = 'Python 3.0'
@@ -27,30 +30,30 @@ PYTHON312 = 'Python 3.12'
 class Analyzer(ast.NodeVisitor):
     """ Node Visitor used to walk the abstract syntax tree. """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.min_version = PYTHON3
         self.requirements = set()
         self.changes = load_changes()
 
-    def report(self, path):
+    def report(self, path: PathLike) -> None:
         """ Print version report. """
         print(f'{path}: requires {self.min_version}')
         for requirement in self.requirements:
             print(f'  {requirement}')
 
-    def update_requirements(self, feature, version):
+    def update_requirements(self, feature: str, version: str) -> None:
         """ Update script requirements. """
         self.requirements.add(f'{feature} requires {version}')
         self.min_version = max(self.min_version, version)
 
-    def generic_visit(self, node: ast.AST):
+    def generic_visit(self, node: ast.AST) -> None:
         """ Check ast node types not covered by a specific visitor method. """
         if isinstance(node, (ast.AsyncFunctionDef, ast.AsyncFor, ast.AsyncWith, ast.Await)):
             # Check for async/await which were added in Python 3.5
             self.update_requirements('async/await coroutines', PYTHON35)
         super().generic_visit(node)
 
-    def visit_Import(self, node: ast.Import):
+    def visit_Import(self, node: ast.Import) -> None:
         """ Scan import statements for specific modules. """
         for version, module, additions in self.get_changes():
             for alias in node.names:
@@ -61,7 +64,7 @@ class Analyzer(ast.NodeVisitor):
 
         self.generic_visit(node)
 
-    def visit_ImportFrom(self, node: ast.ImportFrom):
+    def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
         """ Scan import from statements for specific modules. """
         for version, module, additions in self.get_changes():
             if node.module == module:
@@ -73,7 +76,7 @@ class Analyzer(ast.NodeVisitor):
 
         self.generic_visit(node)
 
-    def visit_Attribute(self, node: ast.Attribute):
+    def visit_Attribute(self, node: ast.Attribute) -> None:
         """ Check attribute accesses for API changes. """
         if isinstance(node.value, ast.Name):
             self._check_attribute(node.value.id, node.attr)
@@ -81,7 +84,7 @@ class Analyzer(ast.NodeVisitor):
             self._check_attribute(node.value.value, node.attr)
         self.generic_visit(node)
 
-    def visit_Call(self, node: ast.Call):
+    def visit_Call(self, node: ast.Call) -> None:
         """ Check function calls for API changes. """
         if isinstance(node.func, ast.Name):
             if node.func.id == 'callable':
@@ -93,7 +96,7 @@ class Analyzer(ast.NodeVisitor):
 
         self.generic_visit(node)
 
-    def visit_Raise(self, node: ast.Raise):
+    def visit_Raise(self, node: ast.Raise) -> None:
         """ Check raised exceptions for new exceptions types. """
         if isinstance(node.exc, ast.Call):
             self._check_exception(node.exc.func.id)
@@ -101,45 +104,45 @@ class Analyzer(ast.NodeVisitor):
             self._check_exception(node.exc.id)
         self.generic_visit(node)
 
-    def visit_ExceptHandler(self, node: ast.ExceptHandler):
+    def visit_ExceptHandler(self, node: ast.ExceptHandler) -> None:
         """ Check caught exceptions for new exceptions types."""
         self._check_exception(node.type.id)
         self.generic_visit(node)
 
-    def visit_Str(self, node: ast.Str):
+    def visit_Str(self, node: ast.Str) -> None:
         """ Check for unicode literals i.e: u'this is a unicode literal' """
         if node.kind == 'u':
             self.update_requirements('unicode literal', PYTHON33)
         self.generic_visit(node)
 
-    def visit_JoinedStr(self, node: ast.JoinedStr):
+    def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
         """ Check for fstrings which were added in Python 3.6 """
         self.update_requirements('fstring', PYTHON36)
         self.generic_visit(node)
 
-    def visit_Match(self, node: ast.Match):
+    def visit_Match(self, node: ast.Match) -> None:
         """ Check for match/case statements which were added in Python 3.10 """
         self.update_requirements('match statement', PYTHON310)
         self.generic_visit(node)
 
-    def visit_With(self, node: ast.With):
+    def visit_With(self, node: ast.With) -> None:
         """ Check for multiple context managers which was added in Python 3.1 """
         if len(node.items) > 1:
             self.update_requirements('multiple with clauses', PYTHON31)
         self.generic_visit(node)
 
-    def visit_YieldFrom(self, node: ast.YieldFrom):
+    def visit_YieldFrom(self, node: ast.YieldFrom) -> None:
         """ Check for "yield from" statement which was added in Python 3.3 """
         self.update_requirements('yield from statement', PYTHON33)
         self.generic_visit(node)
 
-    def get_changes(self):
-        """ Convenience method to yield tuples of module changes. """
+    def get_changes(self) -> Generator[tuple[str, str, list[str]], None, None]:
+        """ Convenience method to retrieve tuples of module changes. """
         for version, history in self.changes.items():
             for module, additions in history.items():
                 yield version, module, additions
 
-    def _check_exception(self, name):
+    def _check_exception(self, name: str) -> None:
         """ Check for new exception classes. """
         if name == 'ResourceWarning':
             self.update_requirements('ResourceWarning exception', PYTHON32)
@@ -156,18 +159,14 @@ class Analyzer(ast.NodeVisitor):
         elif name in ('BaseExceptionGroup', 'ExceptionGroup'):
             self.update_requirements(f'{name} exception', PYTHON311)
 
-    def _check_attribute(self, name, attr):
-        """ Check for module additions. """
+    def _check_attribute(self, name: str, attr: str) -> None:
+        """ Check for calls to new module attributes. """
         for version, module, additions in self.get_changes():
             if name == module and attr in additions:
                 self.update_requirements(f'{name}.{attr}', version)
 
-    def _dump(self, node: ast.AST):
-        """ Convenience method to print a node to stdout. """
-        print(ast.dump(node, indent=4))
 
-
-def detect_version(path: str) -> None:
+def detect_version(path: PathLike) -> None:
     """ Detect minimum version required to run a script. """
     with open(path, 'r') as source:
         tree = ast.parse(source.read())
@@ -177,17 +176,17 @@ def detect_version(path: str) -> None:
     analyzer.report(path)
 
 
-def load_changes():
-    """ Load the dictionary of changes from file. """
-    with open('changes.json', 'r', encoding='utf-8') as infile:
-        return json.load(infile)
-
-
-def dump_ast(path: str) -> None:
+def dump_ast(path: PathLike) -> ast.AST:
     """ Print ast to stdout. """
     with open(path, 'r') as source:
         tree = ast.parse(source.read())
-        print(ast.dump(tree, indent=4))
+    print(ast.dump(tree, indent=4))
+
+
+def load_changes() -> dict:
+    """ Load changes from file. """
+    with open('changes.json', 'r', encoding='utf-8') as infile:
+        return json.load(infile)
 
 
 def main():
