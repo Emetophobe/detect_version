@@ -1353,6 +1353,12 @@
             "UnionType"
         ],
         "typing": [
+            "Concatenate",
+            "ParamSpec",
+            "ParamSpecArgs",
+            "ParamSpecKwargs",
+            "TypeAlias",
+            "TypeGuard",
             "is_typeddict"
         ],
         "xml.sax.handler": [
@@ -1463,12 +1469,13 @@
         ],
         "tomllib": [],
         "typing": [
-            "TypeVarTuple",
-            "Required",
+            "LiteralString",
             "Never",
             "NotRequired",
+            "Required",
             "Self",
-            "LiteralString",
+            "TypeVarTuple",
+            "Unpack",
             "assert_never",
             "assert_type",
             "get_overloads",
