@@ -144,6 +144,9 @@
         "tempfile": [
             "TemporaryDirectory"
         ],
+        "_thread": [
+            "TIMEOUT_MAX"
+        ],
         "threading": [
             "TIMEOUT_MAX",
             "Barrier"
@@ -929,6 +932,9 @@
         ],
         "sys": [
             "unraisablehook"
+        ],
+        "_thread": [
+            "get_native_id"
         ],
         "threading": [
             "excepthook",
