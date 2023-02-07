@@ -11,6 +11,11 @@
             "OrderedDict"
         ],
         "importlib": [],
+        "io":[
+            "SEEK_SET",
+            "SEEK_CUR",
+            "SEEK_END"
+        ],
         "itertools": [
             "combinations_with_replacement",
             "compress"
@@ -757,6 +762,9 @@
             "BadGzipFile"
         ],
         "importlib.metadata": [],
+        "io":[
+            "open_code"
+        ],
         "math": [
             "dist",
             "prod",
@@ -959,6 +967,9 @@
         ],
         "inspect": [
             "get_annotations"
+        ],
+        "io":[
+            "text_encoding"
         ],
         "itertools": [
             "pairwise"
