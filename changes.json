@@ -263,6 +263,31 @@
             "html5"
         ],
         "ipaddress": [],
+        "importlib": [
+            "find_loader",
+            "invalidate_caches"
+        ],
+        "importlib.abc": [
+            "MetaPathFinder",
+            "PathEntryFinder",
+            "FileLoader"
+        ],
+        "importlib.machinery": [
+            "SOURCE_SUFFIXES",
+            "DEBUG_BYTECODE_SUFFIXES",
+            "OPTIMIZED_BYTECODE_SUFFIXES",
+            "BYTECODE_SUFFIXES",
+            "EXTENSION_SUFFIXES",
+            "WindowsRegistryFinder",
+            "FileFinder",
+            "SourceFileLoader",
+            "SourcelessFileLoader",
+            "ExtensionFileLoader",
+            "all_suffixes"
+        ],
+        "importlib.util": [
+            "resolve_name"
+        ],
         "inspect": [
             "BoundArguments",
             "Parameter",
@@ -537,6 +562,18 @@
         "importlib": [
             "reload"
         ],
+        "importlib.machinery": [
+            "ModuleSpec"
+        ],
+        "importlib.util": [
+            "MAGIC_NUMBER",
+            "cache_from_source",
+            "source_from_cache",
+            "decode_source",
+            "find_spec",
+            "spec_from_loader",
+            "spec_from_file_location"
+        ],
         "inspect": [
             "unwrap"
         ],
@@ -700,6 +737,12 @@
         ],
         "http.client": [
             "RemoteDisconnected"
+        ],
+        "importlib.machinery": [
+            "module_from_spec"
+        ],
+        "importlib.util": [
+            "LazyLoader"
         ],
         "inspect": [
             "CO_COROUTINE",
@@ -974,6 +1017,9 @@
             "ThreadingHTTPServer"
         ],
         "importlib.resources": [],
+        "importlib.util": [
+            "source_hash"
+        ],
         "math": [
             "remainder"
         ],
@@ -1287,6 +1333,10 @@
             "resources.files",
             "resources.as_file"
         ],
+        "importlib.resources": [
+            "files",
+            "as_file"
+        ],
         "math": [
             "lcm",
             "nextafter",
@@ -1502,9 +1552,13 @@
         "http": [
             "HTTPMethod"
         ],
+        "importlib.resources.abc": [],
         "inspect": [
             "getmembers_static",
             "ismethodwrapper"
+        ],
+        "inspect.machinery": [
+            "NamespaceLoader"
         ],
         "locale": [
             "getencoding"
