@@ -291,8 +291,7 @@
             "new_class",
             "prepare_class"
         ],
-        "unittest": [
-            "mock"
+        "unittest.mock": [
         ],
         "venv": [],
         "zipfile": [
