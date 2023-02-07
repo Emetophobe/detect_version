@@ -209,6 +209,10 @@
             "ParseResultBytes",
             "SplitResultBytes"
         ],
+        "winreg": [
+            "CreateKeyEx",
+            "DeleteKeyEx"
+        ],
         "wsgiref.handlers": [
             "IISCGIHandler",
             "read_environ"
