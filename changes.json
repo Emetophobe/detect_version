@@ -118,6 +118,9 @@
             "gamma",
             "lgamma"
         ],
+        "nntplib": [
+            "NNTP_SSL"
+        ],
         "os": [
             "environb",
             "fsencode",
