@@ -868,6 +868,9 @@
             "fspath",
             "getrandom"
         ],
+        "pkgutil": [
+            "ModuleInfo"
+        ],
         "random": [
             "choices"
         ],
@@ -1297,6 +1300,9 @@
             "putenv",
             "unsetenv",
             "waitstatus_to_exitcode"
+        ],
+        "pkgutil": [
+            "resolve_name"
         ],
         "random": [
             "randbytes"
