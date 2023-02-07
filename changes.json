@@ -1318,6 +1318,9 @@
         "curses": [
             "has_extended_color_support"
         ],
+        "dataclasses": [
+            "KW_ONLY"
+        ],
         "dis": [
             "MATCH_CLASS"
         ],
