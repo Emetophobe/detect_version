@@ -608,6 +608,9 @@
             "iscoroutine",
             "isawaitable"
         ],
+        "json": [
+            "JSONDecodeError"
+        ],
         "linecache": [
             "lazycache"
         ],
