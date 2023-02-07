@@ -88,6 +88,11 @@
         "html": [
             "escape"
         ],
+        "inspect": [
+            "getattr_static",
+            "getcallargs",
+            "getgeneratorstate"
+        ],
         "itertools": [
             "accumulate"
         ],
@@ -254,10 +259,12 @@
         ],
         "ipaddress": [],
         "inspect": [
-            "signature",
-            "Signature",
+            "BoundArguments",
             "Parameter",
-            "BoundArguments"
+            "Signature",
+            "signature",
+            "getclosurevars",
+            "getgeneratorlocals"
         ],
         "lzma": [],
         "math": [
@@ -690,8 +697,13 @@
             "RemoteDisconnected"
         ],
         "inspect": [
+            "CO_COROUTINE",
+            "CO_ITERABLE_COROUTINE",
+            "getcoroutinelocals",
+            "getcoroutinestate",
+            "isawaitable",
             "iscoroutine",
-            "isawaitable"
+            "iscoroutinefunction"
         ],
         "json": [
             "JSONDecodeError"
@@ -837,8 +849,9 @@
             "scrypt"
         ],
         "inspect": [
-            "isasyncgenfunction",
-            "isasyncgen"
+            "CO_ASYNC_GENERATOR",
+            "isasyncgen",
+            "isasyncgenfunction"
         ],
         "math": [
             "tau"
