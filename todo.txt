@@ -1,4 +1,4 @@
-TODO checklist:
+TODO list:
 
 1. Check type annotations (Python 3.6 - PEP 526)
 2. Underscores in numeric literals (Python 3.6 - PEP 515)
@@ -7,4 +7,6 @@ TODO checklist:
 5. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
 6. type hinting generics in standard collections (Python 3.9 - PEP 585)
 7. Add errno.EQFULL and errno.ENOTCAPABLE (Added in 3.11.1 point release)
-8. Add all socket module constants.
+8. Add socket module constants
+9. Add typing module changes
+10. Handle changes in random point releases (i.e typing.Text added in Python 3.5.2)
