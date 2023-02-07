@@ -185,6 +185,12 @@
         "math": [
             "log2"
         ],
+        "multiprocessing": [
+            "Barrier"
+        ],
+        "multiprocessing.connection": [
+            "wait"
+        ],
         "os": [
             "CLD_EXITED",
             "CLD_KILLED",
@@ -398,6 +404,12 @@
         ],
         "inspect": [
             "unwrap"
+        ],
+        "multiprocessing": [
+            "get_all_start_methods",
+            "get_context",
+            "get_start_method",
+            "set_start_method"
         ],
         "operator": [
             "length_hint"
@@ -820,8 +832,10 @@
             "isqrt"
         ],
         "multiprocessing": [
+            "parent_process",
             "shared_memory"
         ],
+        "multiprocessing.shared_memory": [],
         "os": [
             "MFD_CLOEXEC",
             "MFD_ALLOW_SEALING",
