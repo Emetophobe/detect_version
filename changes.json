@@ -1377,6 +1377,11 @@
             "orig_argv",
             "stdlib_module_names"
         ],
+        "sysconfig": [
+            "_get_preferred_schemes",
+            "get_default_scheme",
+            "get_preferred_scheme"
+        ],
         "threading": [
             "__excepthook__",
             "getprofile",
