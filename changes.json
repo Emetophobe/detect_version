@@ -984,7 +984,7 @@
             "seal"
         ],
         "uuid": [
-            "UUID.is_safe"
+            "SafeUUID"
         ]
     },
     "Python 3.8": {
