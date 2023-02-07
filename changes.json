@@ -288,7 +288,17 @@
         ],
         "time": [
             "CLOCK_REALTIME",
-            "clock_settime"
+            "CLOCK_HIGHRES",
+            "CLOCK_MONOTONIC",
+            "CLOCK_MONOTONIC_RAW",
+            "CLOCK_PROCESS_CPUTIME_ID",
+            "CLOCK_THREAD_CPUTIME_ID",
+            "clock_settime",
+            "clock_gettime",
+            "get_clock_info",
+            "monotonic",
+            "perf_counter",
+            "process_time"
         ],
         "types": [
             "MappingProxyType",
@@ -701,7 +711,7 @@
         "time": [
             "CLOCK_BOOTTIME",
             "CLOCK_PROF",
-            "CLOCK_UPTIM",
+            "CLOCK_UPTIME",
             "clock_gettime_ns",
             "clock_settime_ns",
             "monotonic_ns",
@@ -928,6 +938,9 @@
         ],
         "sys": [
             "platlibdir"
+        ],
+        "time":[
+            "CLOCK_TAI"
         ],
         "tracemalloc": [
             "reset_peak"
