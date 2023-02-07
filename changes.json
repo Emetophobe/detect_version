@@ -152,6 +152,11 @@
             "CTRL_C_EVENT",
             "CTRL_BREAK_EVENT"
         ],
+        "site": [
+            "getsitepackages",
+            "getuserbase",
+            "getusersitepackages"
+        ],
         "socket": [
             "SOCK_CLOEXEC",
             "SOCK_NONBLOCK"
