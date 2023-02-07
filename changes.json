@@ -134,6 +134,9 @@
             "OPENSSL_VERSION_INFO",
             "OPENSSL_VERSION_NUMBER"
         ],
+        "subprocess": [
+            "check_output"
+        ],
         "sys": [
             "hash_info"
         ],
@@ -309,6 +312,11 @@
         ],
         "stat": [
             "filemode"
+        ],
+        "subprocess": [
+            "DEVNULL",
+            "SubprocessError",
+            "TimeoutExpired"
         ],
         "sys": [
             "_debugmallocstats",
@@ -565,6 +573,7 @@
             "FILE_ATTRIBUTE_VIRTUAL"
         ],
         "subprocess": [
+            "CompletedProcess",
             "run"
         ],
         "tempfile": [
@@ -758,6 +767,18 @@
             "close",
             "getblocking"
         ],
+        "subprocess": [
+            "ABOVE_NORMAL_PRIORITY_CLASS",
+            "BELOW_NORMAL_PRIORITY_CLASS",
+            "HIGH_PRIORITY_CLASS",
+            "IDLE_PRIORITY_CLASS",
+            "NORMAL_PRIORITY_CLASS",
+            "REALTIME_PRIORITY_CLASS",
+            "CREATE_NO_WINDOW",
+            "DETACHED_PROCESS",
+            "CREATE_DEFAULT_ERROR_MODE",
+            "CREATE_BREAKAWAY_FROM_JOB"
+        ],
         "sys": [
             "breakpointhook",
             "getandroidapilevel",
@@ -902,6 +923,9 @@
             "geometric_mean",
             "multimode",
             "quantiles"
+        ],
+        "subprocess": [
+            "_USE_POSIX_SPAWN"
         ],
         "sys": [
             "unraisablehook"
@@ -1185,12 +1209,15 @@
         "sqlite3": [
             "Blob"
         ],
-        "sys": [
-            "exception"
-        ],
         "string": [
             "get_identifiers",
             "is_valid"
+        ],
+        "subprocess": [
+            "_USE_VFORK"
+        ],
+        "sys": [
+            "exception"
         ],
         "tomllib": [],
         "typing": [
