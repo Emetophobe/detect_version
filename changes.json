@@ -160,6 +160,9 @@
             "methods",
             "mksalt"
         ],
+        "curses": [
+            "unget_wch"
+        ],
         "datetime": [
             "datetime.timestamp"
         ],
@@ -482,6 +485,9 @@
         "contextlib": [
             "redirect_stderr"
         ],
+        "curses": [
+            "update_lines_cols"
+        ],
         "html": [
             "HTTPStatus"
         ],
@@ -681,6 +687,9 @@
         "contextvars": [],
         "crypt": [
             "METHOD_BLOWFISH"
+        ],
+        "curses": [
+            "A_ITALIC"
         ],
         "dataclasses": [],
         "datetime": [
