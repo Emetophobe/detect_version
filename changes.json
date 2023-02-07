@@ -45,6 +45,9 @@
         "csv": [
             "unix_dialect"
         ],
+        "ctypes": [
+            "c_ssize_t"
+        ],
         "datetime": [
             "datetime.timezone"
         ],
@@ -1082,6 +1085,10 @@
         ],
         "contextlib": [
             "chdir"
+        ],
+        "ctypes": [
+            "BigEndianUnion",
+            "LittleEndianUnion"
         ],
         "datetime": [
             "datetime.UTC"
