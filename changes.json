@@ -1337,6 +1337,10 @@
             "files",
             "as_file"
         ],
+        "keyword": [
+            "issoftkeyword",
+            "softkwlist"
+        ],
         "math": [
             "lcm",
             "nextafter",
