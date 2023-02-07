@@ -330,6 +330,9 @@
         "select": [
             "devpoll"
         ],
+        "shlex": [
+            "quote"
+        ],
         "shutil": [
             "chown",
             "disk_usage",
