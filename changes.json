@@ -29,6 +29,13 @@
         ],
         "logging.handlers": [
             "NullHandler"
+        ],
+        "unittest": [
+            "SkipTest",
+            "skip",
+            "skipIf",
+            "skipUnless",
+            "expectedFailure"
         ]
     },
     "Python 3.2": {
@@ -165,6 +172,13 @@
         "threading": [
             "TIMEOUT_MAX",
             "Barrier"
+        ],
+        "unittest": [
+            "TextTestResult",
+            "installHandler",
+            "registerResult",
+            "removeHandler",
+            "removeResult"
         ],
         "urllib.parse": [
             "DefragResult",
