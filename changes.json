@@ -196,6 +196,12 @@
         "hmac": [
             "compare_digest"
         ],
+        "html": [
+            "entities.html5"
+        ],
+        "html.entities": [
+            "html5"
+        ],
         "ipaddress": [],
         "inspect": [
             "signature",
