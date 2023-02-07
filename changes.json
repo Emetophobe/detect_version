@@ -165,6 +165,15 @@
         "threading": [
             "TIMEOUT_MAX",
             "Barrier"
+        ],
+        "xml.etree.ElementTree": [
+            "fromstringlist",
+            "tostringlist",
+            "register_namespace"
+        ],
+        "xml.parsers.expat.errors": [
+            "codes",
+            "messages"
         ]
     },
     "Python 3.3": {
@@ -398,6 +407,9 @@
         "unittest.mock": [
         ],
         "venv": [],
+        "xml.etree.ElementTree": [
+            "canonicalize"
+        ],
         "zipfile": [
             "ZIP_BZIP2",
             "ZIP_LZMA"
@@ -1143,6 +1155,9 @@
         "unittest.mock": [
             "AsyncMock"
         ],
+        "xml.etree.ElementTree": [
+            "C14NWriterTarget"
+        ],
         "zipfile": [
             "Path"
         ]
@@ -1223,6 +1238,9 @@
         ],
         "typing": [
             "Annotated"
+        ],
+        "xml.etree.ElementTree": [
+            "indent"
         ],
         "zoneinfo": []
     },
