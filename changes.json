@@ -1,5 +1,9 @@
 {
     "Python 3.1": {
+        "base64": [
+            "decodebytes",
+            "encodebytes"
+        ],
         "bytes": [
             "maketrans"
         ],
@@ -405,6 +409,12 @@
             "byteswap"
         ],
         "asyncio": [],
+        "base64": [
+            "a85encode",
+            "a85decode",
+            "b85encode",
+            "b85decode"
+        ],
         "contextlib": [
             "redirect_stdout, suppress"
         ],
