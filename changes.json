@@ -124,8 +124,7 @@
         ],
         "socket": [
             "SOCK_CLOEXEC",
-            "SOCK_NONBLOCK",
-            "detach"
+            "SOCK_NONBLOCK"
         ],
         "ssl": [
             "SSLContext",
@@ -301,17 +300,14 @@
             "pthread_kill"
         ],
         "socket": [
+            "AF_RDS",
             "CMSG_LEN",
             "CMSG_SPACE",
             "fromshare",
             "if_nameindex",
             "if_nametoindex",
             "if_indextoname",
-            "recvmsg",
-            "recvmsg_into",
-            "sendmsg",
-            "sethostname",
-            "share"
+            "sethostname"
         ],
         "stat": [
             "filemode"
@@ -454,8 +450,19 @@
         ],
         "socket": [
             "AF_LINK",
-            "set_inheritable",
-            "get_inheritable"
+            "CAN_BCM",
+            "CAN_BCM_RX_CHANGED",
+            "CAN_BCM_RX_DELETE",
+            "CAN_BCM_RX_READ",
+            "CAN_BCM_RX_SETUP",
+            "CAN_BCM_RX_STATUS",
+            "CAN_BCM_RX_TIMEOUT",
+            "CAN_BCM_TX_DELETE",
+            "CAN_BCM_TX_EXPIRED",
+            "CAN_BCM_TX_READ",
+            "CAN_BCM_TX_SEND",
+            "CAN_BCM_TX_SETUP",
+            "CAN_BCM_TX_STATUS"
         ],
         "ssl": [
             "create_default_context",
@@ -553,8 +560,7 @@
             "append_history_file"
         ],
         "socket": [
-            "CAN_RAW_FD_FRAMES",
-            "sendfile"
+            "CAN_RAW_FD_FRAMES"
         ],
         "stat": [
             "FILE_ATTRIBUTE_ARCHIVE",
@@ -671,8 +677,7 @@
             "SO_PEERSEC",
             "SO_PASSSEC",
             "TCP_USER_TIMEOUT",
-            "TCP_CONGESTION",
-            "sendmsg_afalg"
+            "TCP_CONGESTION"
         ],
         "statistics": [
             "harmonic_mean"
@@ -767,8 +772,7 @@
             "AF_VSOCK",
             "CAN_ISOTP",
             "TCP_NOTSENT_LOWAT",
-            "close",
-            "getblocking"
+            "close"
         ],
         "subprocess": [
             "ABOVE_NORMAL_PRIORITY_CLASS",
