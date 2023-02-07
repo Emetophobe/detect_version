@@ -689,6 +689,9 @@
             "Handlers",
             "Sigmasks"
         ],
+        "smtplib": [
+            "SMTPNotSupportedError"
+        ],
         "socket": [
             "CAN_RAW_FD_FRAMES"
         ],
