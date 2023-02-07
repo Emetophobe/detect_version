@@ -194,6 +194,9 @@
             "TIMEOUT_MAX",
             "Barrier"
         ],
+        "tokenize": [
+            "open"
+        ],
         "unittest": [
             "TextTestResult",
             "installHandler",
