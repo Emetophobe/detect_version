@@ -842,6 +842,10 @@
         "pickle": [
             "PickleBuffer"
         ],
+        "platform": [
+            "win32_edition",
+            "win32_is_iot"
+        ],
         "plistlib": [
             "UID"
         ],
