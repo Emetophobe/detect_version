@@ -112,6 +112,9 @@
         "reprlib": [
             "recursive_repr"
         ],
+        "select": [
+            "PIPE_BUF"
+        ],
         "shutil": [
             "get_archive_formats",
             "get_unpack_formats",
@@ -736,6 +739,9 @@
             "set_auto_history"
         ],
         "secrets": [],
+        "select":[
+            "EPOLLEXCLUSIVE"
+        ],
         "socket": [
             "AF_ALG",
             "SO_DOMAIN",
