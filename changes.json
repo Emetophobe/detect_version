@@ -658,6 +658,9 @@
         "linecache": [
             "lazycache"
         ],
+        "locale": [
+            "delocalize"
+        ],
         "math": [
             "gcd",
             "inf",
@@ -1294,6 +1297,9 @@
         ],
         "itertools": [
             "pairwise"
+        ],
+        "locale": [
+            "localize"
         ],
         "mmap": [
             "MAP_POPULATE"
