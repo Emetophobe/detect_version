@@ -611,8 +611,11 @@
         "curses": [
             "update_lines_cols"
         ],
-        "html": [
+        "http": [
             "HTTPStatus"
+        ],
+        "http.client": [
+            "RemoteDisconnected"
         ],
         "inspect": [
             "iscoroutine",
@@ -1358,6 +1361,9 @@
         ],
         "hashlib": [
             "file_digest"
+        ],
+        "http": [
+            "HTTPMethod"
         ],
         "inspect": [
             "getmembers_static",
