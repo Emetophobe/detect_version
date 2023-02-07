@@ -219,6 +219,9 @@
         "concurrent.futures.process": [
             "BrokenProcessPool"
         ],
+        "contextlib": [
+            "ExitStack"
+        ],
         "crypt": [
             "METHOD_SHA256",
             "METHOD_SHA512",
@@ -471,7 +474,8 @@
             "b85decode"
         ],
         "contextlib": [
-            "redirect_stdout, suppress"
+            "redirect_stdout",
+            "suppress"
         ],
         "dis": [
             "LOAD_CLASSDEREF",
