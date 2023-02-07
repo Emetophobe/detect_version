@@ -1308,6 +1308,9 @@
         "zoneinfo": []
     },
     "Python 3.10": {
+        "abc": [
+            "update_abstractmethods"
+        ],
         "base64": [
             "b32hexencode",
             "b32hexdecode"
