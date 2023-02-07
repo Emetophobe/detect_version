@@ -14,6 +14,9 @@
             "Counter",
             "OrderedDict"
         ],
+        "gc": [
+            "is_tracked"
+        ],
         "importlib": [],
         "io":[
             "SEEK_SET",
@@ -237,6 +240,9 @@
             "datetime.timestamp"
         ],
         "faulthandler": [],
+        "gc": [
+            "callbacks"
+        ],
         "hmac": [
             "compare_digest"
         ],
