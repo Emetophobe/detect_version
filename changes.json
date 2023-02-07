@@ -125,6 +125,10 @@
             "unregister_archive_format",
             "unregister_unpack_format"
         ],
+        "signal": [
+            "CTRL_C_EVENT",
+            "CTRL_BREAK_EVENT"
+        ],
         "socket": [
             "SOCK_CLOEXEC",
             "SOCK_NONBLOCK"
@@ -305,7 +309,15 @@
             "which"
         ],
         "signal": [
-            "pthread_kill"
+            "SIG_BLOCK",
+            "SIG_UNBLOCK",
+            "SIG_SETMASK",
+            "pthread_kill",
+            "pthread_sigmask",
+            "sigpending",
+            "sigwait",
+            "sigwaitinfo",
+            "sigtimedwait"
         ],
         "socket": [
             "AF_RDS",
@@ -624,6 +636,11 @@
         ],
         "selectors": [
             "DevpollSelector"
+        ],
+        "signal": [
+            "Signals",
+            "Handlers",
+            "Sigmasks"
         ],
         "socket": [
             "CAN_RAW_FD_FRAMES"
@@ -1012,6 +1029,11 @@
         "shlex": [
             "join"
         ],
+        "signal": [
+            "strsignal",
+            "valid_signals",
+            "raise_signal"
+        ],
         "socket": [
             "AF_QIPCRTR",
             "create_server",
@@ -1315,6 +1337,9 @@
         "os": [
             "SF_NOCACHE",
             "login_tty"
+        ],
+        "signal": [
+            "SIGSTKFLT"
         ],
         "socket": [
             "SCM_CREDS2",
