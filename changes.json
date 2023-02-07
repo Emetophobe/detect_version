@@ -68,7 +68,6 @@
             "datetime.timezone"
         ],
         "dis": [
-            "DELETE_DEREF",
             "code_info",
             "show_code"
         ],
@@ -524,7 +523,6 @@
             "suppress"
         ],
         "dis": [
-            "LOAD_CLASSDEREF",
             "Bytecode",
             "Instruction",
             "get_instructions",
@@ -879,10 +877,6 @@
         "contextlib": [
             "AbstractContextManager"
         ],
-        "dis": [
-            "CALL_FUNCTION_EX",
-            "FORMAT_VALUE"
-        ],
         "enum": [
             "Flag",
             "IntFlag",
@@ -1005,9 +999,6 @@
         "datetime": [
             "datetime.fromisoformat"
         ],
-        "dis": [
-            "LOAD_METHOD"
-        ],
         "gc": [
             "freeze",
             "unfreeze",
@@ -1034,6 +1025,9 @@
             "preadv",
             "pwritev",
             "register_at_fork"
+        ],
+        "py_compile": [
+            "PycInvalidationMode"
         ],
         "queue": [
             "SimpleQueue"
@@ -1415,9 +1409,6 @@
         "dataclasses": [
             "KW_ONLY"
         ],
-        "dis": [
-            "MATCH_CLASS"
-        ],
         "fcntl": [
             "F_GETPIPE_SZ",
             "F_SETPIPE_SZ"
@@ -1523,17 +1514,6 @@
             "datetime.UTC"
         ],
         "dis": [
-            "ASYNC_GEN_WRAP",
-            "COPY_FREE_VARS",
-            "CALL",
-            "COPY",
-            "KW_NAMES",
-            "PRECALL",
-            "PUSH_NULL",
-            "SEND",
-            "SWAP",
-            "RESUME",
-            "RETURN_GENERATOR",
             "Positions"
         ],
         "enum": [
