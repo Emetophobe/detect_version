@@ -984,6 +984,32 @@
             "comb",
             "isqrt"
         ],
+        "mmap": [
+            "MADV_NORMAL",
+            "MADV_RANDOM",
+            "MADV_SEQUENTIAL",
+            "MADV_WILLNEED",
+            "MADV_DONTNEED",
+            "MADV_REMOVE",
+            "MADV_DONTFORK",
+            "MADV_DOFORK",
+            "MADV_HWPOISON",
+            "MADV_MERGEABLE",
+            "MADV_UNMERGEABLE",
+            "MADV_SOFT_OFFLINE",
+            "MADV_HUGEPAGE",
+            "MADV_NOHUGEPAGE",
+            "MADV_DONTDUMP",
+            "MADV_DODUMP",
+            "MADV_FREE",
+            "MADV_NOSYNC",
+            "MADV_AUTOSYNC",
+            "MADV_NOCORE",
+            "MADV_CORE",
+            "MADV_PROTECT",
+            "MADV_FREE_REUSABLE",
+            "MADV_FREE_REUSE"
+        ],
         "multiprocessing": [
             "parent_process",
             "shared_memory"
@@ -1212,6 +1238,9 @@
         "itertools": [
             "pairwise"
         ],
+        "mmap": [
+            "MAP_POPULATE"
+        ],
         "os": [
             "EFD_CLOEXEC",
             "EFD_NONBLOCK",
@@ -1330,6 +1359,9 @@
         "math": [
             "cbrt",
             "exp2"
+        ],
+        "mmap": [
+            "MAP_STACK"
         ],
         "operator": [
             "call"
