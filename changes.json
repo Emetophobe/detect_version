@@ -166,6 +166,12 @@
             "TIMEOUT_MAX",
             "Barrier"
         ],
+        "urllib.parse": [
+            "DefragResult",
+            "DefragResultBytes",
+            "ParseResultBytes",
+            "SplitResultBytes"
+        ],
         "wsgiref.handlers": [
             "IISCGIHandler",
             "read_environ"
@@ -605,6 +611,9 @@
         "types": [
             "DynamicClassAttribute"
         ],
+        "urllib.request": [
+            "DataHandler"
+        ],
         "weakref": [
             "WeakMethod",
             "finalize"
@@ -730,6 +739,7 @@
         "typing": [],
         "urllib.request": [
             "HTTPPasswordMgrWithPriorAuth"
+
         ],
         "zipapp": []
     },
@@ -1456,6 +1466,9 @@
         ],
         "unittest": [
             "enterModuleContext"
+        ],
+        "urllib.request": [
+            "HTTPRedirectHandler.http_error_308"
         ],
         "wsgiref.types": [],
         "zipfile": [
