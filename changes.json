@@ -456,6 +456,9 @@
             "get_instructions",
             "stack_effect"
         ],
+        "doctest": [
+            "FAIL_FAST"
+        ],
         "email": [
             "as_bytes"
         ],
