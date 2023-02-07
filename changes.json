@@ -166,6 +166,10 @@
             "TIMEOUT_MAX",
             "Barrier"
         ],
+        "wsgiref.handlers": [
+            "IISCGIHandler",
+            "read_environ"
+        ],
         "xml.etree.ElementTree": [
             "fromstringlist",
             "tostringlist",
