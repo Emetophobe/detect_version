@@ -19,6 +19,12 @@
         "itertools": [
             "combinations_with_replacement",
             "compress"
+        ],
+        "logging": [
+            "handlers.NullHandler"
+        ],
+        "logging.handlers": [
+            "NullHandler"
         ]
     },
     "Python 3.2": {
@@ -65,6 +71,21 @@
         ],
         "itertools": [
             "accumulate"
+        ],
+        "logging": [
+            "lastResort",
+            "getLogRecordFactory",
+            "setLogRecordFactory",
+            "config.dictConfig",
+            "handlers.QueueHandler",
+            "handlers.QueueListener"
+        ],
+        "logging.config": [
+            "dictConfig"
+        ],
+        "logging.handlers": [
+            "QueueHandler",
+            "QueueListener"
         ],
         "math": [
             "isfinite",
