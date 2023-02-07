@@ -622,6 +622,9 @@
         "readline": [
             "append_history_file"
         ],
+        "selectors": [
+            "DevpollSelector"
+        ],
         "socket": [
             "CAN_RAW_FD_FRAMES"
         ],
