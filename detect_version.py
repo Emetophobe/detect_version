@@ -100,7 +100,7 @@ class Analyzer(ast.NodeVisitor):
         """ Check raised exceptions for new exceptions types. """
         if isinstance(node.exc, ast.Call):
             self._check_exception(node.exc.func.id)
-        elif isinstance(node.exec, ast.Name):
+        elif isinstance(node.exc, ast.Name):
             self._check_exception(node.exc.id)
         self.generic_visit(node)
 
