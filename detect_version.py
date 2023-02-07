@@ -95,7 +95,10 @@ class Analyzer(ast.NodeVisitor):
 
     def visit_Raise(self, node: ast.Raise):
         """ Check raised exceptions for new exceptions types. """
-        self._check_exception(node.exc.id)
+        if isinstance(node.exc, ast.Call):
+            self._check_exception(node.exc.func.id)
+        elif isinstance(node.exec, ast.Name):
+            self._check_exception(node.exc.id)
         self.generic_visit(node)
 
     def visit_ExceptHandler(self, node: ast.ExceptHandler):
@@ -138,16 +141,30 @@ class Analyzer(ast.NodeVisitor):
 
     def _check_exception(self, name):
         """ Check for new exception classes. """
-        if name == 'RecursionError':
+        if name == 'ResourceWarning':
+            self.update_requirements('ResourceWarning exception', PYTHON32)
+        elif name == 'TimeoutError':
+            self.update_requirements('TimeoutError exception', PYTHON33)
+        elif name == 'RecursionError':
             self.update_requirements('RecursionError exception', PYTHON35)
+        elif name == 'StopAsyncIteration':
+            self.update_requirements('StopAsyncIteration exception', PYTHON35)
         elif name == 'ModuleNotFoundError':
             self.update_requirements('ModuleNotFoundError exception', PYTHON36)
+        elif name == 'EncodingWarning':
+            self.update_requirements('EncodingWarning exception', PYTHON310)
+        elif name in ('BaseExceptionGroup', 'ExceptionGroup'):
+            self.update_requirements(f'{name} exception', PYTHON311)
 
     def _check_attribute(self, name, attr):
         """ Check for module additions. """
         for version, module, additions in self.get_changes():
             if name == module and attr in additions:
                 self.update_requirements(f'{name}.{attr}', version)
+
+    def _dump(self, node: ast.AST):
+        """ Convenience method to print a node to stdout. """
+        print(ast.dump(node, indent=4))
 
 
 def detect_version(path: str) -> None:

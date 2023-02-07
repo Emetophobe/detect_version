@@ -6,5 +6,3 @@ TODO checklist:
 4. positional only arguments (Python 3.8 - PEP 570)
 5. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
 6. type hinting generics in standard collections (Python 3.9 - PEP 585)
-7. ExceptionGroup added (Python 3.11 - PEP 654)
-8. Exceptions can be enriched with notes (Python 3.11 - PEP 678)
