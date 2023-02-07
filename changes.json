@@ -144,6 +144,7 @@
             "TemporaryDirectory"
         ],
         "threading": [
+            "TIMEOUT_MAX",
             "Barrier"
         ]
     },
@@ -455,6 +456,9 @@
         ],
         "textwrap": [
             "shorten"
+        ],
+        "threading": [
+            "main_thread"
         ],
         "traceback": [
             "clear_frames"
