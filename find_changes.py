@@ -23,26 +23,29 @@ def find_changes(module_name, attribute=None, list_all=False):
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(
+        description='Find specific module or attribute changes.',
+        usage='%(prog)s [-h] [-a] module [attribute]')
 
     parser.add_argument(
-        'search',
-        help='module or attribute to search for',
+        'name',
+        metavar='module [attribute]',
+        help='module with optional attribute name',
         nargs='+')
 
     parser.add_argument(
         '-a', '--all',
-        help='show all module changes (only if no attributes are specified)',
+        help='show all module changes (only if no attribute is specified)',
         action='store_true')
 
     args = parser.parse_args()
 
-    if len(args.search) == 1:
-        find_changes(args.search[0], list_all=args.all)
-    elif len(args.search) == 2:
-        find_changes(args.search[0], args.search[1])
-    else:
-        parser.error('Invalid number of arguments')
+    if len(args.name) > 2:
+        parser.error('Invalid number of arguments (must be 1 or 2).')
+    elif len(args.name) == 2 and args.all:
+        parser.error('Cannot use --all with the attribute argument.')
+
+    find_changes(*args.name, list_all=args.all)
 
 
 if __name__ == '__main__':
