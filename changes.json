@@ -36,9 +36,7 @@
         "cmath": [
             "isfinite"
         ],
-        "concurrent": [
-            "futures"
-        ],
+        "concurrent.futures": [],
         "contextlib": [
             "ContextDecorator"
         ],
@@ -156,6 +154,9 @@
             "ChainMap"
         ],
         "collections.abc": [],
+        "concurrent.futures.process": [
+            "BrokenProcessPool"
+        ],
         "crypt": [
             "METHOD_SHA256",
             "METHOD_SHA512",
@@ -697,6 +698,12 @@
             "get_running_loop",
             "run"
         ],
+        "concurrent.futures": [
+            "BrokenExecutor"
+        ],
+        "concurrent.futures.thread": [
+            "thread.BrokenThreadPool"
+        ],
         "contextlib": [
             "AbstractAsyncContextManager",
             "AsyncExitStack",
@@ -795,6 +802,9 @@
         "datetime": [
             "date.fromisocalendar",
             "datetime.fromisocalendar"
+        ],
+        "concurrent.futures": [
+            "InvalidStateError"
         ],
         "curses": [
             "ncurses_version"
