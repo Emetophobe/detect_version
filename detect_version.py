@@ -62,14 +62,20 @@ class Module:
 class Analyzer(ast.NodeVisitor):
     """ Node Visitor used to walk the abstract syntax tree. """
 
-    def __init__(self) -> None:
+    def __init__(self, path: PathLike) -> None:
+        """ Initialize node analyzer.
+
+        Args:
+            path (PathLike): filename of the script to parse.
+        """
+        self.script = path
         self.modules = load_changes('modules.json')
         self.min_version = PYTHON3
         self.requirements = {}
 
-    def report(self, path: PathLike) -> None:
+    def report(self) -> None:
         """ Print version report. """
-        print(f'{path}: requires {self.min_version}')
+        print(f'{self.script}: requires {self.min_version}')
 
         requirements = sorted(self.requirements.items(),
                               key=lambda kv: (version_tuple(kv[1]), kv[0]),
@@ -78,13 +84,21 @@ class Analyzer(ast.NodeVisitor):
             print(f'  {feature} requires {version}')
 
     def update_requirements(self, feature: str, version: str) -> None:
-        """ Update script requirements and minimum version. """
+        """ Update minimum requirements and version.
+
+            Args:
+                feature (str): Name of the feature
+                version (str): Initial Python version
+        """
         self.requirements[feature] = version
         if version_tuple(version) > version_tuple(self.min_version):
             self.min_version = version
 
     def visit_Import(self, node: ast.Import) -> None:
-        """ Scan import statements for new modules. """
+        """ Scan import statements for new modules.
+
+            node.names is the list of imports.
+        """
         for alias in node.names:
             for module in self.modules:
                 if alias.name == module.name and module.created:
@@ -93,7 +107,11 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
-        """ Scan "from ... import" statements for new modules or attributes."""
+        """ Scan "from x import a, b, c " statements for new modules or attributes.
+
+            node.module is the module name in the "from x" part of the statement
+            node.names is the list of imports in the "import a, b, c" part of the statement
+        """
         for module in self.modules:
             if node.module != module.name:
                 continue
@@ -112,15 +130,24 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
-        """ Check for attribute accesses for module changes. """
+        """ Check for attribute accesses for module changes.
+
+            node.value is a node, typically a Name or an Attribute itself.
+            node.attr is a string giving the name of the attribute.
+            node.ctx is the context of the attribute access (Load, Store or Del).
+        """
         if isinstance(node.value, ast.Name):
             self._check_attribute(node.value.id, node.attr)
         elif isinstance(node.value, ast.Attribute):
             self._check_attribute(node.value.value, node.attr)
+
         self.generic_visit(node)
 
     def visit_Call(self, node: ast.Call) -> None:
-        """ Check function calls for module changes. """
+        """ Check function calls for module changes.
+
+            node.func is the function (which can be a Name or Attribute node).
+        """
         if isinstance(node.func, ast.Name):
             for function, version in FUNCTION_CHANGES:
                 if isinstance(function, tuple):  # tuple of function names
@@ -134,7 +161,16 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Raise(self, node: ast.Raise) -> None:
-        """ Check raised exceptions for new exceptions types. """
+        """ Check raised exceptions for new exceptions types.
+
+            node: A raise statement (represented as a Raise node).
+
+            node.exc: The exception being raised, normally a Call or Name node,
+                      or None for a standalone raise.
+
+            node.cause (optional): the optional from clause (i.e raise x from y).
+
+        """
         if isinstance(node.exc, ast.Call):
             self._check_exception(node.exc.func.id)
         elif isinstance(node.exc, ast.Name):
@@ -142,22 +178,37 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_ExceptHandler(self, node: ast.ExceptHandler) -> None:
-        """ Check caught exceptions for new exceptions types."""
+        """ Check caught exceptions for new exceptions types.
+
+            node: a single except clause.
+
+            node.type: name of the exception, typically a Name node (or None
+                       for a catch-all except: clause)
+
+            node.name (optional): name of stored exception or None if none was
+                       given. It's the "as x" in "except TypeError as x")
+        """
         self._check_exception(node.type.id)
         self.generic_visit(node)
 
-    def visit_Str(self, node: ast.Str) -> None:
-        """ Check for unicode literals i.e: u'this is a unicode literal' """
+    def visit_Constant(self, node: ast.Constant) -> None:
+        """ Check for unicode literals which were added in Python 3.3.
+
+            node: Represents a constant value or literal.
+            node.value: The actual Python object the constant represents.
+            node.kind: "u" for unicode string, None otherwise.
+        """
         if node.kind == 'u':
             self.update_requirements('unicode literal', PYTHON33)
         self.generic_visit(node)
 
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
-        """ Check for fstrings which were added in Python 3.6 """
+        """ Check for formatted strings (fstrings) which were added in Python 3.6. """
         self.update_requirements('fstring', PYTHON36)
         self.generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AST):
+        """ Check for async/await coroutines which were added in Python 3.5. """
         self.update_requirements('async/await', PYTHON35)
         self.generic_visit(node)
 
@@ -187,14 +238,14 @@ class Analyzer(ast.NodeVisitor):
                 for version, attributes in module.added.items():
                     if attr in attributes:
                         self.update_requirements(f'{name}.{attr}', version)
-                break
+                        return
 
     def _check_exception(self, name: str) -> None:
         """ Check for new exception classes. """
         for exception, version in EXCEPTION_CHANGES:
             if name == exception:
                 self.update_requirements(exception, version)
-                break
+                return
 
 
 def detect_version(path: PathLike) -> None:
@@ -202,16 +253,9 @@ def detect_version(path: PathLike) -> None:
     with open(path, 'r') as source:
         tree = ast.parse(source.read())
 
-    analyzer = Analyzer()
+    analyzer = Analyzer(path)
     analyzer.visit(tree)
-    analyzer.report(path)
-
-
-def dump_ast(path: PathLike) -> ast.AST:
-    """ Print ast to stdout. """
-    with open(path, 'r') as source:
-        tree = ast.parse(source.read())
-    print(ast.dump(tree, indent=4))
+    analyzer.report()
 
 
 def load_changes(filename: PathLike) -> list[Module]:
@@ -219,14 +263,26 @@ def load_changes(filename: PathLike) -> list[Module]:
     with open(filename, 'r', encoding='utf-8') as infile:
         data = json.load(infile)
 
+    # Convert module dictionary to list of Modules
     modules = []
     for module, changes in data.items():
         modules.append(Module(module, changes))
     return modules
 
 
+def dump_file(path: PathLike) -> None:
+    """ Parse script file and print ast to stdout. """
+    with open(path, 'r') as source:
+        dump_node(ast.parse(source.read()))
+
+
+def dump_node(node: ast.AST) -> None:
+    """ Print ast node to stdout. """
+    print(ast.dump(node, indent=4))
+
+
 def version_tuple(version: str) -> tuple:
-    """ Split a version string "3.11.1" into a tuple (3, 11, 1) """
+    """ Split a version string into a tuple; i.e "3.11.1" -> (3, 11, 1) """
     version = version.removeprefix('Python ')
     return tuple(map(int, (version.split('.'))))
 
@@ -240,7 +296,7 @@ def main():
 
     try:
         if args.dump:
-            dump_ast(args.path)
+            dump_file(args.path)
         else:
             detect_version(args.path)
     except OSError as e:
