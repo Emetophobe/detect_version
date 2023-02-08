@@ -4,29 +4,40 @@
 
 import argparse
 from detect_version import load_changes
-
 from typing import Optional
 
 
 def find_changes(
-        module_name: str,
+        name: str,
         attribute: Optional[str] = None,
         list_all: Optional[bool] = False
         ) -> None:
 
-    """ Find and print module changes. """
-    version_history = load_changes()
-    for version, changes in version_history.items():
-        for module, additions in changes.items():
-            if module_name == module:
-                if not attribute:
-                    if not additions:
-                        print(f'Added {module} module in {version}')
-                    elif additions and list_all:
-                        for addition in additions:
-                            print(f'Added {module}.{addition} in {version}')
-                elif attribute and attribute in additions:
-                    print(f'Added {module}.{attribute} in {version}')
+    """ Find all module changes.
+
+        Args:
+            name (str): the module name
+            attribute (str): an optional attribute name
+            list_all (bool): list all module changes (only works with attribute=None)
+    """
+    version_history = load_changes('modules.json')
+    for module in version_history:
+        if module.name != name:
+            continue
+
+        if attribute:
+            for version, names in module.added.items():
+                if attribute in names:
+                    print(f'{module.name}.{attribute} requires {version}')
+        else:
+            if module.created:
+                version = module.created
+                print(f'{module.name} module requires {version}')
+
+            if list_all:
+                for version, attributes in module.added.items():
+                    for name in attributes:
+                        print(f'{module.name}.{name} requires {version}')
 
 
 def main():

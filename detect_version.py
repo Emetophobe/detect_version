@@ -8,7 +8,6 @@ import json
 import argparse
 
 from os import PathLike
-from typing import Generator
 
 
 # Major Python releases
@@ -27,57 +26,93 @@ PYTHON311 = 'Python 3.11'
 PYTHON312 = 'Python 3.12'
 
 
+# Changes to built-in exceptions
+EXCEPTION_CHANGES = (
+    ('ResourceWarning', PYTHON32),
+    ('TimeoutError', PYTHON33),
+    ('RecursionError', PYTHON35),
+    ('StopAsyncIteration', PYTHON35),
+    ('ModuleNotFoundError', PYTHON36),
+    ('EncodingWarning', PYTHON310),
+    ('ExceptionGroup', PYTHON311),
+)
+
+
+# Changes to built-in functions
+FUNCTION_CHANGES = (
+    ('callable', PYTHON32),
+    ('breakpoint', PYTHON37),
+    (('aiter', 'anext'), PYTHON310)
+)
+
+
+class Module:
+    def __init__(self, name: str, data: dict) -> None:
+        self.name = name
+        self.created = data.get('created', None)
+        self.added = data.get('added', dict())
+
+        if not self.created and not self.added:
+            raise ValueError(f'Invalid module {name} (missing changes)')
+
+    def __str__(self):
+        return self.name
+
+
 class Analyzer(ast.NodeVisitor):
     """ Node Visitor used to walk the abstract syntax tree. """
 
     def __init__(self) -> None:
+        self.modules = load_changes('modules.json')
         self.min_version = PYTHON3
-        self.requirements = set()
-        self.changes = load_changes()
+        self.requirements = {}
 
     def report(self, path: PathLike) -> None:
         """ Print version report. """
         print(f'{path}: requires {self.min_version}')
-        for requirement in self.requirements:
-            print(f'  {requirement}')
+
+        requirements = sorted(self.requirements.items(),
+                              key=lambda kv: (version_tuple(kv[1]), kv[0]),
+                              reverse=False)
+        for feature, version in requirements:
+            print(f'  {feature} requires {version}')
 
     def update_requirements(self, feature: str, version: str) -> None:
-        """ Update script requirements. """
-        self.requirements.add(f'{feature} requires {version}')
-        self.min_version = max(self.min_version, version)
-
-    def generic_visit(self, node: ast.AST) -> None:
-        """ Check ast node types not covered by a specific visitor method. """
-        if isinstance(node, (ast.AsyncFunctionDef, ast.AsyncFor, ast.AsyncWith, ast.Await)):
-            # Check for async/await which were added in Python 3.5
-            self.update_requirements('async/await coroutines', PYTHON35)
-        super().generic_visit(node)
+        """ Update script requirements and minimum version. """
+        self.requirements[feature] = version
+        if version_tuple(version) > version_tuple(self.min_version):
+            self.min_version = version
 
     def visit_Import(self, node: ast.Import) -> None:
-        """ Scan import statements for specific modules. """
-        for version, module, additions in self.get_changes():
-            for alias in node.names:
-                if module == alias.name and not additions:
-                    self.update_requirements(f'{module} module', version)
-                elif alias.name in additions:
-                    self.update_requirements(f'{module}.{alias.name}', version)
+        """ Scan import statements for new modules. """
+        for alias in node.names:
+            for module in self.modules:
+                if alias.name == module.name and module.created:
+                    self.update_requirements(module.name, module.created)
 
         self.generic_visit(node)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
-        """ Scan import from statements for specific modules. """
-        for version, module, additions in self.get_changes():
-            if node.module == module:
-                for alias in node.names:
-                    if alias.name in additions:
-                        self.update_requirements(f'{module}.{alias.name}', version)
-                    elif not additions and alias.name == '*':  # handle from module import *
-                        self.update_requirements(f'{module} module', version)
+        """ Scan "from ... import" statements for new modules or attributes."""
+        for module in self.modules:
+            if node.module != module.name:
+                continue
+
+            for alias in node.names:
+                # Handle wildcard cases i.e 'from module import *'
+                if alias.name == '*':
+                    self.update_requirements(module.name, module.created)
+                    continue
+
+                # Check for matching attribute
+                for version, attributes in module.added.items():
+                    if alias.name in attributes:
+                        self.update_requirements(f'{module.name}.{alias.name}', version)
 
         self.generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
-        """ Check attribute accesses for API changes. """
+        """ Check for attribute accesses for module changes. """
         if isinstance(node.value, ast.Name):
             self._check_attribute(node.value.id, node.attr)
         elif isinstance(node.value, ast.Attribute):
@@ -85,14 +120,16 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Call(self, node: ast.Call) -> None:
-        """ Check function calls for API changes. """
+        """ Check function calls for module changes. """
         if isinstance(node.func, ast.Name):
-            if node.func.id == 'callable':
-                self.update_requirements('callable function', PYTHON32)
-            if node.func.id == 'breakpoint':
-                self.update_requirements('breakpoint function', PYTHON37)
-            elif node.func.id in ('aiter', 'anext'):
-                self.update_requirements('aiter/anext function', PYTHON310)
+            for function, version in FUNCTION_CHANGES:
+                if isinstance(function, tuple):  # tuple of function names
+                    if node.func.id in function:
+                        functions = '/'.join(function)  # combine function names
+                        self.update_requirements(functions, version)
+                elif isinstance(function, str):  # single function name
+                    if node.func.id == function:
+                        self.update_requirements(function, version)
 
         self.generic_visit(node)
 
@@ -120,6 +157,13 @@ class Analyzer(ast.NodeVisitor):
         self.update_requirements('fstring', PYTHON36)
         self.generic_visit(node)
 
+    def visit_AsyncFunctionDef(self, node: ast.AST):
+        self.update_requirements('async/await', PYTHON35)
+        self.generic_visit(node)
+
+    # Use same method for all async/await visitors
+    visit_AsyncFor = visit_AsyncWith = visit_Await = visit_AsyncFunctionDef
+
     def visit_Match(self, node: ast.Match) -> None:
         """ Check for match/case statements which were added in Python 3.10 """
         self.update_requirements('match statement', PYTHON310)
@@ -136,34 +180,21 @@ class Analyzer(ast.NodeVisitor):
         self.update_requirements('yield from statement', PYTHON33)
         self.generic_visit(node)
 
-    def get_changes(self) -> Generator[tuple[str, str, list[str]], None, None]:
-        """ Convenience method to retrieve tuples of module changes. """
-        for version, history in self.changes.items():
-            for module, additions in history.items():
-                yield version, module, additions
+    def _check_attribute(self, name: str, attr: str) -> None:
+        """ Check for calls to new module attributes. """
+        for module in self.modules:
+            if name == module.name:
+                for version, attributes in module.added.items():
+                    if attr in attributes:
+                        self.update_requirements(f'{name}.{attr}', version)
+                break
 
     def _check_exception(self, name: str) -> None:
         """ Check for new exception classes. """
-        if name == 'ResourceWarning':
-            self.update_requirements('ResourceWarning exception', PYTHON32)
-        elif name == 'TimeoutError':
-            self.update_requirements('TimeoutError exception', PYTHON33)
-        elif name == 'RecursionError':
-            self.update_requirements('RecursionError exception', PYTHON35)
-        elif name == 'StopAsyncIteration':
-            self.update_requirements('StopAsyncIteration exception', PYTHON35)
-        elif name == 'ModuleNotFoundError':
-            self.update_requirements('ModuleNotFoundError exception', PYTHON36)
-        elif name == 'EncodingWarning':
-            self.update_requirements('EncodingWarning exception', PYTHON310)
-        elif name in ('BaseExceptionGroup', 'ExceptionGroup'):
-            self.update_requirements(f'{name} exception', PYTHON311)
-
-    def _check_attribute(self, name: str, attr: str) -> None:
-        """ Check for calls to new module attributes. """
-        for version, module, additions in self.get_changes():
-            if name == module and attr in additions:
-                self.update_requirements(f'{name}.{attr}', version)
+        for exception, version in EXCEPTION_CHANGES:
+            if name == exception:
+                self.update_requirements(exception, version)
+                break
 
 
 def detect_version(path: PathLike) -> None:
@@ -183,10 +214,21 @@ def dump_ast(path: PathLike) -> ast.AST:
     print(ast.dump(tree, indent=4))
 
 
-def load_changes() -> dict:
-    """ Load changes from file. """
-    with open('changes.json', 'r', encoding='utf-8') as infile:
-        return json.load(infile)
+def load_changes(filename: PathLike) -> list[Module]:
+    """ Load module changes from file. """
+    with open(filename, 'r', encoding='utf-8') as infile:
+        data = json.load(infile)
+
+    modules = []
+    for module, changes in data.items():
+        modules.append(Module(module, changes))
+    return modules
+
+
+def version_tuple(version: str) -> tuple:
+    """ Split a version string "3.11.1" into a tuple (3, 11, 1) """
+    version = version.removeprefix('Python ')
+    return tuple(map(int, (version.split('.'))))
 
 
 def main():
