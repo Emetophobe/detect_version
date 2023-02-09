@@ -1,0 +1,10 @@
+{
+    "added": {
+        "3.8": [
+            "pgettext",
+            "dpgettext",
+            "npgettext",
+            "dnpgettext"
+        ]
+    }
+}

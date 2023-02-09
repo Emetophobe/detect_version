@@ -1,0 +1,36 @@
+{
+    "added": {
+        "3.8": [
+            "MADV_NORMAL",
+            "MADV_RANDOM",
+            "MADV_SEQUENTIAL",
+            "MADV_WILLNEED",
+            "MADV_DONTNEED",
+            "MADV_REMOVE",
+            "MADV_DONTFORK",
+            "MADV_DOFORK",
+            "MADV_HWPOISON",
+            "MADV_MERGEABLE",
+            "MADV_UNMERGEABLE",
+            "MADV_SOFT_OFFLINE",
+            "MADV_HUGEPAGE",
+            "MADV_NOHUGEPAGE",
+            "MADV_DONTDUMP",
+            "MADV_DODUMP",
+            "MADV_FREE",
+            "MADV_NOSYNC",
+            "MADV_AUTOSYNC",
+            "MADV_NOCORE",
+            "MADV_CORE",
+            "MADV_PROTECT",
+            "MADV_FREE_REUSABLE",
+            "MADV_FREE_REUSE"
+        ],
+        "3.10": [
+            "MAP_POPULATE"
+        ],
+        "3.11": [
+            "MAP_STACK"
+        ]
+    }
+}

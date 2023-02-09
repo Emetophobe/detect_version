@@ -1,0 +1,13 @@
+{
+    "added": {
+        "3.2": [
+            "PIPE_BUF"
+        ],
+        "3.3": [
+            "devpoll"
+        ],
+        "3.6": [
+            "EPOLLEXCLUSIVE"
+        ]
+    }
+}

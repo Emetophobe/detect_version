@@ -1,0 +1,12 @@
+{
+    "added": {
+        "3.2": [
+            "CreateKeyEx",
+            "DeleteKeyEx"
+        ],
+        "3.6": [
+            "REG_QWORD",
+            "REG_QWORD_LITTLE_ENDIAN"
+        ]
+    }
+}

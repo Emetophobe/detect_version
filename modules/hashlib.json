@@ -1,0 +1,25 @@
+{
+    "added": {
+        "3.2": [
+            "algorithms_available",
+            "algorithms_guaranteed"
+        ],
+        "3.4": [
+            "pbkdf2_hmac"
+        ],
+        "3.6": [
+            "blake2b",
+            "blake2s",
+            "sha3_224",
+            "sha3_256",
+            "sha3_384",
+            "sha3_512",
+            "shake_128",
+            "shake_256",
+            "scrypt"
+        ],
+        "3.11": [
+            "file_digest"
+        ]
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "added": {
+        "3.9": [
+            "HAVE_CONTEXTVAR"
+        ]
+    },
+    "deprecated": {
+        "3.9": [
+            "HAVE_THREADS"
+        ]
+    }
+}

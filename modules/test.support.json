@@ -1,0 +1,25 @@
+{
+    "added": {
+        "3.5": [
+            "detect_api_mismatch"
+        ],
+        "3.6": [
+            "check__all__"
+        ],
+        "3.8": [
+            "catch_unraisable_exception"
+        ],
+        "3.9": [
+            "print_warning",
+            "wait_process"
+        ],
+        "3.10": [
+            "check_disallow_instantiation",
+            "skip_if_broken_multiprocessing_synchronize"
+        ],
+        "3.11": [
+            "adjust_int_max_str_digits",
+            "flush_std_streams"
+        ]
+    }
+}

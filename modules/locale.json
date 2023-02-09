@@ -1,0 +1,28 @@
+{
+    "added": {
+        "3.5": [
+            "delocalize"
+        ],
+        "3.10": [
+            "localize"
+        ],
+        "3.11": [
+            "getencoding"
+        ]
+    },
+    "deprecated": {
+        "3.7": [
+            "format"
+        ],
+        "3.11": [
+            "getdefaultlocale",
+            "resetlocale"
+        ]
+    },
+    "removed": {
+        "3.13": [
+            "getdefaultlocale",
+            "resetlocale"
+        ]
+    }
+}

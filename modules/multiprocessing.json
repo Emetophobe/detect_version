@@ -1,0 +1,17 @@
+{
+    "added": {
+        "3.3": [
+            "Barrier"
+        ],
+        "3.4": [
+            "get_all_start_methods",
+            "get_context",
+            "get_start_method",
+            "set_start_method"
+        ],
+        "3.8": [
+            "parent_process",
+            "shared_memory"
+        ]
+    }
+}

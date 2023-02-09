@@ -1,0 +1,35 @@
+{
+    "added": {
+        "3.2": [
+            "CTRL_C_EVENT",
+            "CTRL_BREAK_EVENT"
+        ],
+        "3.3": [
+            "SIG_BLOCK",
+            "SIG_UNBLOCK",
+            "SIG_SETMASK",
+            "pthread_kill",
+            "pthread_sigmask",
+            "sigpending",
+            "sigwait",
+            "sigwaitinfo",
+            "sigtimedwait"
+        ],
+        "3.5": [
+            "Signals",
+            "Handlers",
+            "Sigmasks"
+        ],
+        "3.8": [
+            "strsignal",
+            "valid_signals",
+            "raise_signal"
+        ],
+        "3.9": [
+            "pidfd_send_signal"
+        ],
+        "3.11": [
+            "SIGSTKFLT"
+        ]
+    }
+}

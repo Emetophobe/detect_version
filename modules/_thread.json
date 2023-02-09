@@ -1,0 +1,10 @@
+{
+    "added": {
+        "3.2": [
+            "TIMEOUT_MAX"
+        ],
+        "3.8": [
+            "get_native_id"
+        ]
+    }
+}

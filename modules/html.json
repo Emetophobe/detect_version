@@ -1,0 +1,13 @@
+{
+    "added": {
+        "3.2": [
+            "escape"
+        ],
+        "3.3": [
+            "entities.html5"
+        ],
+        "3.4": [
+            "unescape"
+        ]
+    }
+}

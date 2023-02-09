@@ -1,0 +1,11 @@
+{
+    "module_created": "3.3",
+    "added": {
+        "3.7": [
+            "seal"
+        ],
+        "3.8": [
+            "AsyncMock"
+        ]
+    }
+}

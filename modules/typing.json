@@ -1,0 +1,136 @@
+{
+    "module_created": "3.5",
+    "added": {
+        "3.5.2": [
+            "TYPE_CHECKING",
+            "AsyncIterable",
+            "AsyncIterator",
+            "Awaitable",
+            "DefaultDict",
+            "NewType",
+            "Type",
+            "Text"
+        ],
+        "3.5.3": [
+            "ClassVar",
+            "Coroutine"
+        ],
+        "3.6": [
+            "Collection",
+            "ContextManager"
+        ],
+        "3.6.1": [
+            "AsyncGenerator",
+            "ChainMap",
+            "Counter",
+            "Deque"
+        ],
+        "3.6.2": [
+            "AsyncContextManager",
+            "NoReturn"
+        ],
+        "3.7.2": [
+            "OrderedDict"
+        ],
+        "3.7.4": [
+            "ForwardRef"
+        ],
+        "3.8": [
+            "Final",
+            "Literal",
+            "Protocol",
+            "SupportsIndex",
+            "TypedDict",
+            "final",
+            "get_args",
+            "get_origin",
+            "runtime_checkable"
+        ],
+        "3.9": [
+            "Annotated"
+        ],
+        "3.10": [
+            "Concatenate",
+            "ParamSpec",
+            "ParamSpecArgs",
+            "ParamSpecKwargs",
+            "TypeAlias",
+            "TypeGuard",
+            "is_typeddict"
+        ],
+        "3.11": [
+            "LiteralString",
+            "Never",
+            "NotRequired",
+            "Required",
+            "Self",
+            "TypeVarTuple",
+            "Unpack",
+            "assert_never",
+            "assert_type",
+            "get_overloads",
+            "clear_overloads",
+            "dataclass_transform",
+            "reveal_type"
+        ]
+    },
+    "deprecated": {
+        "3.8": [
+            "IO",
+            "TextIO",
+            "BinaryIO",
+            "Pattern",
+            "Match"
+        ],
+        "3.9": [
+            "AbstractSet",
+            "AsyncContextManager",
+            "AsyncGenerator",
+            "AsyncIterable",
+            "AsyncIterator",
+            "Awaitable",
+            "ByteString",
+            "Callable",
+            "ChainMap",
+            "Collection",
+            "Container",
+            "ContextManager",
+            "Coroutine",
+            "Counter",
+            "Deque",
+            "Dict",
+            "DefaultDict",
+            "FrozenSet",
+            "Generator",
+            "ItemsView",
+            "Iterable",
+            "Iterator",
+            "KeysView",
+            "List",
+            "Mapping",
+            "MappingView",
+            "MutableMapping",
+            "MutableSequence",
+            "MutableSet",
+            "OrderedDict",
+            "Reversible",
+            "Sequence",
+            "Set",
+            "Tuple",
+            "Type",
+            "ValuesView"
+        ],
+        "3.11": [
+            "Text"
+        ]
+    },
+    "removed": {
+        "3.13": [
+            "IO",
+            "TextIO",
+            "BinaryIO",
+            "Pattern",
+            "Match"
+        ]
+    }
+}

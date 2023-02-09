@@ -1,0 +1,67 @@
+{
+    "added": {
+        "3.1": [
+            "float_repr_style",
+            "int_info"
+        ],
+        "3.2": [
+            "_xoptions",
+            "abi_flags",
+            "hash_info",
+            "getswitchinterval",
+            "setswitchinterval"
+        ],
+        "3.3": [
+            "_debugmallocstats",
+            "base_exec_prefix",
+            "base_prefix",
+            "implementation",
+            "thread_info"
+        ],
+        "3.4": [
+            "__interactivehook__",
+            "getallocatedblocks"
+        ],
+        "3.5": [
+            "is_finalizing"
+        ],
+        "3.6": [
+            "_enablelegacywindowsfsencoding",
+            "getfilesystemencodeerrors",
+            "get_asyncgen_hooks",
+            "set_asyncgen_hooks"
+        ],
+        "3.7": [
+            "__breakpointhook__",
+            "breakpointhook",
+            "getandroidapilevel",
+            "get_coroutine_origin_tracking_depth",
+            "set_coroutine_origin_tracking_depth"
+        ],
+        "3.8": [
+            "__unraisablehook__",
+            "audit",
+            "addaudithook",
+            "unraisablehook",
+            "pycache_prefix"
+        ],
+        "3.9": [
+            "platlibdir"
+        ],
+        "3.10": [
+            "orig_argv",
+            "stdlib_module_names"
+        ],
+        "3.11": [
+            "_emscripten_info",
+            "exception",
+            "get_int_max_str_digits",
+            "set_int_max_str_digits"
+        ],
+        "3.12": [
+            "activate_stack_trampoline",
+            "deactivate_stack_trampoline",
+            "is_stack_trampoline_active"
+        ]
+    }
+}

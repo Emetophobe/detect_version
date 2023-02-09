@@ -1,0 +1,8 @@
+{
+    "added": {
+        "3.4": [
+            "DEFAULT_IGNORES",
+            "clear_cache"
+        ]
+    }
+}

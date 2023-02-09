@@ -1,0 +1,11 @@
+{
+    "added": {
+        "3.5": [
+            "commonpath"
+        ],
+        "3.12": [
+            "isjunction",
+            "splitroot"
+        ]
+    }
+}

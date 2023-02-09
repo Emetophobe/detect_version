@@ -1,0 +1,11 @@
+{
+    "added": {
+        "3.8": [
+            "win32_edition",
+            "win32_is_iot"
+        ],
+        "3.10": [
+            "freedesktop_os_release"
+        ]
+    }
+}

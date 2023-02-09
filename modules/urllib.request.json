@@ -1,0 +1,13 @@
+{
+    "added": {
+        "3.4": [
+            "DataHandler"
+        ],
+        "3.5": [
+            "HTTPPasswordMgrWithPriorAuth"
+        ],
+        "3.11": [
+            "HTTPRedirectHandler.http_error_308"
+        ]
+    }
+}

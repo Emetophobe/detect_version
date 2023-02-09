@@ -1,0 +1,8 @@
+{
+    "module_deprecated": "3.11",
+    "added": {
+        "3.2": [
+            "NNTP_SSL"
+        ]
+    }
+}

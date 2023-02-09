@@ -1,0 +1,24 @@
+{
+    "added": {
+        "3.2": [
+            "get_archive_formats",
+            "get_unpack_formats",
+            "make_archive",
+            "register_archive_format",
+            "register_unpack_format",
+            "unpack_archive",
+            "unregister_archive_format",
+            "unregister_unpack_format"
+        ],
+        "3.3": [
+            "chown",
+            "disk_usage",
+            "get_terminal_size",
+            "rmtree.avoids_symlink_attacks",
+            "which"
+        ],
+        "3.4": [
+            "SameFileError"
+        ]
+    }
+}

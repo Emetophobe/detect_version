@@ -1,0 +1,27 @@
+{
+    "added": {
+        "3.2": [
+            "TIMEOUT_MAX",
+            "Barrier"
+        ],
+        "3.3": [
+            "get_ident"
+        ],
+        "3.4": [
+            "main_thread"
+        ],
+        "3.8": [
+            "excepthook",
+            "get_native_id"
+        ],
+        "3.10": [
+            "__excepthook__",
+            "getprofile",
+            "gettrace"
+        ],
+        "3.12": [
+            "settrace_all_threads",
+            "setprofile_all_threads"
+        ]
+    }
+}

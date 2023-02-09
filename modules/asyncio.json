@@ -1,0 +1,31 @@
+{
+    "module_created": "3.4",
+    "added": {
+        "3.6": [
+            "run_coroutine_threadsafe",
+            "loop.shutdown_asyncgens"
+        ],
+        "3.7": [
+            "BufferedProtocol",
+            "all_tasks",
+            "create_task",
+            "current_task",
+            "get_running_loop",
+            "run"
+        ],
+        "3.9": [
+            "PidfdChildWatcher",
+            "loop.shutdown_default_executor",
+            "to_thread"
+        ],
+        "3.11": [
+            "Barrier",
+            "BrokenBarrierError",
+            "Runner",
+            "TaskGroup",
+            "Timeout",
+            "timeout",
+            "timeout_at"
+        ]
+    }
+}

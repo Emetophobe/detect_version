@@ -1,0 +1,11 @@
+{
+    "added": {
+        "3.2": [
+            "compress",
+            "decompress"
+        ],
+        "3.8": [
+            "BadGzipFile"
+        ]
+    }
+}

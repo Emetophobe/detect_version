@@ -1,0 +1,20 @@
+{
+    "added": {
+        "3.2": [
+            "cmp_to_key",
+            "lru_cache",
+            "total_ordering"
+        ],
+        "3.4": [
+            "partialmethod",
+            "singledispatch"
+        ],
+        "3.8": [
+            "cached_property",
+            "singledispatchmethod"
+        ],
+        "3.9": [
+            "cache"
+        ]
+    }
+}

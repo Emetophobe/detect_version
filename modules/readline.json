@@ -1,0 +1,10 @@
+{
+    "added": {
+        "3.5": [
+            "append_history_file"
+        ],
+        "3.6": [
+            "set_auto_history"
+        ]
+    }
+}

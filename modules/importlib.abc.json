@@ -1,0 +1,17 @@
+{
+    "added": {
+        "3.3": [
+            "MetaPathFinder",
+            "PathEntryFinder",
+            "FileLoader"
+        ]
+    },
+    "deprecated": {
+        "3.3": [
+            "Finder"
+        ],
+        "3.7": [
+            "ResourceLoader"
+        ]
+    }
+}

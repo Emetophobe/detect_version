@@ -1,0 +1,15 @@
+{
+    "added": {
+        "3.4": [
+            "FMT_BINARY",
+            "FMT_XML",
+            "load",
+            "loads",
+            "dump",
+            "dumps"
+        ],
+        "3.8": [
+            "UID"
+        ]
+    }
+}

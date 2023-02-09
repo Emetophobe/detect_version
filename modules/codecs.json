@@ -1,0 +1,10 @@
+{
+    "added": {
+        "3.5": [
+            "namereplace_errors"
+        ],
+        "3.10": [
+            "unregister"
+        ]
+    }
+}

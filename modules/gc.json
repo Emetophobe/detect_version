@@ -1,0 +1,21 @@
+{
+    "added": {
+        "3.1": [
+            "is_tracked"
+        ],
+        "3.3": [
+            "callbacks"
+        ],
+        "3.4": [
+            "get_stats"
+        ],
+        "3.7": [
+            "freeze",
+            "unfreeze",
+            "get_freeze_count"
+        ],
+        "3.9": [
+            "is_finalized"
+        ]
+    }
+}

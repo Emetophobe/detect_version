@@ -1,0 +1,23 @@
+{
+    "module_created": "3.4",
+    "added": {
+        "3.6": [
+            "Flag",
+            "IntFlag",
+            "auto"
+        ],
+        "3.11": [
+            "EnumCheck",
+            "EnumType",
+            "FlagBoundary",
+            "ReprEnum",
+            "StrEnum",
+            "global_enum",
+            "member",
+            "nonmember",
+            "property",
+            "show_flag_values",
+            "verify"
+        ]
+    }
+}

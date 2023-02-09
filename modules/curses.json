@@ -1,0 +1,25 @@
+{
+    "added": {
+        "3.3": [
+            "unget_wch"
+        ],
+        "3.5": [
+            "update_lines_cols"
+        ],
+        "3.7": [
+            "A_ITALIC"
+        ],
+        "3.8": [
+            "ncurses_version"
+        ],
+        "3.9": [
+            "get_escdelay",
+            "set_escdelay",
+            "get_tabsize",
+            "set_tabsize"
+        ],
+        "3.10": [
+            "has_extended_color_support"
+        ]
+    }
+}

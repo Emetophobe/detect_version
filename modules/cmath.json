@@ -1,0 +1,17 @@
+{
+    "added": {
+        "3.2": [
+            "isfinite"
+        ],
+        "3.5": [
+            "isclose"
+        ],
+        "3.6": [
+            "tau",
+            "inf",
+            "infj",
+            "nan",
+            "nanj"
+        ]
+    }
+}

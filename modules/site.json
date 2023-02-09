@@ -1,0 +1,9 @@
+{
+    "added": {
+        "3.2": [
+            "getsitepackages",
+            "getuserbase",
+            "getusersitepackages"
+        ]
+    }
+}

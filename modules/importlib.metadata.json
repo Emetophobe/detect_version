@@ -1,0 +1,8 @@
+{
+    "module_created": "3.8",
+    "added": {
+        "3.10": [
+            "packages_distributions"
+        ]
+    }
+}

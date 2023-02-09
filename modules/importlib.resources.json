@@ -1,0 +1,20 @@
+{
+    "module_created": "3.7",
+    "added": {
+        "3.9": [
+            "files",
+            "as_file"
+        ]
+    },
+    "deprecated": {
+        "3.11": [
+            "open_binary",
+            "open_text",
+            "read_binary",
+            "read_text",
+            "path",
+            "is_resource",
+            "contents"
+        ]
+    }
+}

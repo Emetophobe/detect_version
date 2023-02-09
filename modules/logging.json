@@ -1,0 +1,12 @@
+{
+    "added": {
+        "3.2": [
+            "lastResort",
+            "getLogRecordFactory",
+            "setLogRecordFactory"
+        ],
+        "3.11": [
+            "getLevelNamesMapping"
+        ]
+    }
+}

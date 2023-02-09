@@ -1,0 +1,36 @@
+{
+    "added": {
+        "3.3": [
+            "SOURCE_SUFFIXES",
+            "DEBUG_BYTECODE_SUFFIXES",
+            "OPTIMIZED_BYTECODE_SUFFIXES",
+            "BYTECODE_SUFFIXES",
+            "EXTENSION_SUFFIXES",
+            "WindowsRegistryFinder",
+            "FileFinder",
+            "SourceFileLoader",
+            "SourcelessFileLoader",
+            "ExtensionFileLoader",
+            "all_suffixes"
+        ],
+        "3.4": [
+            "ModuleSpec"
+        ],
+        "3.5": [
+            "module_from_spec"
+        ],
+        "3.11": [
+            "NamespaceLoader"
+        ]
+    },
+    "deprecated": {
+        "3.5": [
+            "DEBUG_BYTECODE_SUFFIXES",
+            "OPTIMIZED_BYTECODE_SUFFIXES"
+        ],
+        "3.6": [
+            "SourcelessFileLoader",
+            "WindowsRegistryFinder"
+        ]
+    }
+}

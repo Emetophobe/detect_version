@@ -1,0 +1,16 @@
+{
+    "added": {
+        "3.6": [
+            "ModuleInfo"
+        ],
+        "3.9": [
+            "resolve_name"
+        ]
+    },
+    "deprecated": {
+        "3.3": [
+            "ImpImporter",
+            "ImpLoader"
+        ]
+    }
+}

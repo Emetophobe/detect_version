@@ -1,0 +1,8 @@
+{
+    "added": {
+        "3.11": [
+            "get_identifiers",
+            "is_valid"
+        ]
+    }
+}

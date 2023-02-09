@@ -1,0 +1,11 @@
+{
+    "added": {
+        "3.2": [
+            "TemporaryDirectory"
+        ],
+        "3.5": [
+            "gettempdirb",
+            "gettempprefixb"
+        ]
+    }
+}
