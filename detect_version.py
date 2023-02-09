@@ -26,37 +26,20 @@ PYTHON311 = 'Python 3.11'
 PYTHON312 = 'Python 3.12'
 
 
-# Changes to built-in exceptions
-EXCEPTION_CHANGES = (
-    ('ResourceWarning', PYTHON32),
-    ('TimeoutError', PYTHON33),
-    ('RecursionError', PYTHON35),
-    ('StopAsyncIteration', PYTHON35),
-    ('ModuleNotFoundError', PYTHON36),
-    ('EncodingWarning', PYTHON310),
-    ('ExceptionGroup', PYTHON311),
-)
-
-
-# Changes to built-in functions
-FUNCTION_CHANGES = (
-    ('callable', PYTHON32),
-    ('breakpoint', PYTHON37),
-    (('aiter', 'anext'), PYTHON310)
-)
-
-
 class Module:
-    def __init__(self, name: str, data: dict) -> None:
-        self.name = name
-        self.created = data.get('created', None)
-        self.added = data.get('added', dict())
+    def __init__(self, module_name: str, changes: dict) -> None:
+        self.name = module_name
 
-        if not self.created and not self.added:
-            raise ValueError(f'Invalid module {name} (missing changes)')
+        self.module_created = changes.get('module_created', None)
+        self.module_deprecated = changes.get('module_deprecated', None)
+        self.module_removed = changes.get('module_removed', None)
+
+        self.added = changes.get('added', dict())
+        self.deprecated = changes.get('deprecated', dict())
+        self.removed = changes.get('removed', dict())
 
     def __str__(self):
-        return self.name
+        return self.module_name
 
 
 class Analyzer(ast.NodeVisitor):
@@ -69,9 +52,12 @@ class Analyzer(ast.NodeVisitor):
             path (PathLike): filename of the script to parse.
         """
         self.script = path
-        self.modules = load_changes('modules.json')
         self.min_version = PYTHON3
         self.requirements = {}
+
+        self.modules = load_modules('modules.json')
+        self.exceptions = load_changes('exceptions.json')
+        self.functions = load_changes('functions.json')
 
     def report(self) -> None:
         """ Print version report. """
@@ -101,8 +87,8 @@ class Analyzer(ast.NodeVisitor):
         """
         for alias in node.names:
             for module in self.modules:
-                if alias.name == module.name and module.created:
-                    self.update_requirements(module.name, module.created)
+                if alias.name == module.name and module.module_created:
+                    self.update_requirements(module.name, module.module_created)
 
         self.generic_visit(node)
 
@@ -119,7 +105,7 @@ class Analyzer(ast.NodeVisitor):
             for alias in node.names:
                 # Handle wildcard cases i.e 'from module import *'
                 if alias.name == '*':
-                    self.update_requirements(module.name, module.created)
+                    self.update_requirements(module.name, module.module_created)
                     continue
 
                 # Check for matching attribute
@@ -149,7 +135,7 @@ class Analyzer(ast.NodeVisitor):
             node.func is the function (which can be a Name or Attribute node).
         """
         if isinstance(node.func, ast.Name):
-            for function, version in FUNCTION_CHANGES:
+            for function, version in self.functions.items():
                 if isinstance(function, tuple):  # tuple of function names
                     if node.func.id in function:
                         functions = '/'.join(function)  # combine function names
@@ -242,7 +228,7 @@ class Analyzer(ast.NodeVisitor):
 
     def _check_exception(self, name: str) -> None:
         """ Check for new exception classes. """
-        for exception, version in EXCEPTION_CHANGES:
+        for exception, version in self.exceptions.items():
             if name == exception:
                 self.update_requirements(exception, version)
                 return
@@ -258,16 +244,16 @@ def detect_version(path: PathLike) -> None:
     analyzer.report()
 
 
-def load_changes(filename: PathLike) -> list[Module]:
-    """ Load module changes from file. """
+def load_changes(filename: PathLike) -> dict:
+    """ Load changes from a json file. """
     with open(filename, 'r', encoding='utf-8') as infile:
-        data = json.load(infile)
+        return json.load(infile)
 
-    # Convert module dictionary to list of Modules
-    modules = []
-    for module, changes in data.items():
-        modules.append(Module(module, changes))
-    return modules
+
+def load_modules(filename: PathLike) -> list[Module]:
+    """ Read modules dictionary and convert to a list of Modules. """
+    modules = load_changes('modules.json')
+    return [Module(name, changes) for name, changes in modules.items()]
 
 
 def dump_file(path: PathLike) -> None:

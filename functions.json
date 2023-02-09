@@ -1,0 +1,13 @@
+{
+    "added:": {
+        "Python 3.2": [
+            "callable"
+        ],
+        "Python 3.7": [
+            "breakpoint"
+        ],
+        "Python 3.10": [
+            ["aiter", "anext"]
+        ]
+    }
+}
