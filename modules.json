@@ -2030,10 +2030,10 @@
         }
     },
     "test.support.bytecode_helper": {
-        "module_added": "3.9"
+        "module_created": "3.9"
     },
     "test.support.import_helper": {
-        "module_added": "3.10"
+        "module_created": "3.10"
     },
     "test.support": {
         "added": {
@@ -2061,13 +2061,13 @@
         }
     },
     "test.support.os_helper": {
-        "module_added": "3.10"
+        "module_created": "3.10"
     },
     "test.support.socket_helper": {
-        "module_added": "3.9"
+        "module_created": "3.9"
     },
     "test.support.threading_helper": {
-        "module_added": "3.10",
+        "module_created": "3.10",
         "added": {
             "3.8": [
                 "catch_threading_exception"
