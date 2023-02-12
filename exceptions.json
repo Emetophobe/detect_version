@@ -1,23 +1,23 @@
 {
-    "added": {
-        "3.2": [
-            "ResourceWarning"
-        ],
-        "3.3": [
-            "TimeoutError"
-        ],
-        "3.5": [
-            "RecursionError",
-            "StopAsyncIteration"
-        ],
-        "3.6": [
-            "ModuleNotFoundError"
-        ],
-        "3.10": [
-            "EncodingWarning"
-        ],
-        "3.11": [
-            "ExceptionGroup"
-        ]
+    "ResourceWarning": {
+        "added": "3.2"
+    },
+    "TimeoutError": {
+        "added": "3.3"
+    },
+    "RecursionError": {
+        "added": "3.5"
+    },
+    "StopAsyncIteration": {
+        "added": "3.5"
+    },
+    "ModuleNotFoundError": {
+        "added": "3.6"
+    },
+    "EncodingWarning": {
+        "added": "3.10"
+    },
+    "ExceptionGroup": {
+        "added": "3.11"
     }
 }

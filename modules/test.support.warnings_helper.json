@@ -1,8 +1,0 @@
-{
-    "module_created": "3.10",
-    "added": {
-        "3.8": [
-            "check_syntax_warning"
-        ]
-    }
-}

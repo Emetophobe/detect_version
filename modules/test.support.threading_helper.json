@@ -1,8 +1,0 @@
-{
-    "module_added": "3.10",
-    "added": {
-        "3.8": [
-            "catch_threading_exception"
-        ]
-    }
-}

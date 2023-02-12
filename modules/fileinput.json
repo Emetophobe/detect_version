@@ -1,7 +1,0 @@
-{
-    "deprecated": {
-        "3.10": [
-            "hook_encoded"
-        ]
-    }
-}

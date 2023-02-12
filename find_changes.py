@@ -3,34 +3,72 @@
 
 
 import argparse
-
-from typing import Optional
 from detect_version import load_modules
+from typing import Optional
 
 
 def find_changes(name: str, attribute: Optional[str] = None) -> None:
-    """ Find changes matching module name and optional attribute name.
+    """ Find changes matching a specific module or attribute.
 
         Args:
-            name (str): the module name
-            attribute (str): the optional attribute name
+            name (str): The module name.
+            attribute (str, optional): Optional attribute name. Defaults to None.
     """
-    version_history = load_modules('modules.json')
-    for module in version_history:
-        if module.name != name:
-            continue
+    modules = load_modules('modules.json')
 
-        if attribute:
-            for version, names in module.added.items():
-                if attribute in names:
-                    print(f'{module.name}.{attribute} requires {version}')
+    # Find module
+    try:
+        module = modules[name]
+    except KeyError:
+        print('No module info.')
+        return
+
+    if attribute:
+        # Find attribute
+        if attribute in module.attributes.keys():
+            print_requirement(f'{name}.{attribute}', module.attributes[attribute])
+    else:
+        # Print all module info
+        if module.module_info:
+            print_requirement(f'{name} module', module.module_info)
+
+        # Print all module attribute info
+        for attribute, changes in module.attributes.items():
+            print_requirement(f'{name}.{attribute}', changes)
+
+
+def print_requirement(feature, changes: dict):
+    print(feature, requirement_string(changes))
+
+
+def requirement_string(changes: dict) -> str:
+    """ Create string from a dictionary. """
+    builder = list()
+
+    added = changes.get('added', None)
+    deprecated = changes.get('deprecated', None)
+    removed = changes.get('removed', None)
+
+    if added:
+        builder.append(f'requires {added}')
+
+    if deprecated:
+        prefix = '(' if added else 'was '
+        builder.append(f'{prefix}deprecated in {deprecated}')
+
+    if removed:
+        if added and deprecated:
+            prefix = ', '
+        elif added:
+            prefix = '('
+        elif deprecated:
+            prefix = 'and '
         else:
-            if module.module_created:
-                print(f'{module.name} module requires {module.module_created}')
+            prefix = ''
+        builder.append(f'{prefix}removed in {removed}')
 
-            for version, attributes in module.added.items():
-                for name in attributes:
-                    print(f'{module.name}.{name} requires {version}')
+    end_curly = ')' if added and (deprecated or removed) else ''
+    return f'{" ".join(builder)}{end_curly}'
 
 
 def main():

@@ -1,7 +1,0 @@
-{
-    "added": {
-        "3.5": [
-            "SMTPNotSupportedError"
-        ]
-    }
-}

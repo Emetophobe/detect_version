@@ -1,14 +1,14 @@
 {
-    "added": {
-        "3.2": [
-            "callable"
-        ],
-        "3.7": [
-            "breakpoint"
-        ],
-        "3.10": [
-            "aiter",
-            "anext"
-        ]
+    "callable": {
+        "added": "3.2"
+    },
+    "breakpoint": {
+        "added": "3.7"
+    },
+    "aiter": {
+        "added": "3.10"
+    },
+    "anext": {
+        "added": "3.10"
     }
 }

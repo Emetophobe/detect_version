@@ -1,2591 +1,4139 @@
 {
     "abc": {
-        "added": {
-            "3.2": [
-                "abstractclassmethod",
-                "abstractstaticmethod"
-            ],
-            "3.4": [
-                "ABC",
-                "get_cache_token"
-            ],
-            "3.10": [
-                "update_abstractmethods"
-            ]
-        },
-        "deprecated": {
-            "3.3": [
-                "abstractclassmethod",
-                "abstractstaticmethod",
-                "abstractproperty"
-            ]
+        "attributes": {
+            "abstractclassmethod": {
+                "added": "3.2",
+                "deprecated": "3.3"
+            },
+            "abstractstaticmethod": {
+                "added": "3.2",
+                "deprecated": "3.3"
+            },
+            "ABC": {
+                "added": "3.4"
+            },
+            "get_cache_token": {
+                "added": "3.4"
+            },
+            "update_abstractmethods": {
+                "added": "3.10"
+            },
+            "abstractproperty": {
+                "deprecated": "3.3"
+            }
         }
     },
     "aifc": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "argparse": {
-        "module_created": "3.2",
-        "added": {
-            "3.9": [
-                "BooleanOptionalAction"
-            ]
+        "module": {
+            "added": "3.2"
+        },
+        "attributes": {
+            "BooleanOptionalAction": {
+                "added": "3.9"
+            }
         }
     },
     "ast": {
-        "added": {
-            "3.6": [
-                "Constant"
-            ],
-            "3.8": [
-                "PyCF_ALLOW_TOP_LEVEL_AWAIT",
-                "PyCF_TYPE_COMMENTS",
-                "get_source_segment"
-            ],
-            "3.9": [
-                "unparse"
-            ]
-        },
-        "deprecated": {
-            "3.8": [
-                "Num",
-                "Str",
-                "Bytes",
-                "NameConstant",
-                "Ellipsis"
-            ],
-            "3.9": [
-                "Index",
-                "ExtSlice"
-            ]
+        "attributes": {
+            "Constant": {
+                "added": "3.6"
+            },
+            "PyCF_ALLOW_TOP_LEVEL_AWAIT": {
+                "added": "3.8"
+            },
+            "PyCF_TYPE_COMMENTS": {
+                "added": "3.8"
+            },
+            "get_source_segment": {
+                "added": "3.8"
+            },
+            "unparse": {
+                "added": "3.9"
+            },
+            "Num": {
+                "deprecated": "3.8"
+            },
+            "Str": {
+                "deprecated": "3.8"
+            },
+            "Bytes": {
+                "deprecated": "3.8"
+            },
+            "NameConstant": {
+                "deprecated": "3.8"
+            },
+            "Ellipsis": {
+                "deprecated": "3.8"
+            },
+            "Index": {
+                "deprecated": "3.9"
+            },
+            "ExtSlice": {
+                "deprecated": "3.9"
+            }
         }
     },
     "asyncchat": {
-        "module_deprecated": "3.6",
-        "module_removed": "3.12"
+        "module": {
+            "deprecated": "3.6",
+            "removed": "3.12"
+        }
     },
     "asyncio": {
-        "module_created": "3.4",
-        "added": {
-            "3.6": [
-                "run_coroutine_threadsafe",
-                "loop.shutdown_asyncgens"
-            ],
-            "3.7": [
-                "BufferedProtocol",
-                "all_tasks",
-                "create_task",
-                "current_task",
-                "get_running_loop",
-                "run"
-            ],
-            "3.9": [
-                "PidfdChildWatcher",
-                "loop.shutdown_default_executor",
-                "to_thread"
-            ],
-            "3.11": [
-                "Barrier",
-                "BrokenBarrierError",
-                "Runner",
-                "TaskGroup",
-                "Timeout",
-                "timeout",
-                "timeout_at"
-            ]
+        "module": {
+            "added": "3.4"
+        },
+        "attributes": {
+            "run_coroutine_threadsafe": {
+                "added": "3.6"
+            },
+            "loop.shutdown_asyncgens": {
+                "added": "3.6"
+            },
+            "BufferedProtocol": {
+                "added": "3.7"
+            },
+            "all_tasks": {
+                "added": "3.7"
+            },
+            "create_task": {
+                "added": "3.7"
+            },
+            "current_task": {
+                "added": "3.7"
+            },
+            "get_running_loop": {
+                "added": "3.7"
+            },
+            "run": {
+                "added": "3.7"
+            },
+            "PidfdChildWatcher": {
+                "added": "3.9"
+            },
+            "loop.shutdown_default_executor": {
+                "added": "3.9"
+            },
+            "to_thread": {
+                "added": "3.9"
+            },
+            "Barrier": {
+                "added": "3.11"
+            },
+            "BrokenBarrierError": {
+                "added": "3.11"
+            },
+            "Runner": {
+                "added": "3.11"
+            },
+            "TaskGroup": {
+                "added": "3.11"
+            },
+            "Timeout": {
+                "added": "3.11"
+            },
+            "timeout": {
+                "added": "3.11"
+            },
+            "timeout_at": {
+                "added": "3.11"
+            }
         }
     },
     "asyncore": {
-        "module_deprecated": "3.6",
-        "module_removed": "3.12"
+        "module": {
+            "deprecated": "3.6",
+            "removed": "3.12"
+        }
     },
     "audioop": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13",
-        "added": {
-            "3.4": [
-                "byteswap"
-            ]
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        },
+        "attributes": {
+            "byteswap": {
+                "added": "3.4"
+            }
         }
     },
     "base64": {
-        "added": {
-            "3.1": [
-                "decodebytes",
-                "encodebytes"
-            ],
-            "3.4": [
-                "a85encode",
-                "a85decode",
-                "b85encode",
-                "b85decode"
-            ],
-            "3.10": [
-                "b32hexencode",
-                "b32hexdecode"
-            ]
+        "attributes": {
+            "decodebytes": {
+                "added": "3.1"
+            },
+            "encodebytes": {
+                "added": "3.1"
+            },
+            "a85encode": {
+                "added": "3.4"
+            },
+            "a85decode": {
+                "added": "3.4"
+            },
+            "b85encode": {
+                "added": "3.4"
+            },
+            "b85decode": {
+                "added": "3.4"
+            },
+            "b32hexencode": {
+                "added": "3.10"
+            },
+            "b32hexdecode": {
+                "added": "3.10"
+            }
         }
     },
     "bytearray": {
-        "added": {
-            "3.1": [
-                "maketrans"
-            ]
+        "attributes": {
+            "maketrans": {
+                "added": "3.1"
+            }
         }
     },
     "bytes": {
-        "added": {
-            "3.1": [
-                "maketrans"
-            ]
+        "attributes": {
+            "maketrans": {
+                "added": "3.1"
+            }
         }
     },
     "bz2": {
-        "added": {
-            "3.3": [
-                "open"
-            ]
+        "attributes": {
+            "open": {
+                "added": "3.3"
+            }
         }
     },
     "cgi": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "cgitb": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "chunk": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "cmath": {
-        "added": {
-            "3.2": [
-                "isfinite"
-            ],
-            "3.5": [
-                "isclose"
-            ],
-            "3.6": [
-                "tau",
-                "inf",
-                "infj",
-                "nan",
-                "nanj"
-            ]
+        "attributes": {
+            "isfinite": {
+                "added": "3.2"
+            },
+            "isclose": {
+                "added": "3.5"
+            },
+            "tau": {
+                "added": "3.6"
+            },
+            "inf": {
+                "added": "3.6"
+            },
+            "infj": {
+                "added": "3.6"
+            },
+            "nan": {
+                "added": "3.6"
+            },
+            "nanj": {
+                "added": "3.6"
+            }
         }
     },
     "codecs": {
-        "added": {
-            "3.5": [
-                "namereplace_errors"
-            ],
-            "3.10": [
-                "unregister"
-            ]
+        "attributes": {
+            "namereplace_errors": {
+                "added": "3.5"
+            },
+            "unregister": {
+                "added": "3.10"
+            }
         }
     },
     "collections.abc": {
-        "module_created": "3.3",
-        "added": {
-            "3.5": [
-                "AsyncIterable",
-                "AsyncIterator",
-                "Awaitable",
-                "Coroutine",
-                "Generator"
-            ],
-            "3.6": [
-                "AsyncGenerator",
-                "Collection",
-                "Reversible"
-            ]
+        "module": {
+            "added": "3.3"
+        },
+        "attributes": {
+            "AsyncIterable": {
+                "added": "3.5"
+            },
+            "AsyncIterator": {
+                "added": "3.5"
+            },
+            "Awaitable": {
+                "added": "3.5"
+            },
+            "Coroutine": {
+                "added": "3.5"
+            },
+            "Generator": {
+                "added": "3.5"
+            },
+            "AsyncGenerator": {
+                "added": "3.6"
+            },
+            "Collection": {
+                "added": "3.6"
+            },
+            "Reversible": {
+                "added": "3.6"
+            }
         }
     },
     "collections": {
-        "added": {
-            "3.1": [
-                "Counter",
-                "OrderedDict"
-            ],
-            "3.3": [
-                "ChainMap"
-            ]
+        "attributes": {
+            "Counter": {
+                "added": "3.1"
+            },
+            "OrderedDict": {
+                "added": "3.1"
+            },
+            "ChainMap": {
+                "added": "3.3"
+            }
         }
     },
     "compileall": {
-        "added": {
-            "3.2": [
-                "compile_file"
-            ]
+        "attributes": {
+            "compile_file": {
+                "added": "3.2"
+            }
         }
     },
     "concurrent.futures": {
-        "module_created": "3.2",
-        "added": {
-            "3.3": [
-                "process.BrokenProcessPool"
-            ],
-            "3.7": [
-                "BrokenExecutor",
-                "thread.BrokenThreadPool"
-            ],
-            "3.8": [
-                "InvalidStateError"
-            ]
+        "module": {
+            "added": "3.2"
+        },
+        "attributes": {
+            "process.BrokenProcessPool": {
+                "added": "3.3"
+            },
+            "BrokenExecutor": {
+                "added": "3.7"
+            },
+            "thread.BrokenThreadPool": {
+                "added": "3.7"
+            },
+            "InvalidStateError": {
+                "added": "3.8"
+            }
         }
     },
     "concurrent.futures.process": {
-        "added": {
-            "3.3": [
-                "BrokenProcessPool"
-            ]
+        "attributes": {
+            "BrokenProcessPool": {
+                "added": "3.3"
+            }
         }
     },
     "concurrent.futures.thread": {
-        "added": {
-            "3.7": [
-                "BrokenThreadPool"
-            ]
+        "attributes": {
+            "BrokenThreadPool": {
+                "added": "3.7"
+            }
         }
     },
     "contextlib": {
-        "added": {
-            "3.2": [
-                "ContextDecorator"
-            ],
-            "3.3": [
-                "ExitStack"
-            ],
-            "3.4": [
-                "redirect_stdout",
-                "suppress"
-            ],
-            "3.5": [
-                "redirect_stderr"
-            ],
-            "3.6": [
-                "AbstractContextManager"
-            ],
-            "3.7": [
-                "AbstractAsyncContextManager",
-                "AsyncExitStack",
-                "asynccontextmanager",
-                "nullcontext"
-            ],
-            "3.10": [
-                "AsyncContextDecorator",
-                "aclosing"
-            ],
-            "3.11": [
-                "chdir"
-            ]
+        "attributes": {
+            "ContextDecorator": {
+                "added": "3.2"
+            },
+            "ExitStack": {
+                "added": "3.3"
+            },
+            "redirect_stdout": {
+                "added": "3.4"
+            },
+            "suppress": {
+                "added": "3.4"
+            },
+            "redirect_stderr": {
+                "added": "3.5"
+            },
+            "AbstractContextManager": {
+                "added": "3.6"
+            },
+            "AbstractAsyncContextManager": {
+                "added": "3.7"
+            },
+            "AsyncExitStack": {
+                "added": "3.7"
+            },
+            "asynccontextmanager": {
+                "added": "3.7"
+            },
+            "nullcontext": {
+                "added": "3.7"
+            },
+            "AsyncContextDecorator": {
+                "added": "3.10"
+            },
+            "aclosing": {
+                "added": "3.10"
+            },
+            "chdir": {
+                "added": "3.11"
+            }
         }
     },
     "contextvars": {
-        "module_created": "3.7"
+        "module": {
+            "added": "3.7"
+        }
     },
     "crypt": {
-        "added": {
-            "3.3": [
-                "METHOD_SHA256",
-                "METHOD_SHA512",
-                "METHOD_MD5",
-                "METHOD_CRYPT",
-                "methods",
-                "mksalt"
-            ],
-            "3.7": [
-                "METHOD_BLOWFISH"
-            ]
+        "attributes": {
+            "METHOD_SHA256": {
+                "added": "3.3"
+            },
+            "METHOD_SHA512": {
+                "added": "3.3"
+            },
+            "METHOD_MD5": {
+                "added": "3.3"
+            },
+            "METHOD_CRYPT": {
+                "added": "3.3"
+            },
+            "methods": {
+                "added": "3.3"
+            },
+            "mksalt": {
+                "added": "3.3"
+            },
+            "METHOD_BLOWFISH": {
+                "added": "3.7"
+            }
         }
     },
     "csv": {
-        "added": {
-            "3.2": [
-                "unix_dialect"
-            ]
+        "attributes": {
+            "unix_dialect": {
+                "added": "3.2"
+            }
         }
     },
     "ctypes": {
-        "added": {
-            "3.2": [
-                "c_ssize_t"
-            ],
-            "3.11": [
-                "BigEndianUnion",
-                "LittleEndianUnion"
-            ]
+        "attributes": {
+            "c_ssize_t": {
+                "added": "3.2"
+            },
+            "BigEndianUnion": {
+                "added": "3.11"
+            },
+            "LittleEndianUnion": {
+                "added": "3.11"
+            }
         }
     },
     "curses": {
-        "added": {
-            "3.3": [
-                "unget_wch"
-            ],
-            "3.5": [
-                "update_lines_cols"
-            ],
-            "3.7": [
-                "A_ITALIC"
-            ],
-            "3.8": [
-                "ncurses_version"
-            ],
-            "3.9": [
-                "get_escdelay",
-                "set_escdelay",
-                "get_tabsize",
-                "set_tabsize"
-            ],
-            "3.10": [
-                "has_extended_color_support"
-            ]
+        "attributes": {
+            "unget_wch": {
+                "added": "3.3"
+            },
+            "update_lines_cols": {
+                "added": "3.5"
+            },
+            "A_ITALIC": {
+                "added": "3.7"
+            },
+            "ncurses_version": {
+                "added": "3.8"
+            },
+            "get_escdelay": {
+                "added": "3.9"
+            },
+            "set_escdelay": {
+                "added": "3.9"
+            },
+            "get_tabsize": {
+                "added": "3.9"
+            },
+            "set_tabsize": {
+                "added": "3.9"
+            },
+            "has_extended_color_support": {
+                "added": "3.10"
+            }
         }
     },
     "dataclasses": {
-        "module_created": "3.7",
-        "added": {
-            "3.10": [
-                "KW_ONLY"
-            ]
+        "module": {
+            "added": "3.7"
+        },
+        "attributes": {
+            "KW_ONLY": {
+                "added": "3.10"
+            }
         }
     },
     "datetime": {
-        "added": {
-            "3.2": [
-                "timezone"
-            ],
-            "3.11": [
-                "UTC"
-            ]
+        "attributes": {
+            "timezone": {
+                "added": "3.2"
+            },
+            "UTC": {
+                "added": "3.11"
+            }
         }
     },
     "decimal": {
-        "added": {
-            "3.9": [
-                "HAVE_CONTEXTVAR"
-            ]
-        },
-        "deprecated": {
-            "3.9": [
-                "HAVE_THREADS"
-            ]
+        "attributes": {
+            "HAVE_CONTEXTVAR": {
+                "added": "3.9"
+            },
+            "HAVE_THREADS": {
+                "deprecated": "3.9"
+            }
         }
     },
     "difflib": {
-        "added": {
-            "3.5": [
-                "diff_bytes"
-            ]
+        "attributes": {
+            "diff_bytes": {
+                "added": "3.5"
+            }
         }
     },
     "dis": {
-        "added": {
-            "3.2": [
-                "code_info",
-                "show_code"
-            ],
-            "3.4": [
-                "Bytecode",
-                "Instruction",
-                "get_instructions",
-                "stack_effect"
-            ],
-            "3.11": [
-                "Positions"
-            ],
-            "3.12": [
-                "hasarg"
-            ]
+        "attributes": {
+            "code_info": {
+                "added": "3.2"
+            },
+            "show_code": {
+                "added": "3.2"
+            },
+            "Bytecode": {
+                "added": "3.4"
+            },
+            "Instruction": {
+                "added": "3.4"
+            },
+            "get_instructions": {
+                "added": "3.4"
+            },
+            "stack_effect": {
+                "added": "3.4"
+            },
+            "Positions": {
+                "added": "3.11"
+            },
+            "hasarg": {
+                "added": "3.12"
+            }
         }
     },
     "distutils": {
-        "module_deprecated": "3.10",
-        "module_removed": "3.12"
+        "module": {
+            "deprecated": "3.10",
+            "removed": "3.12"
+        }
     },
     "doctest": {
-        "added": {
-            "3.4": [
-                "FAIL_FAST"
-            ]
+        "attributes": {
+            "FAIL_FAST": {
+                "added": "3.4"
+            }
         }
     },
     "email": {
-        "added": {
-            "3.4": [
-                "as_bytes"
-            ]
+        "attributes": {
+            "as_bytes": {
+                "added": "3.4"
+            }
         }
     },
     "ensurepip": {
-        "module_created": "3.4"
+        "module": {
+            "added": "3.4"
+        }
     },
     "enum": {
-        "module_created": "3.4",
-        "added": {
-            "3.6": [
-                "Flag",
-                "IntFlag",
-                "auto"
-            ],
-            "3.11": [
-                "EnumCheck",
-                "EnumType",
-                "FlagBoundary",
-                "ReprEnum",
-                "StrEnum",
-                "global_enum",
-                "member",
-                "nonmember",
-                "property",
-                "show_flag_values",
-                "verify"
-            ]
+        "module": {
+            "added": "3.4"
+        },
+        "attributes": {
+            "Flag": {
+                "added": "3.6"
+            },
+            "IntFlag": {
+                "added": "3.6"
+            },
+            "auto": {
+                "added": "3.6"
+            },
+            "EnumCheck": {
+                "added": "3.11"
+            },
+            "EnumType": {
+                "added": "3.11"
+            },
+            "FlagBoundary": {
+                "added": "3.11"
+            },
+            "ReprEnum": {
+                "added": "3.11"
+            },
+            "StrEnum": {
+                "added": "3.11"
+            },
+            "global_enum": {
+                "added": "3.11"
+            },
+            "member": {
+                "added": "3.11"
+            },
+            "nonmember": {
+                "added": "3.11"
+            },
+            "property": {
+                "added": "3.11"
+            },
+            "show_flag_values": {
+                "added": "3.11"
+            },
+            "verify": {
+                "added": "3.11"
+            }
         }
     },
     "errno": {
-        "added": {
-            "3.11": [
-                "EQFULL"
-            ],
-            "3.11.1": [
-                "ENOTCAPABLE"
-            ]
+        "attributes": {
+            "EQFULL": {
+                "added": "3.11"
+            },
+            "ENOTCAPABLE": {
+                "added": "3.11.1"
+            }
         }
     },
     "faulthandler": {
-        "module_created": "3.3"
+        "module": {
+            "added": "3.3"
+        }
     },
     "fcntl": {
-        "added": {
-            "3.8": [
-                "F_ADD_SEALS",
-                "F_GET_SEALS",
-                "F_SEAL_GROW",
-                "F_SEAL_SHRINK",
-                "F_SEAL_SEAL",
-                "F_SEAL_WRITE"
-            ],
-            "3.9": [
-                "F_GETPATH",
-                "F_OFD_GETLK",
-                "F_OFD_SETLK",
-                "F_OFD_SETLKW"
-            ],
-            "3.10": [
-                "F_GETPIPE_SZ",
-                "F_SETPIPE_SZ"
-            ],
-            "3.11": [
-                "F_DUP2FD",
-                "F_DUP2FD_CLOEXEC"
-            ]
+        "attributes": {
+            "F_ADD_SEALS": {
+                "added": "3.8"
+            },
+            "F_GET_SEALS": {
+                "added": "3.8"
+            },
+            "F_SEAL_GROW": {
+                "added": "3.8"
+            },
+            "F_SEAL_SHRINK": {
+                "added": "3.8"
+            },
+            "F_SEAL_SEAL": {
+                "added": "3.8"
+            },
+            "F_SEAL_WRITE": {
+                "added": "3.8"
+            },
+            "F_GETPATH": {
+                "added": "3.9"
+            },
+            "F_OFD_GETLK": {
+                "added": "3.9"
+            },
+            "F_OFD_SETLK": {
+                "added": "3.9"
+            },
+            "F_OFD_SETLKW": {
+                "added": "3.9"
+            },
+            "F_GETPIPE_SZ": {
+                "added": "3.10"
+            },
+            "F_SETPIPE_SZ": {
+                "added": "3.10"
+            },
+            "F_DUP2FD": {
+                "added": "3.11"
+            },
+            "F_DUP2FD_CLOEXEC": {
+                "added": "3.11"
+            }
         }
     },
     "filecmp": {
-        "added": {
-            "3.4": [
-                "DEFAULT_IGNORES",
-                "clear_cache"
-            ]
+        "attributes": {
+            "DEFAULT_IGNORES": {
+                "added": "3.4"
+            },
+            "clear_cache": {
+                "added": "3.4"
+            }
         }
     },
     "fileinput": {
-        "deprecated": {
-            "3.10": [
-                "hook_encoded"
-            ]
+        "attributes": {
+            "hook_encoded": {
+                "deprecated": "3.10"
+            }
         }
     },
     "ftplib": {
-        "added": {
-            "3.2": [
-                "FTP_TLS"
-            ]
+        "attributes": {
+            "FTP_TLS": {
+                "added": "3.2"
+            }
         }
     },
     "functools": {
-        "added": {
-            "3.2": [
-                "cmp_to_key",
-                "lru_cache",
-                "total_ordering"
-            ],
-            "3.4": [
-                "partialmethod",
-                "singledispatch"
-            ],
-            "3.8": [
-                "cached_property",
-                "singledispatchmethod"
-            ],
-            "3.9": [
-                "cache"
-            ]
+        "attributes": {
+            "cmp_to_key": {
+                "added": "3.2"
+            },
+            "lru_cache": {
+                "added": "3.2"
+            },
+            "total_ordering": {
+                "added": "3.2"
+            },
+            "partialmethod": {
+                "added": "3.4"
+            },
+            "singledispatch": {
+                "added": "3.4"
+            },
+            "cached_property": {
+                "added": "3.8"
+            },
+            "singledispatchmethod": {
+                "added": "3.8"
+            },
+            "cache": {
+                "added": "3.9"
+            }
         }
     },
     "gc": {
-        "added": {
-            "3.1": [
-                "is_tracked"
-            ],
-            "3.3": [
-                "callbacks"
-            ],
-            "3.4": [
-                "get_stats"
-            ],
-            "3.7": [
-                "freeze",
-                "unfreeze",
-                "get_freeze_count"
-            ],
-            "3.9": [
-                "is_finalized"
-            ]
+        "attributes": {
+            "is_tracked": {
+                "added": "3.1"
+            },
+            "callbacks": {
+                "added": "3.3"
+            },
+            "get_stats": {
+                "added": "3.4"
+            },
+            "freeze": {
+                "added": "3.7"
+            },
+            "unfreeze": {
+                "added": "3.7"
+            },
+            "get_freeze_count": {
+                "added": "3.7"
+            },
+            "is_finalized": {
+                "added": "3.9"
+            }
         }
     },
     "gettext": {
-        "added": {
-            "3.8": [
-                "pgettext",
-                "dpgettext",
-                "npgettext",
-                "dnpgettext"
-            ]
+        "attributes": {
+            "pgettext": {
+                "added": "3.8"
+            },
+            "dpgettext": {
+                "added": "3.8"
+            },
+            "npgettext": {
+                "added": "3.8"
+            },
+            "dnpgettext": {
+                "added": "3.8"
+            }
         }
     },
     "glob": {
-        "added": {
-            "3.4": [
-                "escape"
-            ]
+        "attributes": {
+            "escape": {
+                "added": "3.4"
+            }
         }
     },
     "graphlib": {
-        "module_created": "3.9"
+        "module": {
+            "added": "3.9"
+        }
     },
     "gzip": {
-        "added": {
-            "3.2": [
-                "compress",
-                "decompress"
-            ],
-            "3.8": [
-                "BadGzipFile"
-            ]
+        "attributes": {
+            "compress": {
+                "added": "3.2"
+            },
+            "decompress": {
+                "added": "3.2"
+            },
+            "BadGzipFile": {
+                "added": "3.8"
+            }
         }
     },
     "hashlib": {
-        "added": {
-            "3.2": [
-                "algorithms_available",
-                "algorithms_guaranteed"
-            ],
-            "3.4": [
-                "pbkdf2_hmac"
-            ],
-            "3.6": [
-                "blake2b",
-                "blake2s",
-                "sha3_224",
-                "sha3_256",
-                "sha3_384",
-                "sha3_512",
-                "shake_128",
-                "shake_256",
-                "scrypt"
-            ],
-            "3.11": [
-                "file_digest"
-            ]
+        "attributes": {
+            "algorithms_available": {
+                "added": "3.2"
+            },
+            "algorithms_guaranteed": {
+                "added": "3.2"
+            },
+            "pbkdf2_hmac": {
+                "added": "3.4"
+            },
+            "blake2b": {
+                "added": "3.6"
+            },
+            "blake2s": {
+                "added": "3.6"
+            },
+            "sha3_224": {
+                "added": "3.6"
+            },
+            "sha3_256": {
+                "added": "3.6"
+            },
+            "sha3_384": {
+                "added": "3.6"
+            },
+            "sha3_512": {
+                "added": "3.6"
+            },
+            "shake_128": {
+                "added": "3.6"
+            },
+            "shake_256": {
+                "added": "3.6"
+            },
+            "scrypt": {
+                "added": "3.6"
+            },
+            "file_digest": {
+                "added": "3.11"
+            }
         }
     },
     "hmac": {
-        "added": {
-            "3.3": [
-                "compare_digest"
-            ],
-            "3.4": [
-                "block_size",
-                "name"
-            ],
-            "3.7": [
-                "digest"
-            ]
-        },
-        "deprecated": {
-            "3.9": [
-                "digest_cons",
-                "inner",
-                "outer"
-            ]
-        },
-        "removed": {
-            "3.10": [
-                "digest_cons",
-                "inner",
-                "outer"
-            ]
+        "attributes": {
+            "compare_digest": {
+                "added": "3.3"
+            },
+            "block_size": {
+                "added": "3.4"
+            },
+            "name": {
+                "added": "3.4"
+            },
+            "digest": {
+                "added": "3.7"
+            },
+            "digest_cons": {
+                "deprecated": "3.9",
+                "removed": "3.10"
+            },
+            "inner": {
+                "deprecated": "3.9",
+                "removed": "3.10"
+            },
+            "outer": {
+                "deprecated": "3.9",
+                "removed": "3.10"
+            }
         }
     },
     "html.entities": {
-        "added": {
-            "3.3": [
-                "html5"
-            ]
+        "attributes": {
+            "html5": {
+                "added": "3.3"
+            }
         }
     },
     "html": {
-        "added": {
-            "3.2": [
-                "escape"
-            ],
-            "3.3": [
-                "entities.html5"
-            ],
-            "3.4": [
-                "unescape"
-            ]
+        "attributes": {
+            "escape": {
+                "added": "3.2"
+            },
+            "entities.html5": {
+                "added": "3.3"
+            },
+            "unescape": {
+                "added": "3.4"
+            }
         }
     },
     "http.client": {
-        "added": {
-            "3.5": [
-                "RemoteDisconnected"
-            ]
+        "attributes": {
+            "RemoteDisconnected": {
+                "added": "3.5"
+            }
         }
     },
     "http": {
-        "added": {
-            "3.5": [
-                "HTTPStatus"
-            ],
-            "3.11": [
-                "HTTPMethod"
-            ]
+        "attributes": {
+            "HTTPStatus": {
+                "added": "3.5"
+            },
+            "HTTPMethod": {
+                "added": "3.11"
+            }
         }
     },
     "http.server": {
-        "added": {
-            "3.7": [
-                "ThreadingHTTPServer"
-            ]
+        "attributes": {
+            "ThreadingHTTPServer": {
+                "added": "3.7"
+            }
         }
     },
     "imghdr": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "imp": {
-        "module_deprecated": "3.4",
-        "module_removed": "3.12"
+        "module": {
+            "deprecated": "3.4",
+            "removed": "3.12"
+        }
     },
     "importlib.abc": {
-        "added": {
-            "3.3": [
-                "MetaPathFinder",
-                "PathEntryFinder",
-                "FileLoader"
-            ]
-        },
-        "deprecated": {
-            "3.3": [
-                "Finder"
-            ],
-            "3.7": [
-                "ResourceLoader"
-            ]
+        "attributes": {
+            "MetaPathFinder": {
+                "added": "3.3"
+            },
+            "PathEntryFinder": {
+                "added": "3.3"
+            },
+            "FileLoader": {
+                "added": "3.3"
+            },
+            "Finder": {
+                "deprecated": "3.3"
+            },
+            "ResourceLoader": {
+                "deprecated": "3.7"
+            }
         }
     },
     "importlib": {
-        "module_created": "3.1",
-        "added": {
-            "3.3": [
-                "find_loader",
-                "invalidate_caches"
-            ],
-            "3.4": [
-                "reload"
-            ]
+        "module": {
+            "added": "3.1"
+        },
+        "attributes": {
+            "find_loader": {
+                "added": "3.3"
+            },
+            "invalidate_caches": {
+                "added": "3.3"
+            },
+            "reload": {
+                "added": "3.4"
+            }
         }
     },
     "importlib.machinery": {
-        "added": {
-            "3.3": [
-                "SOURCE_SUFFIXES",
-                "DEBUG_BYTECODE_SUFFIXES",
-                "OPTIMIZED_BYTECODE_SUFFIXES",
-                "BYTECODE_SUFFIXES",
-                "EXTENSION_SUFFIXES",
-                "WindowsRegistryFinder",
-                "FileFinder",
-                "SourceFileLoader",
-                "SourcelessFileLoader",
-                "ExtensionFileLoader",
-                "all_suffixes"
-            ],
-            "3.4": [
-                "ModuleSpec"
-            ],
-            "3.5": [
-                "module_from_spec"
-            ],
-            "3.11": [
-                "NamespaceLoader"
-            ]
-        },
-        "deprecated": {
-            "3.5": [
-                "DEBUG_BYTECODE_SUFFIXES",
-                "OPTIMIZED_BYTECODE_SUFFIXES"
-            ],
-            "3.6": [
-                "SourcelessFileLoader",
-                "WindowsRegistryFinder"
-            ]
+        "attributes": {
+            "SOURCE_SUFFIXES": {
+                "added": "3.3"
+            },
+            "DEBUG_BYTECODE_SUFFIXES": {
+                "added": "3.3",
+                "deprecated": "3.5"
+            },
+            "OPTIMIZED_BYTECODE_SUFFIXES": {
+                "added": "3.3",
+                "deprecated": "3.5"
+            },
+            "BYTECODE_SUFFIXES": {
+                "added": "3.3"
+            },
+            "EXTENSION_SUFFIXES": {
+                "added": "3.3"
+            },
+            "WindowsRegistryFinder": {
+                "added": "3.3",
+                "deprecated": "3.6"
+            },
+            "FileFinder": {
+                "added": "3.3"
+            },
+            "SourceFileLoader": {
+                "added": "3.3"
+            },
+            "SourcelessFileLoader": {
+                "added": "3.3",
+                "deprecated": "3.6"
+            },
+            "ExtensionFileLoader": {
+                "added": "3.3"
+            },
+            "all_suffixes": {
+                "added": "3.3"
+            },
+            "ModuleSpec": {
+                "added": "3.4"
+            },
+            "module_from_spec": {
+                "added": "3.5"
+            },
+            "NamespaceLoader": {
+                "added": "3.11"
+            }
         }
     },
     "importlib.metadata": {
-        "module_created": "3.8",
-        "added": {
-            "3.10": [
-                "packages_distributions"
-            ]
+        "module": {
+            "added": "3.8"
+        },
+        "attributes": {
+            "packages_distributions": {
+                "added": "3.10"
+            }
         }
     },
     "importlib.resources.abc": {
-        "module_created": "3.11"
+        "module": {
+            "added": "3.11"
+        }
     },
     "importlib.resources": {
-        "module_created": "3.7",
-        "added": {
-            "3.9": [
-                "files",
-                "as_file"
-            ]
+        "module": {
+            "added": "3.7"
         },
-        "deprecated": {
-            "3.11": [
-                "open_binary",
-                "open_text",
-                "read_binary",
-                "read_text",
-                "path",
-                "is_resource",
-                "contents"
-            ]
+        "attributes": {
+            "files": {
+                "added": "3.9"
+            },
+            "as_file": {
+                "added": "3.9"
+            },
+            "open_binary": {
+                "deprecated": "3.11"
+            },
+            "open_text": {
+                "deprecated": "3.11"
+            },
+            "read_binary": {
+                "deprecated": "3.11"
+            },
+            "read_text": {
+                "deprecated": "3.11"
+            },
+            "path": {
+                "deprecated": "3.11"
+            },
+            "is_resource": {
+                "deprecated": "3.11"
+            },
+            "contents": {
+                "deprecated": "3.11"
+            }
         }
     },
     "importlib.util": {
-        "added": {
-            "3.3": [
-                "resolve_name"
-            ],
-            "3.4": [
-                "MAGIC_NUMBER",
-                "cache_from_source",
-                "source_from_cache",
-                "decode_source",
-                "find_spec",
-                "spec_from_loader",
-                "spec_from_file_location"
-            ],
-            "3.5": [
-                "LazyLoader",
-                "module_from_spec"
-            ],
-            "3.7": [
-                "source_hash"
-            ]
-        },
-        "deprecated": {
-            "3.4": [
-                "module_for_loader",
-                "set_loader",
-                "set_package"
-            ]
+        "attributes": {
+            "resolve_name": {
+                "added": "3.3"
+            },
+            "MAGIC_NUMBER": {
+                "added": "3.4"
+            },
+            "cache_from_source": {
+                "added": "3.4"
+            },
+            "source_from_cache": {
+                "added": "3.4"
+            },
+            "decode_source": {
+                "added": "3.4"
+            },
+            "find_spec": {
+                "added": "3.4"
+            },
+            "spec_from_loader": {
+                "added": "3.4"
+            },
+            "spec_from_file_location": {
+                "added": "3.4"
+            },
+            "LazyLoader": {
+                "added": "3.5"
+            },
+            "module_from_spec": {
+                "added": "3.5"
+            },
+            "source_hash": {
+                "added": "3.7"
+            },
+            "module_for_loader": {
+                "deprecated": "3.4"
+            },
+            "set_loader": {
+                "deprecated": "3.4"
+            },
+            "set_package": {
+                "deprecated": "3.4"
+            }
         }
     },
     "inspect": {
-        "added": {
-            "3.2": [
-                "getattr_static",
-                "getcallargs",
-                "getgeneratorstate"
-            ],
-            "3.3": [
-                "BoundArguments",
-                "Parameter",
-                "Signature",
-                "signature",
-                "getclosurevars",
-                "getgeneratorlocals"
-            ],
-            "3.4": [
-                "unwrap"
-            ],
-            "3.5": [
-                "CO_COROUTINE",
-                "CO_ITERABLE_COROUTINE",
-                "getcoroutinelocals",
-                "getcoroutinestate",
-                "isawaitable",
-                "iscoroutine",
-                "iscoroutinefunction"
-            ],
-            "3.6": [
-                "CO_ASYNC_GENERATOR",
-                "isasyncgen",
-                "isasyncgenfunction"
-            ],
-            "3.10": [
-                "get_annotations"
-            ],
-            "3.11": [
-                "getmembers_static",
-                "ismethodwrapper"
-            ],
-            "3.12": [
-                "markcoroutinefunction"
-            ]
-        },
-        "deprecated": {
-            "3.5": [
-                "getcallargs"
-            ]
+        "attributes": {
+            "getattr_static": {
+                "added": "3.2"
+            },
+            "getcallargs": {
+                "added": "3.2",
+                "deprecated": "3.5"
+            },
+            "getgeneratorstate": {
+                "added": "3.2"
+            },
+            "BoundArguments": {
+                "added": "3.3"
+            },
+            "Parameter": {
+                "added": "3.3"
+            },
+            "Signature": {
+                "added": "3.3"
+            },
+            "signature": {
+                "added": "3.3"
+            },
+            "getclosurevars": {
+                "added": "3.3"
+            },
+            "getgeneratorlocals": {
+                "added": "3.3"
+            },
+            "unwrap": {
+                "added": "3.4"
+            },
+            "CO_COROUTINE": {
+                "added": "3.5"
+            },
+            "CO_ITERABLE_COROUTINE": {
+                "added": "3.5"
+            },
+            "getcoroutinelocals": {
+                "added": "3.5"
+            },
+            "getcoroutinestate": {
+                "added": "3.5"
+            },
+            "isawaitable": {
+                "added": "3.5"
+            },
+            "iscoroutine": {
+                "added": "3.5"
+            },
+            "iscoroutinefunction": {
+                "added": "3.5"
+            },
+            "CO_ASYNC_GENERATOR": {
+                "added": "3.6"
+            },
+            "isasyncgen": {
+                "added": "3.6"
+            },
+            "isasyncgenfunction": {
+                "added": "3.6"
+            },
+            "get_annotations": {
+                "added": "3.10"
+            },
+            "getmembers_static": {
+                "added": "3.11"
+            },
+            "ismethodwrapper": {
+                "added": "3.11"
+            },
+            "markcoroutinefunction": {
+                "added": "3.12"
+            }
         }
     },
     "io": {
-        "added": {
-            "3.1": [
-                "SEEK_SET",
-                "SEEK_CUR",
-                "SEEK_END"
-            ],
-            "3.8": [
-                "open_code"
-            ],
-            "3.10": [
-                "text_encoding"
-            ]
+        "attributes": {
+            "SEEK_SET": {
+                "added": "3.1"
+            },
+            "SEEK_CUR": {
+                "added": "3.1"
+            },
+            "SEEK_END": {
+                "added": "3.1"
+            },
+            "open_code": {
+                "added": "3.8"
+            },
+            "text_encoding": {
+                "added": "3.10"
+            }
         }
     },
     "ipaddress": {
-        "module_created": "3.3"
+        "module": {
+            "added": "3.3"
+        }
     },
     "itertools": {
-        "added": {
-            "3.1": [
-                "combinations_with_replacement",
-                "compress"
-            ],
-            "3.2": [
-                "accumulate"
-            ],
-            "3.10": [
-                "pairwise"
-            ]
+        "attributes": {
+            "combinations_with_replacement": {
+                "added": "3.1"
+            },
+            "compress": {
+                "added": "3.1"
+            },
+            "accumulate": {
+                "added": "3.2"
+            },
+            "pairwise": {
+                "added": "3.10"
+            }
         }
     },
     "json": {
-        "added": {
-            "3.5": [
-                "JSONDecodeError"
-            ]
+        "attributes": {
+            "JSONDecodeError": {
+                "added": "3.5"
+            }
         }
     },
     "keyword": {
-        "added": {
-            "3.9": [
-                "issoftkeyword",
-                "softkwlist"
-            ]
+        "attributes": {
+            "issoftkeyword": {
+                "added": "3.9"
+            },
+            "softkwlist": {
+                "added": "3.9"
+            }
         }
     },
     "linecache": {
-        "added": {
-            "3.5": [
-                "lazycache"
-            ]
+        "attributes": {
+            "lazycache": {
+                "added": "3.5"
+            }
         }
     },
     "locale": {
-        "added": {
-            "3.5": [
-                "delocalize"
-            ],
-            "3.10": [
-                "localize"
-            ],
-            "3.11": [
-                "getencoding"
-            ]
-        },
-        "deprecated": {
-            "3.7": [
-                "format"
-            ],
-            "3.11": [
-                "getdefaultlocale",
-                "resetlocale"
-            ]
-        },
-        "removed": {
-            "3.13": [
-                "getdefaultlocale",
-                "resetlocale"
-            ]
+        "attributes": {
+            "delocalize": {
+                "added": "3.5"
+            },
+            "localize": {
+                "added": "3.10"
+            },
+            "getencoding": {
+                "added": "3.11"
+            },
+            "format": {
+                "deprecated": "3.7"
+            },
+            "getdefaultlocale": {
+                "deprecated": "3.11",
+                "removed": "3.13"
+            },
+            "resetlocale": {
+                "deprecated": "3.11",
+                "removed": "3.13"
+            }
         }
     },
     "logging.config": {
-        "added": {
-            "3.2": [
-                "dictConfig"
-            ]
+        "attributes": {
+            "dictConfig": {
+                "added": "3.2"
+            }
         }
     },
     "logging.handlers": {
-        "added": {
-            "3.1": [
-                "NullHandler"
-            ],
-            "3.2": [
-                "QueueHandler",
-                "QueueListener"
-            ]
+        "attributes": {
+            "NullHandler": {
+                "added": "3.1"
+            },
+            "QueueHandler": {
+                "added": "3.2"
+            },
+            "QueueListener": {
+                "added": "3.2"
+            }
         }
     },
     "logging": {
-        "added": {
-            "3.2": [
-                "lastResort",
-                "getLogRecordFactory",
-                "setLogRecordFactory"
-            ],
-            "3.11": [
-                "getLevelNamesMapping"
-            ]
+        "attributes": {
+            "lastResort": {
+                "added": "3.2"
+            },
+            "getLogRecordFactory": {
+                "added": "3.2"
+            },
+            "setLogRecordFactory": {
+                "added": "3.2"
+            },
+            "getLevelNamesMapping": {
+                "added": "3.11"
+            }
         }
     },
     "lzma": {
-        "module_created": "3.3"
+        "module": {
+            "added": "3.3"
+        }
     },
     "mailcap": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "math": {
-        "added": {
-            "3.2": [
-                "isfinite",
-                "expm1",
-                "erf",
-                "erfc",
-                "gamma",
-                "lgamma"
-            ],
-            "3.3": [
-                "log2"
-            ],
-            "3.5": [
-                "gcd",
-                "inf",
-                "nan",
-                "isclose"
-            ],
-            "3.6": [
-                "tau"
-            ],
-            "3.7": [
-                "remainder"
-            ],
-            "3.8": [
-                "comb",
-                "dist",
-                "isqrt",
-                "perm",
-                "prod"
-            ],
-            "3.9": [
-                "lcm",
-                "nextafter",
-                "ulp"
-            ],
-            "3.11": [
-                "cbrt",
-                "exp2"
-            ],
-            "3.12": [
-                "sumprod"
-            ]
+        "attributes": {
+            "isfinite": {
+                "added": "3.2"
+            },
+            "expm1": {
+                "added": "3.2"
+            },
+            "erf": {
+                "added": "3.2"
+            },
+            "erfc": {
+                "added": "3.2"
+            },
+            "gamma": {
+                "added": "3.2"
+            },
+            "lgamma": {
+                "added": "3.2"
+            },
+            "log2": {
+                "added": "3.3"
+            },
+            "gcd": {
+                "added": "3.5"
+            },
+            "inf": {
+                "added": "3.5"
+            },
+            "nan": {
+                "added": "3.5"
+            },
+            "isclose": {
+                "added": "3.5"
+            },
+            "tau": {
+                "added": "3.6"
+            },
+            "remainder": {
+                "added": "3.7"
+            },
+            "comb": {
+                "added": "3.8"
+            },
+            "dist": {
+                "added": "3.8"
+            },
+            "isqrt": {
+                "added": "3.8"
+            },
+            "perm": {
+                "added": "3.8"
+            },
+            "prod": {
+                "added": "3.8"
+            },
+            "lcm": {
+                "added": "3.9"
+            },
+            "nextafter": {
+                "added": "3.9"
+            },
+            "ulp": {
+                "added": "3.9"
+            },
+            "cbrt": {
+                "added": "3.11"
+            },
+            "exp2": {
+                "added": "3.11"
+            },
+            "sumprod": {
+                "added": "3.12"
+            }
         }
     },
     "mmap": {
-        "added": {
-            "3.8": [
-                "MADV_NORMAL",
-                "MADV_RANDOM",
-                "MADV_SEQUENTIAL",
-                "MADV_WILLNEED",
-                "MADV_DONTNEED",
-                "MADV_REMOVE",
-                "MADV_DONTFORK",
-                "MADV_DOFORK",
-                "MADV_HWPOISON",
-                "MADV_MERGEABLE",
-                "MADV_UNMERGEABLE",
-                "MADV_SOFT_OFFLINE",
-                "MADV_HUGEPAGE",
-                "MADV_NOHUGEPAGE",
-                "MADV_DONTDUMP",
-                "MADV_DODUMP",
-                "MADV_FREE",
-                "MADV_NOSYNC",
-                "MADV_AUTOSYNC",
-                "MADV_NOCORE",
-                "MADV_CORE",
-                "MADV_PROTECT",
-                "MADV_FREE_REUSABLE",
-                "MADV_FREE_REUSE"
-            ],
-            "3.10": [
-                "MAP_POPULATE"
-            ],
-            "3.11": [
-                "MAP_STACK"
-            ]
+        "attributes": {
+            "MADV_NORMAL": {
+                "added": "3.8"
+            },
+            "MADV_RANDOM": {
+                "added": "3.8"
+            },
+            "MADV_SEQUENTIAL": {
+                "added": "3.8"
+            },
+            "MADV_WILLNEED": {
+                "added": "3.8"
+            },
+            "MADV_DONTNEED": {
+                "added": "3.8"
+            },
+            "MADV_REMOVE": {
+                "added": "3.8"
+            },
+            "MADV_DONTFORK": {
+                "added": "3.8"
+            },
+            "MADV_DOFORK": {
+                "added": "3.8"
+            },
+            "MADV_HWPOISON": {
+                "added": "3.8"
+            },
+            "MADV_MERGEABLE": {
+                "added": "3.8"
+            },
+            "MADV_UNMERGEABLE": {
+                "added": "3.8"
+            },
+            "MADV_SOFT_OFFLINE": {
+                "added": "3.8"
+            },
+            "MADV_HUGEPAGE": {
+                "added": "3.8"
+            },
+            "MADV_NOHUGEPAGE": {
+                "added": "3.8"
+            },
+            "MADV_DONTDUMP": {
+                "added": "3.8"
+            },
+            "MADV_DODUMP": {
+                "added": "3.8"
+            },
+            "MADV_FREE": {
+                "added": "3.8"
+            },
+            "MADV_NOSYNC": {
+                "added": "3.8"
+            },
+            "MADV_AUTOSYNC": {
+                "added": "3.8"
+            },
+            "MADV_NOCORE": {
+                "added": "3.8"
+            },
+            "MADV_CORE": {
+                "added": "3.8"
+            },
+            "MADV_PROTECT": {
+                "added": "3.8"
+            },
+            "MADV_FREE_REUSABLE": {
+                "added": "3.8"
+            },
+            "MADV_FREE_REUSE": {
+                "added": "3.8"
+            },
+            "MAP_POPULATE": {
+                "added": "3.10"
+            },
+            "MAP_STACK": {
+                "added": "3.11"
+            }
         }
     },
     "msilib": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "multiprocessing.connection": {
-        "added": {
-            "3.3": [
-                "wait"
-            ]
+        "attributes": {
+            "wait": {
+                "added": "3.3"
+            }
         }
     },
     "multiprocessing": {
-        "added": {
-            "3.3": [
-                "Barrier"
-            ],
-            "3.4": [
-                "get_all_start_methods",
-                "get_context",
-                "get_start_method",
-                "set_start_method"
-            ],
-            "3.8": [
-                "parent_process",
-                "shared_memory"
-            ]
+        "attributes": {
+            "Barrier": {
+                "added": "3.3"
+            },
+            "get_all_start_methods": {
+                "added": "3.4"
+            },
+            "get_context": {
+                "added": "3.4"
+            },
+            "get_start_method": {
+                "added": "3.4"
+            },
+            "set_start_method": {
+                "added": "3.4"
+            },
+            "parent_process": {
+                "added": "3.8"
+            },
+            "shared_memory": {
+                "added": "3.8"
+            }
         }
     },
     "multiprocessing.shared_memory": {
-        "module_created": "3.8"
+        "module": {
+            "added": "3.8"
+        }
     },
     "nis": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "nntplib": {
-        "module_deprecated": "3.11",
-        "added": {
-            "3.2": [
-                "NNTP_SSL"
-            ]
+        "module": {
+            "deprecated": "3.11"
+        },
+        "attributes": {
+            "NNTP_SSL": {
+                "added": "3.2"
+            }
         }
     },
     "operator": {
-        "added": {
-            "3.4": [
-                "length_hint"
-            ],
-            "3.5": [
-                "__imatmul__",
-                "__matmul__",
-                "imatmul",
-                "matmul"
-            ],
-            "3.11": [
-                "__call__",
-                "call"
-            ]
+        "attributes": {
+            "length_hint": {
+                "added": "3.4"
+            },
+            "__imatmul__": {
+                "added": "3.5"
+            },
+            "__matmul__": {
+                "added": "3.5"
+            },
+            "imatmul": {
+                "added": "3.5"
+            },
+            "matmul": {
+                "added": "3.5"
+            },
+            "__call__": {
+                "added": "3.11"
+            },
+            "call": {
+                "added": "3.11"
+            }
         }
     },
     "optparse": {
-        "module_deprecated": "3.2"
+        "module": {
+            "deprecated": "3.2"
+        }
     },
     "os": {
-        "added": {
-            "3.2": [
-                "environb",
-                "fsencode",
-                "fsdecode",
-                "getenvb",
-                "get_exec_path",
-                "getresuid",
-                "setresuid",
-                "getresgid",
-                "setresgid",
-                "initgroups",
-                "supports_bytes_environ"
-            ],
-            "3.3": [
-                "CLD_EXITED",
-                "CLD_DUMPED",
-                "CLD_TRAPPED",
-                "CLD_CONTINUED",
-                "F_LOCK",
-                "F_TLOCK",
-                "F_ULOCK",
-                "F_TEST",
-                "O_CLOEXEC",
-                "POSIX_FADV_NORMAL",
-                "POSIX_FADV_SEQUENTIAL",
-                "POSIX_FADV_RANDOM",
-                "POSIX_FADV_NOREUSE",
-                "POSIX_FADV_WILLNEED",
-                "POSIX_FADV_DONTNEED",
-                "PRIO_PROCESS",
-                "PRIO_PGRP",
-                "PRIO_USER",
-                "P_ALL",
-                "P_PID",
-                "P_PGID",
-                "RTLD_LAZY",
-                "RTLD_NOW",
-                "RTLD_GLOBAL",
-                "RTLD_LOCAL",
-                "RTLD_NODELETE",
-                "RTLD_NOLOAD",
-                "RTLD_DEEPBIND",
-                "SCHED_OTHER",
-                "SCHED_BATCH",
-                "SCHED_IDLE",
-                "SCHED_SPORADIC",
-                "SCHED_FIFO",
-                "SCHED_RR",
-                "SCHED_RESET_ON_FORK",
-                "SEEK_DATA",
-                "SEEK_HOLE",
-                "SF_NODISKIO",
-                "SF_MNOWAIT",
-                "SF_SYNC",
-                "WEXITED",
-                "WSTOPPED",
-                "XATTR_SIZE_MAX",
-                "XATTR_CREATE",
-                "XATTR_REPLACE",
-                "getgrouplist",
-                "getpriority",
-                "setpriority",
-                "getxattr",
-                "setxattr",
-                "listxattr",
-                "removexattr",
-                "get_terminal_size",
-                "terminal_size",
-                "fwalk",
-                "lockf",
-                "pipe2",
-                "posix_fallocate",
-                "posix_fadvise",
-                "pread",
-                "pwrite",
-                "readv",
-                "writev",
-                "replace",
-                "rmdir",
-                "sched_param",
-                "sched_get_priority_min",
-                "sched_get_priority_max",
-                "sched_setscheduler",
-                "sched_getscheduler",
-                "sched_setparam",
-                "sched_getparam",
-                "sched_rr_get_interval",
-                "sched_yield",
-                "sched_setaffinity",
-                "sched_getaffinity",
-                "sendfile",
-                "supports_dir_fd",
-                "supports_effective_ids",
-                "supports_fd",
-                "supports_follow_symlinks",
-                "sync",
-                "truncate",
-                "unlink",
-                "waitid"
-            ],
-            "3.4": [
-                "cpu_count",
-                "get_inheritable",
-                "set_inheritable",
-                "get_handle_inheritable",
-                "set_handle_inheritable"
-            ],
-            "3.5": [
-                "DirEntry",
-                "scandir",
-                "get_blocking",
-                "set_blocking",
-                "path.commonpath"
-            ],
-            "3.6": [
-                "GRND_NONBLOCK",
-                "GRND_RANDOM",
-                "PathLike",
-                "fspath",
-                "getrandom"
-            ],
-            "3.7": [
-                "RWF_NOWAIT",
-                "RWF_HIPRI",
-                "RWF_DSYNC",
-                "RWF_SYNC",
-                "preadv",
-                "pwritev",
-                "register_at_fork"
-            ],
-            "3.8": [
-                "MFD_CLOEXEC",
-                "MFD_ALLOW_SEALING",
-                "MFD_HUGETLB",
-                "MFD_HUGE_SHIFT",
-                "MFD_HUGE_MASK",
-                "MFD_HUGE_64KB",
-                "MFD_HUGE_512KB",
-                "MFD_HUGE_1MB",
-                "MFD_HUGE_2MB",
-                "MFD_HUGE_8MB",
-                "MFD_HUGE_16MB",
-                "MFD_HUGE_32MB",
-                "MFD_HUGE_256MB",
-                "MFD_HUGE_512MB",
-                "MFD_HUGE_1GB",
-                "MFD_HUGE_2GB",
-                "MFD_HUGE_16GB",
-                "add_dll_directory",
-                "copy_file_range",
-                "memfd_create",
-                "posix_spawn",
-                "posix_spawnp"
-            ],
-            "3.9": [
-                "CLD_KILLED",
-                "CLD_STOPPED",
-                "P_PIDFD",
-                "pidfd_open",
-                "putenv",
-                "unsetenv",
-                "waitstatus_to_exitcode"
-            ],
-            "3.10": [
-                "EFD_CLOEXEC",
-                "EFD_NONBLOCK",
-                "EFD_SEMAPHORE",
-                "O_EVTONLY",
-                "O_FSYNC",
-                "O_SYMLINK",
-                "O_NOFOLLOW_ANY",
-                "RWF_APPEND",
-                "SPLICE_F_MOVE",
-                "SPLICE_F_NONBLOCK",
-                "SPLICE_F_MORE",
-                "eventfd",
-                "eventfd_read",
-                "eventfd_write",
-                "splice"
-            ],
-            "3.11": [
-                "SF_NOCACHE",
-                "login_tty"
-            ],
-            "3.12": [
-                "PIDFD_NONBLOCK",
-                "path.isjunction",
-                "path.splitroot"
-            ]
+        "attributes": {
+            "environb": {
+                "added": "3.2"
+            },
+            "fsencode": {
+                "added": "3.2"
+            },
+            "fsdecode": {
+                "added": "3.2"
+            },
+            "getenvb": {
+                "added": "3.2"
+            },
+            "get_exec_path": {
+                "added": "3.2"
+            },
+            "getresuid": {
+                "added": "3.2"
+            },
+            "setresuid": {
+                "added": "3.2"
+            },
+            "getresgid": {
+                "added": "3.2"
+            },
+            "setresgid": {
+                "added": "3.2"
+            },
+            "initgroups": {
+                "added": "3.2"
+            },
+            "supports_bytes_environ": {
+                "added": "3.2"
+            },
+            "CLD_EXITED": {
+                "added": "3.3"
+            },
+            "CLD_DUMPED": {
+                "added": "3.3"
+            },
+            "CLD_TRAPPED": {
+                "added": "3.3"
+            },
+            "CLD_CONTINUED": {
+                "added": "3.3"
+            },
+            "F_LOCK": {
+                "added": "3.3"
+            },
+            "F_TLOCK": {
+                "added": "3.3"
+            },
+            "F_ULOCK": {
+                "added": "3.3"
+            },
+            "F_TEST": {
+                "added": "3.3"
+            },
+            "O_CLOEXEC": {
+                "added": "3.3"
+            },
+            "POSIX_FADV_NORMAL": {
+                "added": "3.3"
+            },
+            "POSIX_FADV_SEQUENTIAL": {
+                "added": "3.3"
+            },
+            "POSIX_FADV_RANDOM": {
+                "added": "3.3"
+            },
+            "POSIX_FADV_NOREUSE": {
+                "added": "3.3"
+            },
+            "POSIX_FADV_WILLNEED": {
+                "added": "3.3"
+            },
+            "POSIX_FADV_DONTNEED": {
+                "added": "3.3"
+            },
+            "PRIO_PROCESS": {
+                "added": "3.3"
+            },
+            "PRIO_PGRP": {
+                "added": "3.3"
+            },
+            "PRIO_USER": {
+                "added": "3.3"
+            },
+            "P_ALL": {
+                "added": "3.3"
+            },
+            "P_PID": {
+                "added": "3.3"
+            },
+            "P_PGID": {
+                "added": "3.3"
+            },
+            "RTLD_LAZY": {
+                "added": "3.3"
+            },
+            "RTLD_NOW": {
+                "added": "3.3"
+            },
+            "RTLD_GLOBAL": {
+                "added": "3.3"
+            },
+            "RTLD_LOCAL": {
+                "added": "3.3"
+            },
+            "RTLD_NODELETE": {
+                "added": "3.3"
+            },
+            "RTLD_NOLOAD": {
+                "added": "3.3"
+            },
+            "RTLD_DEEPBIND": {
+                "added": "3.3"
+            },
+            "SCHED_OTHER": {
+                "added": "3.3"
+            },
+            "SCHED_BATCH": {
+                "added": "3.3"
+            },
+            "SCHED_IDLE": {
+                "added": "3.3"
+            },
+            "SCHED_SPORADIC": {
+                "added": "3.3"
+            },
+            "SCHED_FIFO": {
+                "added": "3.3"
+            },
+            "SCHED_RR": {
+                "added": "3.3"
+            },
+            "SCHED_RESET_ON_FORK": {
+                "added": "3.3"
+            },
+            "SEEK_DATA": {
+                "added": "3.3"
+            },
+            "SEEK_HOLE": {
+                "added": "3.3"
+            },
+            "SF_NODISKIO": {
+                "added": "3.3"
+            },
+            "SF_MNOWAIT": {
+                "added": "3.3"
+            },
+            "SF_SYNC": {
+                "added": "3.3"
+            },
+            "WEXITED": {
+                "added": "3.3"
+            },
+            "WSTOPPED": {
+                "added": "3.3"
+            },
+            "XATTR_SIZE_MAX": {
+                "added": "3.3"
+            },
+            "XATTR_CREATE": {
+                "added": "3.3"
+            },
+            "XATTR_REPLACE": {
+                "added": "3.3"
+            },
+            "getgrouplist": {
+                "added": "3.3"
+            },
+            "getpriority": {
+                "added": "3.3"
+            },
+            "setpriority": {
+                "added": "3.3"
+            },
+            "getxattr": {
+                "added": "3.3"
+            },
+            "setxattr": {
+                "added": "3.3"
+            },
+            "listxattr": {
+                "added": "3.3"
+            },
+            "removexattr": {
+                "added": "3.3"
+            },
+            "get_terminal_size": {
+                "added": "3.3"
+            },
+            "terminal_size": {
+                "added": "3.3"
+            },
+            "fwalk": {
+                "added": "3.3"
+            },
+            "lockf": {
+                "added": "3.3"
+            },
+            "pipe2": {
+                "added": "3.3"
+            },
+            "posix_fallocate": {
+                "added": "3.3"
+            },
+            "posix_fadvise": {
+                "added": "3.3"
+            },
+            "pread": {
+                "added": "3.3"
+            },
+            "pwrite": {
+                "added": "3.3"
+            },
+            "readv": {
+                "added": "3.3"
+            },
+            "writev": {
+                "added": "3.3"
+            },
+            "replace": {
+                "added": "3.3"
+            },
+            "rmdir": {
+                "added": "3.3"
+            },
+            "sched_param": {
+                "added": "3.3"
+            },
+            "sched_get_priority_min": {
+                "added": "3.3"
+            },
+            "sched_get_priority_max": {
+                "added": "3.3"
+            },
+            "sched_setscheduler": {
+                "added": "3.3"
+            },
+            "sched_getscheduler": {
+                "added": "3.3"
+            },
+            "sched_setparam": {
+                "added": "3.3"
+            },
+            "sched_getparam": {
+                "added": "3.3"
+            },
+            "sched_rr_get_interval": {
+                "added": "3.3"
+            },
+            "sched_yield": {
+                "added": "3.3"
+            },
+            "sched_setaffinity": {
+                "added": "3.3"
+            },
+            "sched_getaffinity": {
+                "added": "3.3"
+            },
+            "sendfile": {
+                "added": "3.3"
+            },
+            "supports_dir_fd": {
+                "added": "3.3"
+            },
+            "supports_effective_ids": {
+                "added": "3.3"
+            },
+            "supports_fd": {
+                "added": "3.3"
+            },
+            "supports_follow_symlinks": {
+                "added": "3.3"
+            },
+            "sync": {
+                "added": "3.3"
+            },
+            "truncate": {
+                "added": "3.3"
+            },
+            "unlink": {
+                "added": "3.3"
+            },
+            "waitid": {
+                "added": "3.3"
+            },
+            "cpu_count": {
+                "added": "3.4"
+            },
+            "get_inheritable": {
+                "added": "3.4"
+            },
+            "set_inheritable": {
+                "added": "3.4"
+            },
+            "get_handle_inheritable": {
+                "added": "3.4"
+            },
+            "set_handle_inheritable": {
+                "added": "3.4"
+            },
+            "DirEntry": {
+                "added": "3.5"
+            },
+            "scandir": {
+                "added": "3.5"
+            },
+            "get_blocking": {
+                "added": "3.5"
+            },
+            "set_blocking": {
+                "added": "3.5"
+            },
+            "path.commonpath": {
+                "added": "3.5"
+            },
+            "GRND_NONBLOCK": {
+                "added": "3.6"
+            },
+            "GRND_RANDOM": {
+                "added": "3.6"
+            },
+            "PathLike": {
+                "added": "3.6"
+            },
+            "fspath": {
+                "added": "3.6"
+            },
+            "getrandom": {
+                "added": "3.6"
+            },
+            "RWF_NOWAIT": {
+                "added": "3.7"
+            },
+            "RWF_HIPRI": {
+                "added": "3.7"
+            },
+            "RWF_DSYNC": {
+                "added": "3.7"
+            },
+            "RWF_SYNC": {
+                "added": "3.7"
+            },
+            "preadv": {
+                "added": "3.7"
+            },
+            "pwritev": {
+                "added": "3.7"
+            },
+            "register_at_fork": {
+                "added": "3.7"
+            },
+            "MFD_CLOEXEC": {
+                "added": "3.8"
+            },
+            "MFD_ALLOW_SEALING": {
+                "added": "3.8"
+            },
+            "MFD_HUGETLB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_SHIFT": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_MASK": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_64KB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_512KB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_1MB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_2MB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_8MB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_16MB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_32MB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_256MB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_512MB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_1GB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_2GB": {
+                "added": "3.8"
+            },
+            "MFD_HUGE_16GB": {
+                "added": "3.8"
+            },
+            "add_dll_directory": {
+                "added": "3.8"
+            },
+            "copy_file_range": {
+                "added": "3.8"
+            },
+            "memfd_create": {
+                "added": "3.8"
+            },
+            "posix_spawn": {
+                "added": "3.8"
+            },
+            "posix_spawnp": {
+                "added": "3.8"
+            },
+            "CLD_KILLED": {
+                "added": "3.9"
+            },
+            "CLD_STOPPED": {
+                "added": "3.9"
+            },
+            "P_PIDFD": {
+                "added": "3.9"
+            },
+            "pidfd_open": {
+                "added": "3.9"
+            },
+            "putenv": {
+                "added": "3.9"
+            },
+            "unsetenv": {
+                "added": "3.9"
+            },
+            "waitstatus_to_exitcode": {
+                "added": "3.9"
+            },
+            "EFD_CLOEXEC": {
+                "added": "3.10"
+            },
+            "EFD_NONBLOCK": {
+                "added": "3.10"
+            },
+            "EFD_SEMAPHORE": {
+                "added": "3.10"
+            },
+            "O_EVTONLY": {
+                "added": "3.10"
+            },
+            "O_FSYNC": {
+                "added": "3.10"
+            },
+            "O_SYMLINK": {
+                "added": "3.10"
+            },
+            "O_NOFOLLOW_ANY": {
+                "added": "3.10"
+            },
+            "RWF_APPEND": {
+                "added": "3.10"
+            },
+            "SPLICE_F_MOVE": {
+                "added": "3.10"
+            },
+            "SPLICE_F_NONBLOCK": {
+                "added": "3.10"
+            },
+            "SPLICE_F_MORE": {
+                "added": "3.10"
+            },
+            "eventfd": {
+                "added": "3.10"
+            },
+            "eventfd_read": {
+                "added": "3.10"
+            },
+            "eventfd_write": {
+                "added": "3.10"
+            },
+            "splice": {
+                "added": "3.10"
+            },
+            "SF_NOCACHE": {
+                "added": "3.11"
+            },
+            "login_tty": {
+                "added": "3.11"
+            },
+            "PIDFD_NONBLOCK": {
+                "added": "3.12"
+            },
+            "path.isjunction": {
+                "added": "3.12"
+            },
+            "path.splitroot": {
+                "added": "3.12"
+            }
         }
     },
     "os.path": {
-        "added": {
-            "3.5": [
-                "commonpath"
-            ],
-            "3.12": [
-                "isjunction",
-                "splitroot"
-            ]
+        "attributes": {
+            "commonpath": {
+                "added": "3.5"
+            },
+            "isjunction": {
+                "added": "3.12"
+            },
+            "splitroot": {
+                "added": "3.12"
+            }
         }
     },
     "ossaudiodev": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "pathlib": {
-        "module_created": "3.4"
+        "module": {
+            "added": "3.4"
+        }
     },
     "pickle": {
-        "added": {
-            "3.8": [
-                "PickleBuffer"
-            ]
+        "attributes": {
+            "PickleBuffer": {
+                "added": "3.8"
+            }
         }
     },
     "pipes": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "pkgutil": {
-        "added": {
-            "3.6": [
-                "ModuleInfo"
-            ],
-            "3.9": [
-                "resolve_name"
-            ]
-        },
-        "deprecated": {
-            "3.3": [
-                "ImpImporter",
-                "ImpLoader"
-            ]
+        "attributes": {
+            "ModuleInfo": {
+                "added": "3.6"
+            },
+            "resolve_name": {
+                "added": "3.9"
+            },
+            "ImpImporter": {
+                "deprecated": "3.3"
+            },
+            "ImpLoader": {
+                "deprecated": "3.3"
+            }
         }
     },
     "platform": {
-        "added": {
-            "3.8": [
-                "win32_edition",
-                "win32_is_iot"
-            ],
-            "3.10": [
-                "freedesktop_os_release"
-            ]
+        "attributes": {
+            "win32_edition": {
+                "added": "3.8"
+            },
+            "win32_is_iot": {
+                "added": "3.8"
+            },
+            "freedesktop_os_release": {
+                "added": "3.10"
+            }
         }
     },
     "plistlib": {
-        "added": {
-            "3.4": [
-                "FMT_BINARY",
-                "FMT_XML",
-                "load",
-                "loads",
-                "dump",
-                "dumps"
-            ],
-            "3.8": [
-                "UID"
-            ]
+        "attributes": {
+            "FMT_BINARY": {
+                "added": "3.4"
+            },
+            "FMT_XML": {
+                "added": "3.4"
+            },
+            "load": {
+                "added": "3.4"
+            },
+            "loads": {
+                "added": "3.4"
+            },
+            "dump": {
+                "added": "3.4"
+            },
+            "dumps": {
+                "added": "3.4"
+            },
+            "UID": {
+                "added": "3.8"
+            }
         }
     },
     "pprint": {
-        "added": {
-            "3.8": [
-                "pp"
-            ]
+        "attributes": {
+            "pp": {
+                "added": "3.8"
+            }
         }
     },
     "py_compile": {
-        "added": {
-            "3.7": [
-                "PycInvalidationMode"
-            ]
+        "attributes": {
+            "PycInvalidationMode": {
+                "added": "3.7"
+            }
         }
     },
     "queue": {
-        "added": {
-            "3.7": [
-                "SimpleQueue"
-            ]
+        "attributes": {
+            "SimpleQueue": {
+                "added": "3.7"
+            }
         }
     },
     "random": {
-        "added": {
-            "3.6": [
-                "choices"
-            ],
-            "3.9": [
-                "randbytes"
-            ]
+        "attributes": {
+            "choices": {
+                "added": "3.6"
+            },
+            "randbytes": {
+                "added": "3.9"
+            }
         }
     },
     "re": {
-        "added": {
-            "3.4": [
-                "fullmatch"
-            ],
-            "3.11": [
-                "NOFLAG"
-            ]
+        "attributes": {
+            "fullmatch": {
+                "added": "3.4"
+            },
+            "NOFLAG": {
+                "added": "3.11"
+            }
         }
     },
     "readline": {
-        "added": {
-            "3.5": [
-                "append_history_file"
-            ],
-            "3.6": [
-                "set_auto_history"
-            ]
+        "attributes": {
+            "append_history_file": {
+                "added": "3.5"
+            },
+            "set_auto_history": {
+                "added": "3.6"
+            }
         }
     },
     "reprlib": {
-        "added": {
-            "3.2": [
-                "recursive_repr"
-            ]
+        "attributes": {
+            "recursive_repr": {
+                "added": "3.2"
+            }
         }
     },
     "resource": {
-        "added": {
-            "3.2": [
-                "RUSAGE_THREAD"
-            ],
-            "3.4": [
-                "RLIMIT_MSGQUEUE",
-                "RLIMIT_NICE",
-                "RLIMIT_RTPRIO",
-                "RLIMIT_RTTIME",
-                "RLIMIT_SIGPENDING",
-                "RLIMIT_SBSIZE",
-                "RLIMIT_SWAP",
-                "RLIMIT_NPTS",
-                "prlimit"
-            ],
-            "3.10": [
-                "RLIMIT_KQUEUES"
-            ]
+        "attributes": {
+            "RUSAGE_THREAD": {
+                "added": "3.2"
+            },
+            "RLIMIT_MSGQUEUE": {
+                "added": "3.4"
+            },
+            "RLIMIT_NICE": {
+                "added": "3.4"
+            },
+            "RLIMIT_RTPRIO": {
+                "added": "3.4"
+            },
+            "RLIMIT_RTTIME": {
+                "added": "3.4"
+            },
+            "RLIMIT_SIGPENDING": {
+                "added": "3.4"
+            },
+            "RLIMIT_SBSIZE": {
+                "added": "3.4"
+            },
+            "RLIMIT_SWAP": {
+                "added": "3.4"
+            },
+            "RLIMIT_NPTS": {
+                "added": "3.4"
+            },
+            "prlimit": {
+                "added": "3.4"
+            },
+            "RLIMIT_KQUEUES": {
+                "added": "3.10"
+            }
         }
     },
     "runpy": {
-        "added": {
-            "3.2": [
-                "run_path"
-            ]
+        "attributes": {
+            "run_path": {
+                "added": "3.2"
+            }
         }
     },
     "secrets": {
-        "module_created": "3.6"
+        "module": {
+            "added": "3.6"
+        }
     },
     "select": {
-        "added": {
-            "3.2": [
-                "PIPE_BUF"
-            ],
-            "3.3": [
-                "devpoll"
-            ],
-            "3.6": [
-                "EPOLLEXCLUSIVE"
-            ]
+        "attributes": {
+            "PIPE_BUF": {
+                "added": "3.2"
+            },
+            "devpoll": {
+                "added": "3.3"
+            },
+            "EPOLLEXCLUSIVE": {
+                "added": "3.6"
+            }
         }
     },
     "selectors": {
-        "module_created": "3.4",
-        "added": {
-            "3.5": [
-                "DevpollSelector"
-            ]
+        "module": {
+            "added": "3.4"
+        },
+        "attributes": {
+            "DevpollSelector": {
+                "added": "3.5"
+            }
         }
     },
     "shlex": {
-        "added": {
-            "3.3": [
-                "quote"
-            ],
-            "3.8": [
-                "join"
-            ]
+        "attributes": {
+            "quote": {
+                "added": "3.3"
+            },
+            "join": {
+                "added": "3.8"
+            }
         }
     },
     "shutil": {
-        "added": {
-            "3.2": [
-                "get_archive_formats",
-                "get_unpack_formats",
-                "make_archive",
-                "register_archive_format",
-                "register_unpack_format",
-                "unpack_archive",
-                "unregister_archive_format",
-                "unregister_unpack_format"
-            ],
-            "3.3": [
-                "chown",
-                "disk_usage",
-                "get_terminal_size",
-                "rmtree.avoids_symlink_attacks",
-                "which"
-            ],
-            "3.4": [
-                "SameFileError"
-            ]
+        "attributes": {
+            "get_archive_formats": {
+                "added": "3.2"
+            },
+            "get_unpack_formats": {
+                "added": "3.2"
+            },
+            "make_archive": {
+                "added": "3.2"
+            },
+            "register_archive_format": {
+                "added": "3.2"
+            },
+            "register_unpack_format": {
+                "added": "3.2"
+            },
+            "unpack_archive": {
+                "added": "3.2"
+            },
+            "unregister_archive_format": {
+                "added": "3.2"
+            },
+            "unregister_unpack_format": {
+                "added": "3.2"
+            },
+            "chown": {
+                "added": "3.3"
+            },
+            "disk_usage": {
+                "added": "3.3"
+            },
+            "get_terminal_size": {
+                "added": "3.3"
+            },
+            "rmtree.avoids_symlink_attacks": {
+                "added": "3.3"
+            },
+            "which": {
+                "added": "3.3"
+            },
+            "SameFileError": {
+                "added": "3.4"
+            }
         }
     },
     "signal": {
-        "added": {
-            "3.2": [
-                "CTRL_C_EVENT",
-                "CTRL_BREAK_EVENT"
-            ],
-            "3.3": [
-                "SIG_BLOCK",
-                "SIG_UNBLOCK",
-                "SIG_SETMASK",
-                "pthread_kill",
-                "pthread_sigmask",
-                "sigpending",
-                "sigwait",
-                "sigwaitinfo",
-                "sigtimedwait"
-            ],
-            "3.5": [
-                "Signals",
-                "Handlers",
-                "Sigmasks"
-            ],
-            "3.8": [
-                "strsignal",
-                "valid_signals",
-                "raise_signal"
-            ],
-            "3.9": [
-                "pidfd_send_signal"
-            ],
-            "3.11": [
-                "SIGSTKFLT"
-            ]
+        "attributes": {
+            "CTRL_C_EVENT": {
+                "added": "3.2"
+            },
+            "CTRL_BREAK_EVENT": {
+                "added": "3.2"
+            },
+            "SIG_BLOCK": {
+                "added": "3.3"
+            },
+            "SIG_UNBLOCK": {
+                "added": "3.3"
+            },
+            "SIG_SETMASK": {
+                "added": "3.3"
+            },
+            "pthread_kill": {
+                "added": "3.3"
+            },
+            "pthread_sigmask": {
+                "added": "3.3"
+            },
+            "sigpending": {
+                "added": "3.3"
+            },
+            "sigwait": {
+                "added": "3.3"
+            },
+            "sigwaitinfo": {
+                "added": "3.3"
+            },
+            "sigtimedwait": {
+                "added": "3.3"
+            },
+            "Signals": {
+                "added": "3.5"
+            },
+            "Handlers": {
+                "added": "3.5"
+            },
+            "Sigmasks": {
+                "added": "3.5"
+            },
+            "strsignal": {
+                "added": "3.8"
+            },
+            "valid_signals": {
+                "added": "3.8"
+            },
+            "raise_signal": {
+                "added": "3.8"
+            },
+            "pidfd_send_signal": {
+                "added": "3.9"
+            },
+            "SIGSTKFLT": {
+                "added": "3.11"
+            }
         }
     },
     "site": {
-        "added": {
-            "3.2": [
-                "getsitepackages",
-                "getuserbase",
-                "getusersitepackages"
-            ]
+        "attributes": {
+            "getsitepackages": {
+                "added": "3.2"
+            },
+            "getuserbase": {
+                "added": "3.2"
+            },
+            "getusersitepackages": {
+                "added": "3.2"
+            }
         }
     },
     "smtpd": {
-        "module_deprecated": "3.6",
-        "module_removed": "3.12"
+        "module": {
+            "deprecated": "3.6",
+            "removed": "3.12"
+        }
     },
     "smtplib": {
-        "added": {
-            "3.5": [
-                "SMTPNotSupportedError"
-            ]
+        "attributes": {
+            "SMTPNotSupportedError": {
+                "added": "3.5"
+            }
         }
     },
     "sndhdr": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.12"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.12"
+        }
     },
     "socket": {
-        "added": {
-            "3.2": [
-                "SOCK_CLOEXEC",
-                "SOCK_NONBLOCK"
-            ],
-            "3.3": [
-                "AF_RDS",
-                "CMSG_LEN",
-                "CMSG_SPACE",
-                "fromshare",
-                "if_nameindex",
-                "if_nametoindex",
-                "if_indextoname",
-                "sethostname"
-            ],
-            "3.4": [
-                "AF_LINK",
-                "CAN_BCM",
-                "CAN_BCM_RX_CHANGED",
-                "CAN_BCM_RX_DELETE",
-                "CAN_BCM_RX_READ",
-                "CAN_BCM_RX_SETUP",
-                "CAN_BCM_RX_STATUS",
-                "CAN_BCM_RX_TIMEOUT",
-                "CAN_BCM_TX_DELETE",
-                "CAN_BCM_TX_EXPIRED",
-                "CAN_BCM_TX_READ",
-                "CAN_BCM_TX_SEND",
-                "CAN_BCM_TX_SETUP",
-                "CAN_BCM_TX_STATUS"
-            ],
-            "3.5": [
-                "CAN_RAW_FD_FRAMES"
-            ],
-            "3.6": [
-                "AF_ALG",
-                "SOL_ALG",
-                "SIO_LOOPBACK_FAST_PATH",
-                "SO_DOMAIN",
-                "SO_PROTOCOL",
-                "SO_PEERSEC",
-                "SO_PASSSEC",
-                "TCP_USER_TIMEOUT",
-                "TCP_CONGESTION"
-            ],
-            "3.7": [
-                "AF_VSOCK",
-                "IOCTL_VM_SOCKETS_GET_LOCAL_CID",
-                "CAN_ISOTP",
-                "TCP_NOTSENT_LOWAT",
-                "close"
-            ],
-            "3.8": [
-                "AF_QIPCRTR",
-                "create_server",
-                "has_dualstack_ipv6"
-            ],
-            "3.9": [
-                "CAN_RAW_JOIN_FILTERS",
-                "CAN_J1939",
-                "IPPROTO_UDPLITE",
-                "send_fds",
-                "recv_fds"
-            ],
-            "3.11": [
-                "SCM_CREDS2",
-                "LOCAL_CREDS",
-                "LOCAL_CREDS_PERSISTENT",
-                "SO_INCOMING_CPU",
-                "TCP_CONNECTION_INFO"
-            ]
+        "attributes": {
+            "SOCK_CLOEXEC": {
+                "added": "3.2"
+            },
+            "SOCK_NONBLOCK": {
+                "added": "3.2"
+            },
+            "AF_RDS": {
+                "added": "3.3"
+            },
+            "CMSG_LEN": {
+                "added": "3.3"
+            },
+            "CMSG_SPACE": {
+                "added": "3.3"
+            },
+            "fromshare": {
+                "added": "3.3"
+            },
+            "if_nameindex": {
+                "added": "3.3"
+            },
+            "if_nametoindex": {
+                "added": "3.3"
+            },
+            "if_indextoname": {
+                "added": "3.3"
+            },
+            "sethostname": {
+                "added": "3.3"
+            },
+            "AF_LINK": {
+                "added": "3.4"
+            },
+            "CAN_BCM": {
+                "added": "3.4"
+            },
+            "CAN_BCM_RX_CHANGED": {
+                "added": "3.4"
+            },
+            "CAN_BCM_RX_DELETE": {
+                "added": "3.4"
+            },
+            "CAN_BCM_RX_READ": {
+                "added": "3.4"
+            },
+            "CAN_BCM_RX_SETUP": {
+                "added": "3.4"
+            },
+            "CAN_BCM_RX_STATUS": {
+                "added": "3.4"
+            },
+            "CAN_BCM_RX_TIMEOUT": {
+                "added": "3.4"
+            },
+            "CAN_BCM_TX_DELETE": {
+                "added": "3.4"
+            },
+            "CAN_BCM_TX_EXPIRED": {
+                "added": "3.4"
+            },
+            "CAN_BCM_TX_READ": {
+                "added": "3.4"
+            },
+            "CAN_BCM_TX_SEND": {
+                "added": "3.4"
+            },
+            "CAN_BCM_TX_SETUP": {
+                "added": "3.4"
+            },
+            "CAN_BCM_TX_STATUS": {
+                "added": "3.4"
+            },
+            "CAN_RAW_FD_FRAMES": {
+                "added": "3.5"
+            },
+            "AF_ALG": {
+                "added": "3.6"
+            },
+            "SOL_ALG": {
+                "added": "3.6"
+            },
+            "SIO_LOOPBACK_FAST_PATH": {
+                "added": "3.6"
+            },
+            "SO_DOMAIN": {
+                "added": "3.6"
+            },
+            "SO_PROTOCOL": {
+                "added": "3.6"
+            },
+            "SO_PEERSEC": {
+                "added": "3.6"
+            },
+            "SO_PASSSEC": {
+                "added": "3.6"
+            },
+            "TCP_USER_TIMEOUT": {
+                "added": "3.6"
+            },
+            "TCP_CONGESTION": {
+                "added": "3.6"
+            },
+            "AF_VSOCK": {
+                "added": "3.7"
+            },
+            "IOCTL_VM_SOCKETS_GET_LOCAL_CID": {
+                "added": "3.7"
+            },
+            "CAN_ISOTP": {
+                "added": "3.7"
+            },
+            "TCP_NOTSENT_LOWAT": {
+                "added": "3.7"
+            },
+            "close": {
+                "added": "3.7"
+            },
+            "AF_QIPCRTR": {
+                "added": "3.8"
+            },
+            "create_server": {
+                "added": "3.8"
+            },
+            "has_dualstack_ipv6": {
+                "added": "3.8"
+            },
+            "CAN_RAW_JOIN_FILTERS": {
+                "added": "3.9"
+            },
+            "CAN_J1939": {
+                "added": "3.9"
+            },
+            "IPPROTO_UDPLITE": {
+                "added": "3.9"
+            },
+            "send_fds": {
+                "added": "3.9"
+            },
+            "recv_fds": {
+                "added": "3.9"
+            },
+            "SCM_CREDS2": {
+                "added": "3.11"
+            },
+            "LOCAL_CREDS": {
+                "added": "3.11"
+            },
+            "LOCAL_CREDS_PERSISTENT": {
+                "added": "3.11"
+            },
+            "SO_INCOMING_CPU": {
+                "added": "3.11"
+            },
+            "TCP_CONNECTION_INFO": {
+                "added": "3.11"
+            }
         }
     },
     "spwd": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "sqlite3": {
-        "added": {
-            "3.11": [
-                "Blob"
-            ]
+        "attributes": {
+            "Blob": {
+                "added": "3.11"
+            }
         }
     },
     "ssl": {
-        "added": {
-            "3.2": [
-                "HAS_SNI",
-                "OPENSSL_VERSION",
-                "OPENSSL_VERSION_INFO",
-                "OPENSSL_VERSION_NUMBER",
-                "OP_ALL",
-                "OP_NO_SSLv2",
-                "OP_NO_SSLv3",
-                "OP_NO_TLSv1",
-                "SSLContext",
-                "match_hostname"
-            ],
-            "3.3": [
-                "CHANNEL_BINDING_TYPES",
-                "HAS_ECDH",
-                "HAS_NPN",
-                "OP_CIPHER_SERVER_PREFERENCE",
-                "OP_SINGLE_DH_USE",
-                "OP_SINGLE_ECDH_USE",
-                "OP_NO_COMPRESSION",
-                "SSLZeroReturnError",
-                "SSLWantReadError",
-                "SSLWantWriteError",
-                "SSLSyscallError",
-                "SSLEOFError",
-                "RAND_bytes",
-                "RAND_pseudo_bytes"
-            ],
-            "3.4": [
-                "ALERT_DESCRIPTION_ACCESS_DENIED",
-                "ALERT_DESCRIPTION_BAD_CERTIFICATE",
-                "ALERT_DESCRIPTION_BAD_CERTIFICATE_HASH_VALUE",
-                "ALERT_DESCRIPTION_BAD_CERTIFICATE_STATUS_RESPONSE",
-                "ALERT_DESCRIPTION_BAD_RECORD_MAC",
-                "ALERT_DESCRIPTION_CERTIFICATE_EXPIRED",
-                "ALERT_DESCRIPTION_CERTIFICATE_REVOKED",
-                "ALERT_DESCRIPTION_CERTIFICATE_UNKNOWN",
-                "ALERT_DESCRIPTION_CERTIFICATE_UNOBTAINABLE",
-                "ALERT_DESCRIPTION_CLOSE_NOTIFY",
-                "ALERT_DESCRIPTION_DECODE_ERROR",
-                "ALERT_DESCRIPTION_DECOMPRESSION_FAILURE",
-                "ALERT_DESCRIPTION_DECRYPT_ERROR",
-                "ALERT_DESCRIPTION_HANDSHAKE_FAILURE",
-                "ALERT_DESCRIPTION_ILLEGAL_PARAMETER",
-                "ALERT_DESCRIPTION_INSUFFICIENT_SECURITY",
-                "ALERT_DESCRIPTION_INTERNAL_ERROR",
-                "ALERT_DESCRIPTION_NO_RENEGOTIATION",
-                "ALERT_DESCRIPTION_PROTOCOL_VERSION",
-                "ALERT_DESCRIPTION_RECORD_OVERFLOW",
-                "ALERT_DESCRIPTION_UNEXPECTED_MESSAGE",
-                "ALERT_DESCRIPTION_UNKNOWN_CA",
-                "ALERT_DESCRIPTION_UNKNOWN_PSK_IDENTITY",
-                "ALERT_DESCRIPTION_UNRECOGNIZED_NAME",
-                "ALERT_DESCRIPTION_UNSUPPORTED_CERTIFICATE",
-                "ALERT_DESCRIPTION_UNSUPPORTED_EXTENSION",
-                "ALERT_DESCRIPTION_USER_CANCELLED",
-                "OP_NO_TLSv1_1",
-                "OP_NO_TLSv1_2",
-                "PROTOCOL_TLSv1_1",
-                "PROTOCOL_TLSv1_2",
-                "VERIFY_DEFAULT",
-                "VERIFY_CRL_CHECK_LEAF",
-                "VERIFY_CRL_CHECK_CHAIN",
-                "VERIFY_X509_STRICT",
-                "Purpose.SERVER_AUTH",
-                "Purpose.CLIENT_AUTH",
-                "create_default_context",
-                "enum_certificates",
-                "enum_crls",
-                "get_default_verify_paths"
-            ],
-            "3.4.4": [
-                "VERIFY_X509_TRUSTED_FIRST"
-            ],
-            "3.5": [
-                "HAS_ALPN",
-                "MemoryBIO",
-                "SSLObject"
-            ],
-            "3.6": [
-                "OP_NO_TICKET",
-                "PROTOCOL_TLS",
-                "PROTOCOL_TLS_CLIENT",
-                "PROTOCOL_TLS_SERVER",
-                "AlertDescription",
-                "VerifyFlags",
-                "VerifyMode",
-                "SSLErrorNumber",
-                "SSLSession"
-            ],
-            "3.7": [
-                "HAS_NEVER_CHECK_COMMON_NAME",
-                "HAS_SSLv2",
-                "HAS_SSLv3",
-                "HAS_TLSv1",
-                "HAS_TLSv1_1",
-                "HAS_TLSv1_2",
-                "HAS_TLSv1_3",
-                "OP_NO_TLSv1_3",
-                "OP_NO_RENEGOTIATION",
-                "SSLCertVerificationError",
-                "TLSVersion"
-            ],
-            "3.8": [
-                "OP_ENABLE_MIDDLEBOX_COMPAT"
-            ],
-            "3.10": [
-                "OP_IGNORE_UNEXPECTED_EOF",
-                "VERIFY_ALLOW_PROXY_CERTS",
-                "VERIFY_X509_PARTIAL_CHAIN"
-            ]
-        },
-        "deprecated": {
-            "3.6": [
-                "OP_NO_SSLv2",
-                "OP_NO_SSLv3",
-                "OP_NO_TLSv1_3",
-                "PROTOCOL_SSLv2",
-                "PROTOCOL_SSLv23",
-                "PROTOCOL_SSLv3",
-                "PROTOCOL_TLSv1",
-                "PROTOCOL_TLSv1_1",
-                "PROTOCOL_TLSv1_2",
-                "RAND_pseudo_bytes"
-            ],
-            "3.7": [
-                "OP_NO_TLSv1",
-                "OP_NO_TLSv1_1",
-                "OP_NO_TLSv1_2",
-                "match_hostname",
-                "wrap_socket"
-            ],
-            "3.10": [
-                "PROTOCOL_TLS",
-                "TLSVersion.SSLv3",
-                "TLSVersion.TLSv1",
-                "TLSVersion.TLSv1_1"
-            ]
+        "attributes": {
+            "HAS_SNI": {
+                "added": "3.2"
+            },
+            "OPENSSL_VERSION": {
+                "added": "3.2"
+            },
+            "OPENSSL_VERSION_INFO": {
+                "added": "3.2"
+            },
+            "OPENSSL_VERSION_NUMBER": {
+                "added": "3.2"
+            },
+            "OP_ALL": {
+                "added": "3.2"
+            },
+            "OP_NO_SSLv2": {
+                "added": "3.2",
+                "deprecated": "3.6"
+            },
+            "OP_NO_SSLv3": {
+                "added": "3.2",
+                "deprecated": "3.6"
+            },
+            "OP_NO_TLSv1": {
+                "added": "3.2",
+                "deprecated": "3.7"
+            },
+            "SSLContext": {
+                "added": "3.2"
+            },
+            "match_hostname": {
+                "added": "3.2",
+                "deprecated": "3.7"
+            },
+            "CHANNEL_BINDING_TYPES": {
+                "added": "3.3"
+            },
+            "HAS_ECDH": {
+                "added": "3.3"
+            },
+            "HAS_NPN": {
+                "added": "3.3"
+            },
+            "OP_CIPHER_SERVER_PREFERENCE": {
+                "added": "3.3"
+            },
+            "OP_SINGLE_DH_USE": {
+                "added": "3.3"
+            },
+            "OP_SINGLE_ECDH_USE": {
+                "added": "3.3"
+            },
+            "OP_NO_COMPRESSION": {
+                "added": "3.3"
+            },
+            "SSLZeroReturnError": {
+                "added": "3.3"
+            },
+            "SSLWantReadError": {
+                "added": "3.3"
+            },
+            "SSLWantWriteError": {
+                "added": "3.3"
+            },
+            "SSLSyscallError": {
+                "added": "3.3"
+            },
+            "SSLEOFError": {
+                "added": "3.3"
+            },
+            "RAND_bytes": {
+                "added": "3.3"
+            },
+            "RAND_pseudo_bytes": {
+                "added": "3.3",
+                "deprecated": "3.6"
+            },
+            "ALERT_DESCRIPTION_ACCESS_DENIED": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_BAD_CERTIFICATE": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_BAD_CERTIFICATE_HASH_VALUE": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_BAD_CERTIFICATE_STATUS_RESPONSE": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_BAD_RECORD_MAC": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_CERTIFICATE_EXPIRED": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_CERTIFICATE_REVOKED": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_CERTIFICATE_UNKNOWN": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_CERTIFICATE_UNOBTAINABLE": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_CLOSE_NOTIFY": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_DECODE_ERROR": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_DECOMPRESSION_FAILURE": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_DECRYPT_ERROR": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_HANDSHAKE_FAILURE": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_ILLEGAL_PARAMETER": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_INSUFFICIENT_SECURITY": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_INTERNAL_ERROR": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_NO_RENEGOTIATION": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_PROTOCOL_VERSION": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_RECORD_OVERFLOW": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_UNEXPECTED_MESSAGE": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_UNKNOWN_CA": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_UNKNOWN_PSK_IDENTITY": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_UNRECOGNIZED_NAME": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_UNSUPPORTED_CERTIFICATE": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_UNSUPPORTED_EXTENSION": {
+                "added": "3.4"
+            },
+            "ALERT_DESCRIPTION_USER_CANCELLED": {
+                "added": "3.4"
+            },
+            "OP_NO_TLSv1_1": {
+                "added": "3.4",
+                "deprecated": "3.7"
+            },
+            "OP_NO_TLSv1_2": {
+                "added": "3.4",
+                "deprecated": "3.7"
+            },
+            "PROTOCOL_TLSv1_1": {
+                "added": "3.4",
+                "deprecated": "3.6"
+            },
+            "PROTOCOL_TLSv1_2": {
+                "added": "3.4",
+                "deprecated": "3.6"
+            },
+            "VERIFY_DEFAULT": {
+                "added": "3.4"
+            },
+            "VERIFY_CRL_CHECK_LEAF": {
+                "added": "3.4"
+            },
+            "VERIFY_CRL_CHECK_CHAIN": {
+                "added": "3.4"
+            },
+            "VERIFY_X509_STRICT": {
+                "added": "3.4"
+            },
+            "Purpose.SERVER_AUTH": {
+                "added": "3.4"
+            },
+            "Purpose.CLIENT_AUTH": {
+                "added": "3.4"
+            },
+            "create_default_context": {
+                "added": "3.4"
+            },
+            "enum_certificates": {
+                "added": "3.4"
+            },
+            "enum_crls": {
+                "added": "3.4"
+            },
+            "get_default_verify_paths": {
+                "added": "3.4"
+            },
+            "VERIFY_X509_TRUSTED_FIRST": {
+                "added": "3.4.4"
+            },
+            "HAS_ALPN": {
+                "added": "3.5"
+            },
+            "MemoryBIO": {
+                "added": "3.5"
+            },
+            "SSLObject": {
+                "added": "3.5"
+            },
+            "OP_NO_TICKET": {
+                "added": "3.6"
+            },
+            "PROTOCOL_TLS": {
+                "added": "3.6",
+                "deprecated": "3.10"
+            },
+            "PROTOCOL_TLS_CLIENT": {
+                "added": "3.6"
+            },
+            "PROTOCOL_TLS_SERVER": {
+                "added": "3.6"
+            },
+            "AlertDescription": {
+                "added": "3.6"
+            },
+            "VerifyFlags": {
+                "added": "3.6"
+            },
+            "VerifyMode": {
+                "added": "3.6"
+            },
+            "SSLErrorNumber": {
+                "added": "3.6"
+            },
+            "SSLSession": {
+                "added": "3.6"
+            },
+            "HAS_NEVER_CHECK_COMMON_NAME": {
+                "added": "3.7"
+            },
+            "HAS_SSLv2": {
+                "added": "3.7"
+            },
+            "HAS_SSLv3": {
+                "added": "3.7"
+            },
+            "HAS_TLSv1": {
+                "added": "3.7"
+            },
+            "HAS_TLSv1_1": {
+                "added": "3.7"
+            },
+            "HAS_TLSv1_2": {
+                "added": "3.7"
+            },
+            "HAS_TLSv1_3": {
+                "added": "3.7"
+            },
+            "OP_NO_TLSv1_3": {
+                "added": "3.7",
+                "deprecated": "3.6"
+            },
+            "OP_NO_RENEGOTIATION": {
+                "added": "3.7"
+            },
+            "SSLCertVerificationError": {
+                "added": "3.7"
+            },
+            "TLSVersion": {
+                "added": "3.7"
+            },
+            "OP_ENABLE_MIDDLEBOX_COMPAT": {
+                "added": "3.8"
+            },
+            "OP_IGNORE_UNEXPECTED_EOF": {
+                "added": "3.10"
+            },
+            "VERIFY_ALLOW_PROXY_CERTS": {
+                "added": "3.10"
+            },
+            "VERIFY_X509_PARTIAL_CHAIN": {
+                "added": "3.10"
+            },
+            "PROTOCOL_SSLv2": {
+                "deprecated": "3.6"
+            },
+            "PROTOCOL_SSLv23": {
+                "deprecated": "3.6"
+            },
+            "PROTOCOL_SSLv3": {
+                "deprecated": "3.6"
+            },
+            "PROTOCOL_TLSv1": {
+                "deprecated": "3.6"
+            },
+            "wrap_socket": {
+                "deprecated": "3.7"
+            },
+            "TLSVersion.SSLv3": {
+                "deprecated": "3.10"
+            },
+            "TLSVersion.TLSv1": {
+                "deprecated": "3.10"
+            },
+            "TLSVersion.TLSv1_1": {
+                "deprecated": "3.10"
+            }
         }
     },
     "stat": {
-        "added": {
-            "3.3": [
-                "filemode"
-            ],
-            "3.4": [
-                "S_IFDOOR",
-                "S_IFPORT",
-                "S_IFWHT",
-                "S_ISDOOR",
-                "S_ISPORT",
-                "S_ISWHT"
-            ],
-            "3.5": [
-                "FILE_ATTRIBUTE_ARCHIVE",
-                "FILE_ATTRIBUTE_COMPRESSED",
-                "FILE_ATTRIBUTE_DEVICE",
-                "FILE_ATTRIBUTE_DIRECTORY",
-                "FILE_ATTRIBUTE_ENCRYPTED",
-                "FILE_ATTRIBUTE_HIDDEN",
-                "FILE_ATTRIBUTE_INTEGRITY_STREAM",
-                "FILE_ATTRIBUTE_NORMAL",
-                "FILE_ATTRIBUTE_NOT_CONTENT_INDEXED",
-                "FILE_ATTRIBUTE_NO_SCRUB_DATA",
-                "FILE_ATTRIBUTE_OFFLINE",
-                "FILE_ATTRIBUTE_READONLY",
-                "FILE_ATTRIBUTE_REPARSE_POINT",
-                "FILE_ATTRIBUTE_SPARSE_FILE",
-                "FILE_ATTRIBUTE_SYSTEM",
-                "FILE_ATTRIBUTE_TEMPORARY",
-                "FILE_ATTRIBUTE_VIRTUAL"
-            ],
-            "3.8": [
-                "IO_REPARSE_TAG_SYMLINK",
-                "IO_REPARSE_TAG_MOUNT_POINT",
-                "IO_REPARSE_TAG_APPEXECLIN"
-            ]
+        "attributes": {
+            "filemode": {
+                "added": "3.3"
+            },
+            "S_IFDOOR": {
+                "added": "3.4"
+            },
+            "S_IFPORT": {
+                "added": "3.4"
+            },
+            "S_IFWHT": {
+                "added": "3.4"
+            },
+            "S_ISDOOR": {
+                "added": "3.4"
+            },
+            "S_ISPORT": {
+                "added": "3.4"
+            },
+            "S_ISWHT": {
+                "added": "3.4"
+            },
+            "FILE_ATTRIBUTE_ARCHIVE": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_COMPRESSED": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_DEVICE": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_DIRECTORY": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_ENCRYPTED": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_HIDDEN": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_INTEGRITY_STREAM": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_NORMAL": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_NOT_CONTENT_INDEXED": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_NO_SCRUB_DATA": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_OFFLINE": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_READONLY": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_REPARSE_POINT": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_SPARSE_FILE": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_SYSTEM": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_TEMPORARY": {
+                "added": "3.5"
+            },
+            "FILE_ATTRIBUTE_VIRTUAL": {
+                "added": "3.5"
+            },
+            "IO_REPARSE_TAG_SYMLINK": {
+                "added": "3.8"
+            },
+            "IO_REPARSE_TAG_MOUNT_POINT": {
+                "added": "3.8"
+            },
+            "IO_REPARSE_TAG_APPEXECLIN": {
+                "added": "3.8"
+            }
         }
     },
     "statistics": {
-        "module_created": "3.4",
-        "added": {
-            "3.6": [
-                "harmonic_mean"
-            ],
-            "3.8": [
-                "NormalDist",
-                "fmean",
-                "geometric_mean",
-                "multimode",
-                "quantiles"
-            ],
-            "3.10": [
-                "covariance",
-                "correlation",
-                "linear_regression"
-            ]
+        "module": {
+            "added": "3.4"
+        },
+        "attributes": {
+            "harmonic_mean": {
+                "added": "3.6"
+            },
+            "NormalDist": {
+                "added": "3.8"
+            },
+            "fmean": {
+                "added": "3.8"
+            },
+            "geometric_mean": {
+                "added": "3.8"
+            },
+            "multimode": {
+                "added": "3.8"
+            },
+            "quantiles": {
+                "added": "3.8"
+            },
+            "covariance": {
+                "added": "3.10"
+            },
+            "correlation": {
+                "added": "3.10"
+            },
+            "linear_regression": {
+                "added": "3.10"
+            }
         }
     },
     "string": {
-        "added": {
-            "3.11": [
-                "get_identifiers",
-                "is_valid"
-            ]
+        "attributes": {
+            "get_identifiers": {
+                "added": "3.11"
+            },
+            "is_valid": {
+                "added": "3.11"
+            }
         }
     },
     "struct": {
-        "added": {
-            "3.4": [
-                "iter_unpack"
-            ]
+        "attributes": {
+            "iter_unpack": {
+                "added": "3.4"
+            }
         }
     },
     "subprocess": {
-        "added": {
-            "3.1": [
-                "check_output"
-            ],
-            "3.3": [
-                "DEVNULL",
-                "SubprocessError",
-                "TimeoutExpired"
-            ],
-            "3.5": [
-                "CompletedProcess",
-                "run"
-            ],
-            "3.7": [
-                "ABOVE_NORMAL_PRIORITY_CLASS",
-                "BELOW_NORMAL_PRIORITY_CLASS",
-                "HIGH_PRIORITY_CLASS",
-                "IDLE_PRIORITY_CLASS",
-                "NORMAL_PRIORITY_CLASS",
-                "REALTIME_PRIORITY_CLASS",
-                "CREATE_NO_WINDOW",
-                "DETACHED_PROCESS",
-                "CREATE_DEFAULT_ERROR_MODE",
-                "CREATE_BREAKAWAY_FROM_JOB"
-            ],
-            "3.8": [
-                "_USE_POSIX_SPAWN"
-            ],
-            "3.11": [
-                "_USE_VFORK"
-            ]
+        "attributes": {
+            "check_output": {
+                "added": "3.1"
+            },
+            "DEVNULL": {
+                "added": "3.3"
+            },
+            "SubprocessError": {
+                "added": "3.3"
+            },
+            "TimeoutExpired": {
+                "added": "3.3"
+            },
+            "CompletedProcess": {
+                "added": "3.5"
+            },
+            "run": {
+                "added": "3.5"
+            },
+            "ABOVE_NORMAL_PRIORITY_CLASS": {
+                "added": "3.7"
+            },
+            "BELOW_NORMAL_PRIORITY_CLASS": {
+                "added": "3.7"
+            },
+            "HIGH_PRIORITY_CLASS": {
+                "added": "3.7"
+            },
+            "IDLE_PRIORITY_CLASS": {
+                "added": "3.7"
+            },
+            "NORMAL_PRIORITY_CLASS": {
+                "added": "3.7"
+            },
+            "REALTIME_PRIORITY_CLASS": {
+                "added": "3.7"
+            },
+            "CREATE_NO_WINDOW": {
+                "added": "3.7"
+            },
+            "DETACHED_PROCESS": {
+                "added": "3.7"
+            },
+            "CREATE_DEFAULT_ERROR_MODE": {
+                "added": "3.7"
+            },
+            "CREATE_BREAKAWAY_FROM_JOB": {
+                "added": "3.7"
+            },
+            "_USE_POSIX_SPAWN": {
+                "added": "3.8"
+            },
+            "_USE_VFORK": {
+                "added": "3.11"
+            }
         }
     },
     "sunau": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "sys": {
-        "added": {
-            "3.1": [
-                "float_repr_style",
-                "int_info"
-            ],
-            "3.2": [
-                "_xoptions",
-                "abi_flags",
-                "hash_info",
-                "getswitchinterval",
-                "setswitchinterval"
-            ],
-            "3.3": [
-                "_debugmallocstats",
-                "base_exec_prefix",
-                "base_prefix",
-                "implementation",
-                "thread_info"
-            ],
-            "3.4": [
-                "__interactivehook__",
-                "getallocatedblocks"
-            ],
-            "3.5": [
-                "is_finalizing"
-            ],
-            "3.6": [
-                "_enablelegacywindowsfsencoding",
-                "getfilesystemencodeerrors",
-                "get_asyncgen_hooks",
-                "set_asyncgen_hooks"
-            ],
-            "3.7": [
-                "__breakpointhook__",
-                "breakpointhook",
-                "getandroidapilevel",
-                "get_coroutine_origin_tracking_depth",
-                "set_coroutine_origin_tracking_depth"
-            ],
-            "3.8": [
-                "__unraisablehook__",
-                "audit",
-                "addaudithook",
-                "unraisablehook",
-                "pycache_prefix"
-            ],
-            "3.9": [
-                "platlibdir"
-            ],
-            "3.10": [
-                "orig_argv",
-                "stdlib_module_names"
-            ],
-            "3.11": [
-                "_emscripten_info",
-                "exception",
-                "get_int_max_str_digits",
-                "set_int_max_str_digits"
-            ],
-            "3.12": [
-                "activate_stack_trampoline",
-                "deactivate_stack_trampoline",
-                "is_stack_trampoline_active"
-            ]
+        "attributes": {
+            "float_repr_style": {
+                "added": "3.1"
+            },
+            "int_info": {
+                "added": "3.1"
+            },
+            "_xoptions": {
+                "added": "3.2"
+            },
+            "abi_flags": {
+                "added": "3.2"
+            },
+            "hash_info": {
+                "added": "3.2"
+            },
+            "getswitchinterval": {
+                "added": "3.2"
+            },
+            "setswitchinterval": {
+                "added": "3.2"
+            },
+            "_debugmallocstats": {
+                "added": "3.3"
+            },
+            "base_exec_prefix": {
+                "added": "3.3"
+            },
+            "base_prefix": {
+                "added": "3.3"
+            },
+            "implementation": {
+                "added": "3.3"
+            },
+            "thread_info": {
+                "added": "3.3"
+            },
+            "__interactivehook__": {
+                "added": "3.4"
+            },
+            "getallocatedblocks": {
+                "added": "3.4"
+            },
+            "is_finalizing": {
+                "added": "3.5"
+            },
+            "_enablelegacywindowsfsencoding": {
+                "added": "3.6"
+            },
+            "getfilesystemencodeerrors": {
+                "added": "3.6"
+            },
+            "get_asyncgen_hooks": {
+                "added": "3.6"
+            },
+            "set_asyncgen_hooks": {
+                "added": "3.6"
+            },
+            "__breakpointhook__": {
+                "added": "3.7"
+            },
+            "breakpointhook": {
+                "added": "3.7"
+            },
+            "getandroidapilevel": {
+                "added": "3.7"
+            },
+            "get_coroutine_origin_tracking_depth": {
+                "added": "3.7"
+            },
+            "set_coroutine_origin_tracking_depth": {
+                "added": "3.7"
+            },
+            "__unraisablehook__": {
+                "added": "3.8"
+            },
+            "audit": {
+                "added": "3.8"
+            },
+            "addaudithook": {
+                "added": "3.8"
+            },
+            "unraisablehook": {
+                "added": "3.8"
+            },
+            "pycache_prefix": {
+                "added": "3.8"
+            },
+            "platlibdir": {
+                "added": "3.9"
+            },
+            "orig_argv": {
+                "added": "3.10"
+            },
+            "stdlib_module_names": {
+                "added": "3.10"
+            },
+            "_emscripten_info": {
+                "added": "3.11"
+            },
+            "exception": {
+                "added": "3.11"
+            },
+            "get_int_max_str_digits": {
+                "added": "3.11"
+            },
+            "set_int_max_str_digits": {
+                "added": "3.11"
+            },
+            "activate_stack_trampoline": {
+                "added": "3.12"
+            },
+            "deactivate_stack_trampoline": {
+                "added": "3.12"
+            },
+            "is_stack_trampoline_active": {
+                "added": "3.12"
+            }
         }
     },
     "sysconfig": {
-        "module_created": "3.2",
-        "added": {
-            "3.10": [
-                "_get_preferred_schemes",
-                "get_default_scheme",
-                "get_preferred_scheme"
-            ]
+        "module": {
+            "added": "3.2"
+        },
+        "attributes": {
+            "_get_preferred_schemes": {
+                "added": "3.10"
+            },
+            "get_default_scheme": {
+                "added": "3.10"
+            },
+            "get_preferred_scheme": {
+                "added": "3.10"
+            }
         }
     },
     "telnetlib": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "tempfile": {
-        "added": {
-            "3.2": [
-                "TemporaryDirectory"
-            ],
-            "3.5": [
-                "gettempdirb",
-                "gettempprefixb"
-            ]
+        "attributes": {
+            "TemporaryDirectory": {
+                "added": "3.2"
+            },
+            "gettempdirb": {
+                "added": "3.5"
+            },
+            "gettempprefixb": {
+                "added": "3.5"
+            }
         }
     },
     "termios": {
-        "added": {
-            "3.11": [
-                "tcgetwinsize",
-                "tcsetwinsize"
-            ]
+        "attributes": {
+            "tcgetwinsize": {
+                "added": "3.11"
+            },
+            "tcsetwinsize": {
+                "added": "3.11"
+            }
         }
     },
     "test.support.bytecode_helper": {
-        "module_created": "3.9"
+        "module": {
+            "added": "3.9"
+        }
     },
     "test.support.import_helper": {
-        "module_created": "3.10"
+        "module": {
+            "added": "3.10"
+        }
     },
     "test.support": {
-        "added": {
-            "3.5": [
-                "detect_api_mismatch"
-            ],
-            "3.6": [
-                "check__all__"
-            ],
-            "3.8": [
-                "catch_unraisable_exception"
-            ],
-            "3.9": [
-                "print_warning",
-                "wait_process"
-            ],
-            "3.10": [
-                "check_disallow_instantiation",
-                "skip_if_broken_multiprocessing_synchronize"
-            ],
-            "3.11": [
-                "adjust_int_max_str_digits",
-                "flush_std_streams"
-            ]
+        "attributes": {
+            "detect_api_mismatch": {
+                "added": "3.5"
+            },
+            "check__all__": {
+                "added": "3.6"
+            },
+            "catch_unraisable_exception": {
+                "added": "3.8"
+            },
+            "print_warning": {
+                "added": "3.9"
+            },
+            "wait_process": {
+                "added": "3.9"
+            },
+            "check_disallow_instantiation": {
+                "added": "3.10"
+            },
+            "skip_if_broken_multiprocessing_synchronize": {
+                "added": "3.10"
+            },
+            "adjust_int_max_str_digits": {
+                "added": "3.11"
+            },
+            "flush_std_streams": {
+                "added": "3.11"
+            }
         }
     },
     "test.support.os_helper": {
-        "module_created": "3.10"
+        "module": {
+            "added": "3.10"
+        }
     },
     "test.support.socket_helper": {
-        "module_created": "3.9"
+        "module": {
+            "added": "3.9"
+        }
     },
     "test.support.threading_helper": {
-        "module_created": "3.10",
-        "added": {
-            "3.8": [
-                "catch_threading_exception"
-            ]
+        "module": {
+            "added": "3.10"
+        },
+        "attributes": {
+            "catch_threading_exception": {
+                "added": "3.8"
+            }
         }
     },
     "test.support.warnings_helper": {
-        "module_created": "3.10",
-        "added": {
-            "3.8": [
-                "check_syntax_warning"
-            ]
+        "module": {
+            "added": "3.10"
+        },
+        "attributes": {
+            "check_syntax_warning": {
+                "added": "3.8"
+            }
         }
     },
     "textwrap": {
-        "added": {
-            "3.3": [
-                "indent"
-            ],
-            "3.4": [
-                "shorten"
-            ]
+        "attributes": {
+            "indent": {
+                "added": "3.3"
+            },
+            "shorten": {
+                "added": "3.4"
+            }
         }
     },
     "threading": {
-        "added": {
-            "3.2": [
-                "TIMEOUT_MAX",
-                "Barrier"
-            ],
-            "3.3": [
-                "get_ident"
-            ],
-            "3.4": [
-                "main_thread"
-            ],
-            "3.8": [
-                "excepthook",
-                "get_native_id"
-            ],
-            "3.10": [
-                "__excepthook__",
-                "getprofile",
-                "gettrace"
-            ],
-            "3.12": [
-                "settrace_all_threads",
-                "setprofile_all_threads"
-            ]
+        "attributes": {
+            "TIMEOUT_MAX": {
+                "added": "3.2"
+            },
+            "Barrier": {
+                "added": "3.2"
+            },
+            "get_ident": {
+                "added": "3.3"
+            },
+            "main_thread": {
+                "added": "3.4"
+            },
+            "excepthook": {
+                "added": "3.8"
+            },
+            "get_native_id": {
+                "added": "3.8"
+            },
+            "__excepthook__": {
+                "added": "3.10"
+            },
+            "getprofile": {
+                "added": "3.10"
+            },
+            "gettrace": {
+                "added": "3.10"
+            },
+            "settrace_all_threads": {
+                "added": "3.12"
+            },
+            "setprofile_all_threads": {
+                "added": "3.12"
+            }
         }
     },
     "time": {
-        "added": {
-            "3.3": [
-                "CLOCK_REALTIME",
-                "CLOCK_HIGHRES",
-                "CLOCK_MONOTONIC",
-                "CLOCK_MONOTONIC_RAW",
-                "CLOCK_PROCESS_CPUTIME_ID",
-                "CLOCK_THREAD_CPUTIME_ID",
-                "clock_getres",
-                "clock_gettime",
-                "clock_settime",
-                "get_clock_info",
-                "monotonic",
-                "perf_counter",
-                "process_time"
-            ],
-            "3.7": [
-                "CLOCK_BOOTTIME",
-                "CLOCK_PROF",
-                "CLOCK_UPTIME",
-                "clock_gettime_ns",
-                "clock_settime_ns",
-                "monotonic_ns",
-                "perf_counter_ns",
-                "process_time_ns",
-                "time_ns",
-                "thread_time",
-                "thread_time_ns",
-                "pthread_getcpuclockid"
-            ],
-            "3.8": [
-                "CLOCK_UPTIME_RAW"
-            ],
-            "3.9": [
-                "CLOCK_TAI"
-            ]
+        "attributes": {
+            "CLOCK_REALTIME": {
+                "added": "3.3"
+            },
+            "CLOCK_HIGHRES": {
+                "added": "3.3"
+            },
+            "CLOCK_MONOTONIC": {
+                "added": "3.3"
+            },
+            "CLOCK_MONOTONIC_RAW": {
+                "added": "3.3"
+            },
+            "CLOCK_PROCESS_CPUTIME_ID": {
+                "added": "3.3"
+            },
+            "CLOCK_THREAD_CPUTIME_ID": {
+                "added": "3.3"
+            },
+            "clock_getres": {
+                "added": "3.3"
+            },
+            "clock_gettime": {
+                "added": "3.3"
+            },
+            "clock_settime": {
+                "added": "3.3"
+            },
+            "get_clock_info": {
+                "added": "3.3"
+            },
+            "monotonic": {
+                "added": "3.3"
+            },
+            "perf_counter": {
+                "added": "3.3"
+            },
+            "process_time": {
+                "added": "3.3"
+            },
+            "CLOCK_BOOTTIME": {
+                "added": "3.7"
+            },
+            "CLOCK_PROF": {
+                "added": "3.7"
+            },
+            "CLOCK_UPTIME": {
+                "added": "3.7"
+            },
+            "clock_gettime_ns": {
+                "added": "3.7"
+            },
+            "clock_settime_ns": {
+                "added": "3.7"
+            },
+            "monotonic_ns": {
+                "added": "3.7"
+            },
+            "perf_counter_ns": {
+                "added": "3.7"
+            },
+            "process_time_ns": {
+                "added": "3.7"
+            },
+            "time_ns": {
+                "added": "3.7"
+            },
+            "thread_time": {
+                "added": "3.7"
+            },
+            "thread_time_ns": {
+                "added": "3.7"
+            },
+            "pthread_getcpuclockid": {
+                "added": "3.7"
+            },
+            "CLOCK_UPTIME_RAW": {
+                "added": "3.8"
+            },
+            "CLOCK_TAI": {
+                "added": "3.9"
+            }
         }
     },
     "token": {
-        "added": {
-            "3.5": [
-                "ASYNC",
-                "AWAIT"
-            ],
-            "3.7": [
-                "COMMENT",
-                "ENCODING",
-                "NL"
-            ],
-            "3.8": [
-                "ASYNC",
-                "AWAIT",
-                "TYPE_COMMENT",
-                "TYPE_IGNORE",
-                "COLONEQUAL"
-            ]
-        },
-        "removed": {
-            "3.7": [
-                "ASYNC",
-                "AWAIT"
-            ]
+        "attributes": {
+            "ASYNC": {
+                "added": "3.5",
+                "removed": "3.7"
+            },
+            "AWAIT": {
+                "added": "3.5",
+                "removed": "3.7"
+            },
+            "COMMENT": {
+                "added": "3.7"
+            },
+            "ENCODING": {
+                "added": "3.7"
+            },
+            "NL": {
+                "added": "3.7"
+            },
+            "TYPE_COMMENT": {
+                "added": "3.8"
+            },
+            "TYPE_IGNORE": {
+                "added": "3.8"
+            },
+            "COLONEQUAL": {
+                "added": "3.8"
+            }
         }
     },
     "tokenize": {
-        "added": {
-            "3.2": [
-                "open"
-            ]
+        "attributes": {
+            "open": {
+                "added": "3.2"
+            }
         }
     },
     "tomllib": {
-        "module_created": "3.11"
+        "module": {
+            "added": "3.11"
+        }
     },
     "traceback": {
-        "added": {
-            "3.4": [
-                "clear_frames"
-            ],
-            "3.5": [
-                "TracebackException",
-                "StackSummary",
-                "FrameSummary",
-                "walk_stack",
-                "walk_tb"
-            ]
+        "attributes": {
+            "clear_frames": {
+                "added": "3.4"
+            },
+            "TracebackException": {
+                "added": "3.5"
+            },
+            "StackSummary": {
+                "added": "3.5"
+            },
+            "FrameSummary": {
+                "added": "3.5"
+            },
+            "walk_stack": {
+                "added": "3.5"
+            },
+            "walk_tb": {
+                "added": "3.5"
+            }
         }
     },
     "tracemalloc": {
-        "module_created": "3.4",
-        "added": {
-            "3.6": [
-                "DomainFilter"
-            ],
-            "3.9": [
-                "reset_peak"
-            ]
+        "module": {
+            "added": "3.4"
+        },
+        "attributes": {
+            "DomainFilter": {
+                "added": "3.6"
+            },
+            "reset_peak": {
+                "added": "3.9"
+            }
         }
     },
     "types": {
-        "added": {
-            "3.3": [
-                "MappingProxyType",
-                "SimpleNamespace",
-                "new_class",
-                "prepare_class"
-            ],
-            "3.4": [
-                "DynamicClassAttribute"
-            ],
-            "3.5": [
-                "CoroutineType",
-                "coroutine"
-            ],
-            "3.6": [
-                "AsyncGeneratorType"
-            ],
-            "3.7": [
-                "ClassMethodDescriptorType",
-                "MethodDescriptorType",
-                "MethodWrapperType",
-                "WrapperDescriptorType",
-                "resolve_bases"
-            ],
-            "3.8": [
-                "CellType"
-            ],
-            "3.9": [
-                "GenericAlias"
-            ],
-            "3.10": [
-                "EllipsisType",
-                "NoneType",
-                "NotImplementedType",
-                "UnionType"
-            ]
+        "attributes": {
+            "MappingProxyType": {
+                "added": "3.3"
+            },
+            "SimpleNamespace": {
+                "added": "3.3"
+            },
+            "new_class": {
+                "added": "3.3"
+            },
+            "prepare_class": {
+                "added": "3.3"
+            },
+            "DynamicClassAttribute": {
+                "added": "3.4"
+            },
+            "CoroutineType": {
+                "added": "3.5"
+            },
+            "coroutine": {
+                "added": "3.5"
+            },
+            "AsyncGeneratorType": {
+                "added": "3.6"
+            },
+            "ClassMethodDescriptorType": {
+                "added": "3.7"
+            },
+            "MethodDescriptorType": {
+                "added": "3.7"
+            },
+            "MethodWrapperType": {
+                "added": "3.7"
+            },
+            "WrapperDescriptorType": {
+                "added": "3.7"
+            },
+            "resolve_bases": {
+                "added": "3.7"
+            },
+            "CellType": {
+                "added": "3.8"
+            },
+            "GenericAlias": {
+                "added": "3.9"
+            },
+            "EllipsisType": {
+                "added": "3.10"
+            },
+            "NoneType": {
+                "added": "3.10"
+            },
+            "NotImplementedType": {
+                "added": "3.10"
+            },
+            "UnionType": {
+                "added": "3.10"
+            }
         }
     },
     "typing": {
-        "module_created": "3.5",
-        "added": {
-            "3.5.2": [
-                "TYPE_CHECKING",
-                "AsyncIterable",
-                "AsyncIterator",
-                "Awaitable",
-                "DefaultDict",
-                "NewType",
-                "Type",
-                "Text"
-            ],
-            "3.5.3": [
-                "ClassVar",
-                "Coroutine"
-            ],
-            "3.6": [
-                "Collection",
-                "ContextManager"
-            ],
-            "3.6.1": [
-                "AsyncGenerator",
-                "ChainMap",
-                "Counter",
-                "Deque"
-            ],
-            "3.6.2": [
-                "AsyncContextManager",
-                "NoReturn"
-            ],
-            "3.7.2": [
-                "OrderedDict"
-            ],
-            "3.7.4": [
-                "ForwardRef"
-            ],
-            "3.8": [
-                "Final",
-                "Literal",
-                "Protocol",
-                "SupportsIndex",
-                "TypedDict",
-                "final",
-                "get_args",
-                "get_origin",
-                "runtime_checkable"
-            ],
-            "3.9": [
-                "Annotated"
-            ],
-            "3.10": [
-                "Concatenate",
-                "ParamSpec",
-                "ParamSpecArgs",
-                "ParamSpecKwargs",
-                "TypeAlias",
-                "TypeGuard",
-                "is_typeddict"
-            ],
-            "3.11": [
-                "LiteralString",
-                "Never",
-                "NotRequired",
-                "Required",
-                "Self",
-                "TypeVarTuple",
-                "Unpack",
-                "assert_never",
-                "assert_type",
-                "get_overloads",
-                "clear_overloads",
-                "dataclass_transform",
-                "reveal_type"
-            ]
+        "module": {
+            "added": "3.5"
         },
-        "deprecated": {
-            "3.8": [
-                "IO",
-                "TextIO",
-                "BinaryIO",
-                "Pattern",
-                "Match"
-            ],
-            "3.9": [
-                "AbstractSet",
-                "AsyncContextManager",
-                "AsyncGenerator",
-                "AsyncIterable",
-                "AsyncIterator",
-                "Awaitable",
-                "ByteString",
-                "Callable",
-                "ChainMap",
-                "Collection",
-                "Container",
-                "ContextManager",
-                "Coroutine",
-                "Counter",
-                "Deque",
-                "Dict",
-                "DefaultDict",
-                "FrozenSet",
-                "Generator",
-                "ItemsView",
-                "Iterable",
-                "Iterator",
-                "KeysView",
-                "List",
-                "Mapping",
-                "MappingView",
-                "MutableMapping",
-                "MutableSequence",
-                "MutableSet",
-                "OrderedDict",
-                "Reversible",
-                "Sequence",
-                "Set",
-                "Tuple",
-                "Type",
-                "ValuesView"
-            ],
-            "3.11": [
-                "Text"
-            ]
-        },
-        "removed": {
-            "3.13": [
-                "IO",
-                "TextIO",
-                "BinaryIO",
-                "Pattern",
-                "Match"
-            ]
+        "attributes": {
+            "TYPE_CHECKING": {
+                "added": "3.5.2"
+            },
+            "AsyncIterable": {
+                "added": "3.5.2",
+                "deprecated": "3.9"
+            },
+            "AsyncIterator": {
+                "added": "3.5.2",
+                "deprecated": "3.9"
+            },
+            "Awaitable": {
+                "added": "3.5.2",
+                "deprecated": "3.9"
+            },
+            "DefaultDict": {
+                "added": "3.5.2",
+                "deprecated": "3.9"
+            },
+            "NewType": {
+                "added": "3.5.2"
+            },
+            "Type": {
+                "added": "3.5.2",
+                "deprecated": "3.9"
+            },
+            "Text": {
+                "added": "3.5.2",
+                "deprecated": "3.11"
+            },
+            "ClassVar": {
+                "added": "3.5.3"
+            },
+            "Coroutine": {
+                "added": "3.5.3",
+                "deprecated": "3.9"
+            },
+            "Collection": {
+                "added": "3.6",
+                "deprecated": "3.9"
+            },
+            "ContextManager": {
+                "added": "3.6",
+                "deprecated": "3.9"
+            },
+            "AsyncGenerator": {
+                "added": "3.6.1",
+                "deprecated": "3.9"
+            },
+            "ChainMap": {
+                "added": "3.6.1",
+                "deprecated": "3.9"
+            },
+            "Counter": {
+                "added": "3.6.1",
+                "deprecated": "3.9"
+            },
+            "Deque": {
+                "added": "3.6.1",
+                "deprecated": "3.9"
+            },
+            "AsyncContextManager": {
+                "added": "3.6.2",
+                "deprecated": "3.9"
+            },
+            "NoReturn": {
+                "added": "3.6.2"
+            },
+            "OrderedDict": {
+                "added": "3.7.2",
+                "deprecated": "3.9"
+            },
+            "ForwardRef": {
+                "added": "3.7.4"
+            },
+            "Final": {
+                "added": "3.8"
+            },
+            "Literal": {
+                "added": "3.8"
+            },
+            "Protocol": {
+                "added": "3.8"
+            },
+            "SupportsIndex": {
+                "added": "3.8"
+            },
+            "TypedDict": {
+                "added": "3.8"
+            },
+            "final": {
+                "added": "3.8"
+            },
+            "get_args": {
+                "added": "3.8"
+            },
+            "get_origin": {
+                "added": "3.8"
+            },
+            "runtime_checkable": {
+                "added": "3.8"
+            },
+            "Annotated": {
+                "added": "3.9"
+            },
+            "Concatenate": {
+                "added": "3.10"
+            },
+            "ParamSpec": {
+                "added": "3.10"
+            },
+            "ParamSpecArgs": {
+                "added": "3.10"
+            },
+            "ParamSpecKwargs": {
+                "added": "3.10"
+            },
+            "TypeAlias": {
+                "added": "3.10"
+            },
+            "TypeGuard": {
+                "added": "3.10"
+            },
+            "is_typeddict": {
+                "added": "3.10"
+            },
+            "LiteralString": {
+                "added": "3.11"
+            },
+            "Never": {
+                "added": "3.11"
+            },
+            "NotRequired": {
+                "added": "3.11"
+            },
+            "Required": {
+                "added": "3.11"
+            },
+            "Self": {
+                "added": "3.11"
+            },
+            "TypeVarTuple": {
+                "added": "3.11"
+            },
+            "Unpack": {
+                "added": "3.11"
+            },
+            "assert_never": {
+                "added": "3.11"
+            },
+            "assert_type": {
+                "added": "3.11"
+            },
+            "get_overloads": {
+                "added": "3.11"
+            },
+            "clear_overloads": {
+                "added": "3.11"
+            },
+            "dataclass_transform": {
+                "added": "3.11"
+            },
+            "reveal_type": {
+                "added": "3.11"
+            },
+            "IO": {
+                "deprecated": "3.8",
+                "removed": "3.13"
+            },
+            "TextIO": {
+                "deprecated": "3.8",
+                "removed": "3.13"
+            },
+            "BinaryIO": {
+                "deprecated": "3.8",
+                "removed": "3.13"
+            },
+            "Pattern": {
+                "deprecated": "3.8",
+                "removed": "3.13"
+            },
+            "Match": {
+                "deprecated": "3.8",
+                "removed": "3.13"
+            },
+            "AbstractSet": {
+                "deprecated": "3.9"
+            },
+            "ByteString": {
+                "deprecated": "3.9"
+            },
+            "Callable": {
+                "deprecated": "3.9"
+            },
+            "Container": {
+                "deprecated": "3.9"
+            },
+            "Dict": {
+                "deprecated": "3.9"
+            },
+            "FrozenSet": {
+                "deprecated": "3.9"
+            },
+            "Generator": {
+                "deprecated": "3.9"
+            },
+            "ItemsView": {
+                "deprecated": "3.9"
+            },
+            "Iterable": {
+                "deprecated": "3.9"
+            },
+            "Iterator": {
+                "deprecated": "3.9"
+            },
+            "KeysView": {
+                "deprecated": "3.9"
+            },
+            "List": {
+                "deprecated": "3.9"
+            },
+            "Mapping": {
+                "deprecated": "3.9"
+            },
+            "MappingView": {
+                "deprecated": "3.9"
+            },
+            "MutableMapping": {
+                "deprecated": "3.9"
+            },
+            "MutableSequence": {
+                "deprecated": "3.9"
+            },
+            "MutableSet": {
+                "deprecated": "3.9"
+            },
+            "Reversible": {
+                "deprecated": "3.9"
+            },
+            "Sequence": {
+                "deprecated": "3.9"
+            },
+            "Set": {
+                "deprecated": "3.9"
+            },
+            "Tuple": {
+                "deprecated": "3.9"
+            },
+            "ValuesView": {
+                "deprecated": "3.9"
+            }
         }
     },
     "unicodedata": {
-        "added": {
-            "3.8": [
-                "is_normalized"
-            ]
+        "attributes": {
+            "is_normalized": {
+                "added": "3.8"
+            }
         }
     },
     "unittest": {
-        "added": {
-            "3.1": [
-                "SkipTest",
-                "skip",
-                "skipIf",
-                "skipUnless",
-                "expectedFailure"
-            ],
-            "3.2": [
-                "TextTestResult",
-                "installHandler",
-                "registerResult",
-                "removeHandler",
-                "removeResult"
-            ],
-            "3.8": [
-                "IsolatedAsyncioTestCase",
-                "addModuleCleanup",
-                "doModuleCleanups"
-            ],
-            "3.11": [
-                "enterModuleContext"
-            ]
+        "attributes": {
+            "SkipTest": {
+                "added": "3.1"
+            },
+            "skip": {
+                "added": "3.1"
+            },
+            "skipIf": {
+                "added": "3.1"
+            },
+            "skipUnless": {
+                "added": "3.1"
+            },
+            "expectedFailure": {
+                "added": "3.1"
+            },
+            "TextTestResult": {
+                "added": "3.2"
+            },
+            "installHandler": {
+                "added": "3.2"
+            },
+            "registerResult": {
+                "added": "3.2"
+            },
+            "removeHandler": {
+                "added": "3.2"
+            },
+            "removeResult": {
+                "added": "3.2"
+            },
+            "IsolatedAsyncioTestCase": {
+                "added": "3.8"
+            },
+            "addModuleCleanup": {
+                "added": "3.8"
+            },
+            "doModuleCleanups": {
+                "added": "3.8"
+            },
+            "enterModuleContext": {
+                "added": "3.11"
+            }
         }
     },
     "unittest.mock": {
-        "module_created": "3.3",
-        "added": {
-            "3.7": [
-                "seal"
-            ],
-            "3.8": [
-                "AsyncMock"
-            ]
+        "module": {
+            "added": "3.3"
+        },
+        "attributes": {
+            "seal": {
+                "added": "3.7"
+            },
+            "AsyncMock": {
+                "added": "3.8"
+            }
         }
     },
     "urllib.parse": {
-        "added": {
-            "3.2": [
-                "DefragResult",
-                "DefragResultBytes",
-                "ParseResultBytes",
-                "SplitResultBytes"
-            ]
+        "attributes": {
+            "DefragResult": {
+                "added": "3.2"
+            },
+            "DefragResultBytes": {
+                "added": "3.2"
+            },
+            "ParseResultBytes": {
+                "added": "3.2"
+            },
+            "SplitResultBytes": {
+                "added": "3.2"
+            }
         }
     },
     "urllib.request": {
-        "added": {
-            "3.4": [
-                "DataHandler"
-            ],
-            "3.5": [
-                "HTTPPasswordMgrWithPriorAuth"
-            ],
-            "3.11": [
-                "HTTPRedirectHandler.http_error_308"
-            ]
+        "attributes": {
+            "DataHandler": {
+                "added": "3.4"
+            },
+            "HTTPPasswordMgrWithPriorAuth": {
+                "added": "3.5"
+            },
+            "HTTPRedirectHandler.http_error_308": {
+                "added": "3.11"
+            }
         }
     },
     "uu": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "uuid": {
-        "added": {
-            "3.7": [
-                "SafeUUID"
-            ]
+        "attributes": {
+            "SafeUUID": {
+                "added": "3.7"
+            }
         }
     },
     "venv": {
-        "module_created": "3.3"
+        "module": {
+            "added": "3.3"
+        }
     },
     "weakref": {
-        "added": {
-            "3.4": [
-                "WeakMethod",
-                "finalize"
-            ]
+        "attributes": {
+            "WeakMethod": {
+                "added": "3.4"
+            },
+            "finalize": {
+                "added": "3.4"
+            }
         }
     },
     "winreg": {
-        "added": {
-            "3.2": [
-                "CreateKeyEx",
-                "DeleteKeyEx"
-            ],
-            "3.6": [
-                "REG_QWORD",
-                "REG_QWORD_LITTLE_ENDIAN"
-            ]
+        "attributes": {
+            "CreateKeyEx": {
+                "added": "3.2"
+            },
+            "DeleteKeyEx": {
+                "added": "3.2"
+            },
+            "REG_QWORD": {
+                "added": "3.6"
+            },
+            "REG_QWORD_LITTLE_ENDIAN": {
+                "added": "3.6"
+            }
         }
     },
     "wsgiref.handlers": {
-        "added": {
-            "3.2": [
-                "IISCGIHandler",
-                "read_environ"
-            ]
+        "attributes": {
+            "IISCGIHandler": {
+                "added": "3.2"
+            },
+            "read_environ": {
+                "added": "3.2"
+            }
         }
     },
     "wsgiref.types": {
-        "module_created": "3.11"
+        "module": {
+            "added": "3.11"
+        }
     },
     "xdrlib": {
-        "module_deprecated": "3.11",
-        "module_removed": "3.13"
+        "module": {
+            "deprecated": "3.11",
+            "removed": "3.13"
+        }
     },
     "xml.etree.ElementTree": {
-        "added": {
-            "3.2": [
-                "fromstringlist",
-                "tostringlist",
-                "register_namespace"
-            ],
-            "3.3": [
-                "canonicalize"
-            ],
-            "3.4": [
-                "XMLPullParser"
-            ],
-            "3.8": [
-                "C14NWriterTarget"
-            ],
-            "3.9": [
-                "indent"
-            ]
+        "attributes": {
+            "fromstringlist": {
+                "added": "3.2"
+            },
+            "tostringlist": {
+                "added": "3.2"
+            },
+            "register_namespace": {
+                "added": "3.2"
+            },
+            "canonicalize": {
+                "added": "3.3"
+            },
+            "XMLPullParser": {
+                "added": "3.4"
+            },
+            "C14NWriterTarget": {
+                "added": "3.8"
+            },
+            "indent": {
+                "added": "3.9"
+            }
         }
     },
     "xml.parsers.expat.errors": {
-        "added": {
-            "3.2": [
-                "codes",
-                "messages"
-            ]
+        "attributes": {
+            "codes": {
+                "added": "3.2"
+            },
+            "messages": {
+                "added": "3.2"
+            }
         }
     },
     "xml.sax.handler": {
-        "added": {
-            "3.10": [
-                "LexicalHandler"
-            ]
+        "attributes": {
+            "LexicalHandler": {
+                "added": "3.10"
+            }
         }
     },
     "zipapp": {
-        "module_created": "3.5"
+        "module": {
+            "added": "3.5"
+        }
     },
     "zipfile": {
-        "added": {
-            "3.3": [
-                "ZIP_BZIP2",
-                "ZIP_LZMA"
-            ],
-            "3.8": [
-                "Path"
-            ],
-            "3.11": [
-                "ZipFile.mkdir"
-            ]
-        },
-        "deprecated": {
-            "3.2": [
-                "BadZipFile"
-            ]
+        "attributes": {
+            "ZIP_BZIP2": {
+                "added": "3.3"
+            },
+            "ZIP_LZMA": {
+                "added": "3.3"
+            },
+            "Path": {
+                "added": "3.8"
+            },
+            "ZipFile.mkdir": {
+                "added": "3.11"
+            },
+            "BadZipFile": {
+                "deprecated": "3.2"
+            }
         }
     },
     "zlib": {
-        "added": {
-            "3.3": [
-                "ZLIB_RUNTIME_VERSION"
-            ]
+        "attributes": {
+            "ZLIB_RUNTIME_VERSION": {
+                "added": "3.3"
+            }
         }
     },
     "zoneinfo": {
-        "module_created": "3.9"
+        "module": {
+            "added": "3.9"
+        }
     },
     "_thread": {
-        "added": {
-            "3.2": [
-                "TIMEOUT_MAX"
-            ],
-            "3.8": [
-                "get_native_id"
-            ]
+        "attributes": {
+            "TIMEOUT_MAX": {
+                "added": "3.2"
+            },
+            "get_native_id": {
+                "added": "3.8"
+            }
         }
     }
 }
