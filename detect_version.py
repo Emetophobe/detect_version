@@ -68,10 +68,11 @@ class Module:
     def _get_requirements(self, source: dict) -> Optional[VersionHistory]:
         """ Convert source dictionary into a tuple of version requirements.
 
-            Actions are 'added, deprecated, or removed
-            None is used for empty actions.
+        Args:
+            source (dict): A module info or attribute dictionary.
 
-
+        Returns:
+            A 3-tuple of the added, deprecated, and removed versions.
         """
         if source:
             return VersionHistory(source.get(action, None) for action in ALL_VERSIONS)
@@ -91,7 +92,7 @@ class Analyzer(ast.NodeVisitor):
         """
         self.script = path
         self.min_version = '3.0'
-        self.requirements = dict()
+        self.requirements = {}
 
         self.modules = load_modules('modules.json')
         self.functions = load_changes('functions.json')
@@ -108,6 +109,7 @@ class Analyzer(ast.NodeVisitor):
         print(f'{self.script}: requires {self.min_version}')
         for feature, version in self.requirements.items():
             added, deprecated, removed = version
+
             if added:
                 print(f'  {feature} requires {added}')
 
@@ -226,7 +228,11 @@ class Analyzer(ast.NodeVisitor):
         if isinstance(node.func, ast.Name):
             for function, changes in self.functions.items():
                 if node.func.id == function:
-                    self.update_requirements(f'{function} function', changes['added'])
+                    # Special case: Combine aiter/anext functions for display
+                    if function in ('aiter', 'anext'):
+                        self.update_requirements('aiter and anext', changes[VERSION_ADDED])
+                    else:
+                        self.update_requirements(f'{function} function', changes[VERSION_ADDED])
 
         self.generic_visit(node)
 
@@ -273,8 +279,18 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AST):
-        """ Check for async/await coroutines which were added in Python 3.5 """
-        self.update_requirements('async/await coroutines', '3.5')
+        """ Check for async/await reserved keywords which were added in Python 3.7
+
+            Python 3.5 introduced async/await but they were only treated as keywords
+            inside the body of a coroutine function.
+
+            Python 3.7 changed async/await to reserved keywords (like 'if' and 'else')
+
+            This introduced some backwards incompatible syntax changes between the 3.5
+            and 3.7 versions of async/await. I will only be testing against Python 3.7
+            where they became full reserved keywords.
+        """
+        self.update_requirements('async and await', '3.7')
         self.generic_visit(node)
 
     # Use same method for all async/await visitors
