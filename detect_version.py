@@ -161,7 +161,7 @@ class Analyzer(ast.NodeVisitor):
                 module = self.modules[alias.name]
                 requirements = module.get_module_requirements()
                 if requirements:
-                    self.update_requirements(alias.name, requirements)
+                    self.update_requirements(f'{alias.name} module', requirements)
 
         self.generic_visit(node)
 
@@ -202,14 +202,14 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Call(self, node: ast.Call) -> None:
-        """ Check function calls for module changes.
+        """ Check function calls for version changes.
 
             node.func is the function (which can be a Name or Attribute node).
         """
         if isinstance(node.func, ast.Name):
             for function, version in self.functions.items():
                 if node.func.id == function:
-                    self.update_requirements(function, version)
+                    self.update_requirements(f'{function} function', version)
 
         self.generic_visit(node)
 
@@ -252,25 +252,30 @@ class Analyzer(ast.NodeVisitor):
             node.kind: "u" for unicode string, None otherwise.
         """
         if node.kind == 'u':
-            self.update_requirements('unicode literal', '3.3')
+            self.update_requirements('unicode literals', '3.3')
         self.generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AST):
-        """ Check for async/await coroutines which were added in Python 3.5. """
-        self.update_requirements('async/await', '3.5')
+        """ Check for async/await coroutines which were added in Python 3.5 """
+        self.update_requirements('async/await coroutines', '3.5')
         self.generic_visit(node)
 
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
-        """ Check for formatted strings (fstrings) which were added in Python 3.6. """
-        self.update_requirements('fstring', '3.6')
+        """ Check for formatted string literals (f-strings) which were added in Python 3.6 """
+        self.update_requirements('fstring literals', '3.6')
         self.generic_visit(node)
 
     # Use same method for all async/await visitors
     visit_AsyncFor = visit_AsyncWith = visit_Await = visit_AsyncFunctionDef
 
+    def visit_NamedExpr(self, node: ast.NamedExpr) -> None:
+        """ Check for walrus operators which were added in Python 3.8 """
+        self.update_requirements('walrus operators', '3.8')
+        self.generic_visit(node)
+
     def visit_Match(self, node: ast.Match) -> None:
         """ Check for match/case statements which were added in Python 3.10 """
-        self.update_requirements('match statement', '3.10')
+        self.update_requirements('match statements', '3.10')
         self.generic_visit(node)
 
     def visit_With(self, node: ast.With) -> None:
@@ -281,7 +286,7 @@ class Analyzer(ast.NodeVisitor):
 
     def visit_YieldFrom(self, node: ast.YieldFrom) -> None:
         """ Check for "yield from" statement which was added in Python 3.3 """
-        self.update_requirements('yield from statement', '3.3')
+        self.update_requirements('yield from expression', '3.3')
         self.generic_visit(node)
 
     def _check_function(self, name: str) -> None:
@@ -334,9 +339,11 @@ def load_changes(filename: PathLike) -> dict:
 
 
 def load_modules(filename: PathLike) -> dict[str, Module]:
-    """ Load modules and convert to a dictionary of Modules. """
-    modules = load_changes(filename)
-    return {name: Module(changes) for name, changes in modules.items()}
+    """ Load modules history and convert to a dictionary of Modules. """
+    modules = {}
+    for name, changelog in load_changes(filename).items():
+        modules[name] = Module(changelog)
+    return modules
 
 
 def version_tuple(version: str) -> tuple[int, int, int]:
