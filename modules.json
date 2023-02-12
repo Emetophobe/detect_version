@@ -839,26 +839,8 @@
             "compare_digest": {
                 "added": "3.3"
             },
-            "block_size": {
-                "added": "3.4"
-            },
-            "name": {
-                "added": "3.4"
-            },
             "digest": {
                 "added": "3.7"
-            },
-            "digest_cons": {
-                "deprecated": "3.9",
-                "removed": "3.10"
-            },
-            "inner": {
-                "deprecated": "3.9",
-                "removed": "3.10"
-            },
-            "outer": {
-                "deprecated": "3.9",
-                "removed": "3.10"
             }
         }
     },
