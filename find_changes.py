@@ -85,11 +85,6 @@ For example:
         help='module or attribute name (Use "*" to match all names, "%%" to match similar names)')
 
     parser.add_argument(
-        '-l', '--like',
-        help='find similar names instead of an exact match',
-        action='store_true')
-
-    parser.add_argument(
         '-v', '--version',
         help='optional version number')
 
