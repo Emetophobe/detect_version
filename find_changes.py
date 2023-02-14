@@ -62,7 +62,7 @@ def find_changes(name: str | PathLike,
             sqlbuilder.append(clause)
 
     # Sort by version string using custom collate function
-    sqlbuilder.append('ORDER BY name, version COLLATE collate_version')
+    sqlbuilder.append('ORDER BY version COLLATE collate_version')
 
     # Create sql statement and perform the query
     sql = ' '.join(sqlbuilder)
