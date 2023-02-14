@@ -3,153 +3,161 @@
 
 
 import ast
+import csv
 import sys
-import json
+import sqlite3
 import argparse
 
-from collections import defaultdict
 from typing import Optional
 from os import PathLike
 
 
-# Version constants
-VERSION_ADDED = 'added'
-VERSION_DEPRECATED = 'deprecated'
-VERSION_REMOVED = 'removed'
-ALL_VERSIONS = (VERSION_ADDED, VERSION_DEPRECATED, VERSION_REMOVED)
+# ACTION constants
+ACTION_ADDED = 'added'
+ACTION_DEPRECATED = 'deprecated'
+ACTION_REMOVED = 'removed'
+ALL_ACTIONS = (ACTION_ADDED, ACTION_DEPRECATED, ACTION_REMOVED)
 
 
-# For type hinting. Tuple of Optional (added, removed, deprecated) version strings.
-VersionHistory = tuple[Optional[str], Optional[str], Optional[str]]
+class Changelog:
+    """ A simple changelog database backed by csv files.
 
+        Changelogs are stored as csv files (plain text) instead of
+        sqlite (binary) for easier git diffs and tracking changes.
 
-class Module:
-    """ A module holds the version history (or changelog) of one of Python's built-in modules.
-
-        Each module has two main attributes:
-            module: Version information about the module itself.
-            attributes: Version information about the module's functions, exceptions, etc..
-
-        Requirements are returned as a tuple of 3 version strings (added, removed, deprecated).
-        Each module or attribute will have one, two, or all three of the version strings.
-        None is used for empty values, i.e:
-
-            (None, "3.11", "3.9")
-            ("3.5", "3.9", None)
+        This class simply creates an in-memory sqlite3 database
+        with rows loaded from csv files.
     """
 
-    def __init__(self, changes: dict) -> None:
-        """ Initialize built-in module from json dictionary. """
-        # Copy dictionary to a defaultdict. Empty keys return an empty dictionary.
-        self.changes = defaultdict(dict, changes)
+    def __init__(self) -> None:
+        """ Initialize the database connection. """
+        self.conn = sqlite3.connect(':memory:')
+        self.conn.create_collation('collate_version', compare_version)
+        self._create_tables()
 
-        self.module_info = self.changes['module']
-        self.attributes = self.changes['attributes']
+    def get_module(self, module: str) -> list[tuple]:
+        """ Get module changes matching the specified module name. """
+        sql = 'SELECT * FROM modules WHERE name = ?'
+        return self.query(sql, (module,))
 
-    def get_module_requirements(self) -> Optional[VersionHistory]:
-        """ Get module requirements as a 3-tuple of version changes.
+    def get_function(self, function: str) -> list[tuple]:
+        """ Get function changes matching the specified function name. """
+        sql = 'SELECT * FROM functions WHERE name = ?;'
+        return self.query(sql, (function,))
 
-        Returns:
-            Optional[VersionHistory]: The module changelog or None.
-        """
-        return self._get_requirements(self.module_info)
+    def get_exception(self, exception: str) -> list[tuple]:
+        """ Get exception changes matching the specified exception name. """
+        sql = 'SELECT * FROM exceptions WHERE name = ?;'
+        return self.query(sql, (exception,))
 
-    def get_attribute_requirements(self, attribute: str) -> Optional[VersionHistory]:
-        """ Get attribute requirements as a 3-tuple of version changes.
+    def query(self, sql: str, args: tuple | list) -> list[tuple]:
+        """ Convenience method to query the database. """
+        cursor = self.conn.cursor()
+        cursor.execute(sql, args)
+        return cursor.fetchall()
 
-        Args:
-            attribute (str): Name of the attribute.
+    def close(self):
+        """ Close the database connection. """
+        if self.conn:
+            self.conn.close()
 
-        Returns:
-            Optional[VersionHistory]: The attribute changelog or None.
-        """
-        return self._get_requirements(self.attributes.get(attribute, None))
+    def _create_tables(self):
+        """ Initialize the database tables. """
+        # Dictionary of table names and their associated csv files
+        # Plain-text csv files are easier to track in a git repository
+        # than a binary sqlite file.
+        tables = {
+            'modules': 'changelogs/modules.csv',
+            'exceptions': 'changelogs/exceptions.csv',
+            'functions': 'changelogs/functions.csv'
+        }
 
-    def _get_requirements(self, source: dict) -> Optional[VersionHistory]:
-        """ Convert source dictionary into a tuple of version requirements.
-
-        Args:
-            source (dict): A module info or attribute dictionary.
-
-        Returns:
-            A 3-tuple of the added, deprecated, and removed versions.
-        """
-        if source:
-            return VersionHistory(source.get(action, None) for action in ALL_VERSIONS)
-        return None
+        # Create individual database tables and insert csv rows
+        for table, filename in tables.items():
+            cur = self.conn.cursor()
+            cur.execute(f'CREATE TABLE {table} (version TEXT NOT NULL, action TEXT NOT NULL, '
+                        'name TEXT NOT NULL);')
+            cur.executemany(f'INSERT INTO {table} (version, action, name) VALUES '
+                            '(?, ?, ?);', load_changes(filename))
+            self.conn.commit()
 
 
 class Analyzer(ast.NodeVisitor):
-    """ Analyzer is used to parse abstract syntax tree (ast) and determine
-        a minimum Python version. TODO: more info
-    """
+    """ Parse abstract syntax tree and determine a minimum required script version. """
 
-    def __init__(self, path: PathLike) -> None:
+    def __init__(self, script: PathLike) -> None:
         """ Initialize node analyzer.
 
         Args:
-            path (PathLike): filename of the script.
+            script (PathLike): script filename.
         """
-        self.script = path
-        self.min_version = '3.0'
+        self.changelog = Changelog()
         self.requirements = {}
+        self.script = script
 
-        self.modules = load_modules('modules.json')
-        self.functions = load_changes('functions.json')
-        self.exceptions = load_changes('exceptions.json')
+        # Versions are internally stored as strings instead of floats to
+        # prevent Python versions like 3.10 being simplified down to 3.1
+        self.min_version = '3.0'
 
     def report(self) -> None:
-        """ Print script requirements. """
-        # requirements = sorted(self.requirements.items(),
-        #                      key=lambda kv: (requirement_tuple(kv[1]), kv[0]))
-
+        """ Report script requirements. """
         warnings = {}
+
+        # Sort requirements by version (compare strings by converting to a tuple first)
+        requirements = sorted(self.requirements.items(),
+                              key=lambda a: (version_tuple(a[1][0]), a[0]))
 
         # Print minimum detected script version and detailed requirements
         print(f'{self.script}: requires {self.min_version}')
-        for feature, version in self.requirements.items():
-            added, deprecated, removed = version
-
+        for feature, changes in requirements:
+            added, removed, deprecated = changes
+            # Print requirements
             if added:
                 print(f'  {feature} requires {added}')
 
-            if deprecated or removed:
-                warnings[feature] = version
+            # Build dictionary of deprecations and removals
+            elif deprecated or removed:
+                warnings[feature] = (deprecated, removed)
 
         # Print warning about deprecations and removals
         if warnings:
             print()
             print('Warning: Found deprecated or removed features:')
-            for feature, version in warnings.items():
-                _, deprecated, removed = version
+            for feature, changes in warnings.items():
+                deprecated, removed = changes
                 if deprecated:
                     print(f'  {feature} deprecated in version {deprecated}')
                 if removed:
                     print(f'  {feature} removed in version {removed}')
 
-    def update_requirements(self, feature: str, requirements: tuple | str) -> None:
+        # Close database
+        self.changelog.close()
+
+    def update_requirements(self, feature: str, changes: tuple | list[tuple]) -> None:
         """ Update script requirements.
 
         Args:
             feature (str): Name of the feature.
-            requirements (tuple or str): Tuple of version requirements.
+            changes (tuple | list[tuple]): Single change or a list of changes.
 
         Raises:
-            ValueError: If the requirements are missing.
-            TypeError:  If the requirements are an invalid type.
+            TypeError: If the changes are an invalid type.
         """
+        # Convert tuple to a list of tuples
+        if isinstance(changes, tuple):
+            changes = [changes]
+        if not isinstance(changes, list):
+            raise TypeError(f'Unsupported type. Expected a tuple or list,'
+                            f' received a {type(changes)}')
 
-        if not any(requirements):
-            raise ValueError('Missing requirements')
+        # Convert changes to a 3-tuple of version strings (added, deprecated, removed)
+        # TODO: find a much nicer way to implement this
+        versions = {}
+        for row in changes:
+            versions[row[1]] = row[0]
+        requirements = tuple(versions.get(version, None) for version in ALL_ACTIONS)
 
-        # Convert to string requirements to a tuple
-        if isinstance(requirements, str):
-            requirements = (requirements, None, None)
-        elif not isinstance(requirements, tuple):
-            raise TypeError(f'Unsupported type: expected a tuple or str, '
-                            f'received a {type(requirements).__name__}')
-
-        # Check if a feature is already added
+        # Check if the feature is already added
         if feature in self.requirements.keys() and self.requirements[feature] == requirements:
             return
 
@@ -158,7 +166,7 @@ class Analyzer(ast.NodeVisitor):
         self.requirements[feature] = requirements
 
     def update_version(self, version: str) -> None:
-        """ Update script version.
+        """ Update minimum script version.
 
         Args:
             version (str): The version string.
@@ -166,7 +174,7 @@ class Analyzer(ast.NodeVisitor):
         if not version:
             return
 
-        # Convert version strings to tuples for comparison
+        # Convert version strings to tuples temporarily for comparison
         if version_tuple(version) > version_tuple(self.min_version):
             self.min_version = version
 
@@ -176,12 +184,7 @@ class Analyzer(ast.NodeVisitor):
             node.names is the list of imports (i.e "import a, b, c")
         """
         for alias in node.names:
-            if alias.name in self.modules.keys():
-                module = self.modules[alias.name]
-                requirements = module.get_module_requirements()
-                if requirements:
-                    self.update_requirements(f'{alias.name} module', requirements)
-
+            self._check_module(alias.name)
         self.generic_visit(node)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
@@ -190,21 +193,12 @@ class Analyzer(ast.NodeVisitor):
             node.module is the module name (i.e "from x")
             node.names is the list of imports (i.e "import a, b, c")
         """
-        if node.module in self.modules.keys():
-            module = self.modules[node.module]
-
-            for alias in node.names:
-                if alias.name == '*':
-                    # Handle wildcard import i.e 'from module import *'
-                    name = f'{node.module} module'
-                    requirements = module.get_module_requirements()
-                else:
-                    # Check for matching attribute
-                    name = f'{node.module}.{alias.name}'
-                    requirements = module.get_attribute_requirements(alias.name)
-
-                if requirements:
-                    self.update_requirements(name, requirements)
+        for alias in node.names:
+            # Handle wildcard "from module import *"
+            if alias.name == '*':
+                self._check_module(node.module)
+            else:
+                self._check_module(node.module + '.' + alias.name)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
         """ Check for module attribute changes.
@@ -213,11 +207,7 @@ class Analyzer(ast.NodeVisitor):
             node.attr is a string of the attribute name.
             node.ctx is the context of the attribute access (Load, Store or Del).
         """
-        if isinstance(node.value, ast.Name):
-            self._check_attribute(node.value.id, node.attr)
-        elif isinstance(node.value, ast.Attribute):
-            self._check_attribute(node.value.value, node.attr)
-
+        self._check_attribute(node)
         self.generic_visit(node)
 
     def visit_Call(self, node: ast.Call) -> None:
@@ -226,14 +216,9 @@ class Analyzer(ast.NodeVisitor):
             node.func is the function (which can be a Name or Attribute node).
         """
         if isinstance(node.func, ast.Name):
-            for function, changes in self.functions.items():
-                if node.func.id == function:
-                    # Special case: Combine aiter/anext functions for display
-                    if function in ('aiter', 'anext'):
-                        self.update_requirements('aiter and anext', changes[VERSION_ADDED])
-                    else:
-                        self.update_requirements(f'{function} function', changes[VERSION_ADDED])
-
+            self._check_function(node.func.id)
+        elif isinstance(node.func, ast.Attribute):
+            self._check_attribute(node.func)
         self.generic_visit(node)
 
     def visit_Raise(self, node: ast.Raise) -> None:
@@ -275,7 +260,7 @@ class Analyzer(ast.NodeVisitor):
             node.kind: "u" for unicode string, None otherwise.
         """
         if node.kind == 'u':
-            self.update_requirements('unicode literals', '3.3')
+            self.update_requirements('unicode literal', self._create_requirement('3.3'))
         self.generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AST):
@@ -290,7 +275,7 @@ class Analyzer(ast.NodeVisitor):
             and 3.7 versions of async/await. I will only be testing against Python 3.7
             where they became full reserved keywords.
         """
-        self.update_requirements('async and await', '3.7')
+        self.update_requirements('async and await', self._create_requirement('3.7'))
         self.generic_visit(node)
 
     # Use same method for all async/await visitors
@@ -298,91 +283,111 @@ class Analyzer(ast.NodeVisitor):
 
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
         """ Check for fstring literals which were added in Python 3.6 """
-        self.update_requirements('fstring literals', '3.6')
+        self.update_requirements('fstring literal', self._create_requirement('3.6'))
         self.generic_visit(node)
 
     def visit_NamedExpr(self, node: ast.NamedExpr) -> None:
         """ Check for walrus operators which were added in Python 3.8 """
-        self.update_requirements('walrus operators', '3.8')
+        self.update_requirements('walrus operator', self._create_requirement('3.8'))
         self.generic_visit(node)
 
     def visit_Match(self, node: ast.Match) -> None:
         """ Check for match/case statements which were added in Python 3.10 """
-        self.update_requirements('match statements', '3.10')
+        self.update_requirements('match statement', self._create_requirement('3.10'))
         self.generic_visit(node)
 
     def visit_With(self, node: ast.With) -> None:
         """ Check for multiple context managers which were added in Python 3.1 """
         if len(node.items) > 1:
-            self.update_requirements('multiple with clauses', '3.1')
+            self.update_requirements('multiple with clauses', self._create_requirement('3.1'))
         self.generic_visit(node)
 
     def visit_YieldFrom(self, node: ast.YieldFrom) -> None:
         """ Check for "yield from" expressions which were added in Python 3.3 """
-        self.update_requirements('yield from expression', '3.3')
+        self.update_requirements('yield from expression', self._create_requirement('3.3'))
         self.generic_visit(node)
 
-    def _check_exception(self, name: str) -> None:
+    def _check_exception(self, exception: str) -> None:
         """ Check for new exception types. """
-        if name in self.exceptions.keys():
-            self.update_requirements(name, self.exceptions[name])
+        changes = self.changelog.get_exception(exception)
+        if changes:
+            self.update_requirements(exception, changes)
 
-    def _check_attribute(self, module: str, attribute: str) -> None:
-        """ Check for new module attributes. """
-        # Find matching module and update requirements
-        if module in self.modules.keys():
-            requirements = self.modules[module].get_attribute_requirements(attribute)
-            if requirements:
-                self.update_requirements(f'{module}.{attribute}', requirements)
+    def _check_function(self, function: str) -> None:
+        """ Check for new function names. """
+        changes = self.changelog.get_function(function)
+        if changes:
+            self.update_requirements(f'{function} function', changes)
+
+    def _check_module(self, module: str) -> None:
+        """ Check for module changes. """
+        changes = self.changelog.get_module(module)
+        if changes:
+            self.update_requirements(module, changes)
+
+    def _check_attribute(self, node: ast.Attribute) -> None:
+        """ Check for module attribute changes. """
+        # Get full module+attribute name from a potentially nested Attribute
+        self._check_module(self._get_attribute(node))
+
+    def _get_attribute(self, node: ast.Name | ast.Attribute) -> str:
+        """ Combine nested attributes into a single string. """
+        if isinstance(node, ast.Name):
+            return str(node.id)
+        elif isinstance(node, ast.Attribute):
+            return str(self._get_attribute(node.value) + '.' + node.attr)
+        else:
+            return str()
+
+    def _create_requirement(self, version: str, action: Optional[str] = ACTION_ADDED,
+                            name: Optional[str] = None) -> tuple:
+        """ Convenience method to create a single requirement tuple. """
+        return (version, action, name)
 
 
-def detect_version(path: PathLike) -> None:
-    """ Detect minimum version required to run a script. """
-    with open(path, 'r') as source:
+def detect_version(filename: str | bytes) -> None:
+    """ Analyze Python script and print requirements. """
+    with open(filename, 'r') as source:
         tree = ast.parse(source.read())
 
-    analyzer = Analyzer(path)
+    analyzer = Analyzer(filename)
     analyzer.visit(tree)
     analyzer.report()
 
 
-def load_changes(filename: PathLike) -> dict:
-    """ Load dictionary of changes from a json file. """
-    with open(filename, 'r', encoding='utf-8') as infile:
-        return json.load(infile)
-
-
-def load_modules(filename: PathLike) -> dict[str, Module]:
-    """ Load modules changelog and convert to a dictionary of Modules. """
-    modules = {}
-    for name, changelog in load_changes(filename).items():
-        modules[name] = Module(changelog)
-    return modules
-
-
 def version_tuple(version: str) -> tuple[int, int, int]:
-    """ Split a version string into a tuple of ints;
-        Example: "3.11.1" turns into (3, 11, 1)
-    """
+    """ Split a version string into a tuple. Example: "3.11.1" returns (3, 11, 1) """
     if not version:
-        return None
+        return tuple()
     return tuple(map(int, (version.split('.'))))
 
 
-def dump_file(path: PathLike) -> None:
-    """ Parse script file and print ast to stdout. """
+def compare_version(version1: str, version2: str) -> bool:
+    """ Compare two version strings by temporarily converting them to tuples. """
+    if version_tuple(version1) > version_tuple(version2):
+        return 1
+    elif version_tuple(version1) == version_tuple(version2):
+        return 0
+    else:
+        return -1
+
+
+def load_changes(filename: str | PathLike) -> None:
+    """ Load changelog from csv file. """
+    csv.register_dialect('custom_csv', 'unix', skipinitialspace=True)
+    with open(filename, 'r', newline='') as infile:
+        return list(csv.reader(infile, dialect='custom_csv'))
+
+
+def dump_file(path: str | PathLike) -> None:
+    """ Parse script and dump tree to stdout. """
     with open(path, 'r') as source:
         dump_node(ast.parse(source.read()))
 
 
 def dump_node(node: ast.AST) -> None:
-    """  Print ast node to stdout. """
+    """ Convenience function to print contents of a node. """
     print(ast.dump(node, indent=4))
-
-
-def dump_json(data: dict) -> None:
-    """  Print json to stdout. """
-    print(json.dumps(data, indent=4))
 
 
 def main():
@@ -399,10 +404,6 @@ def main():
             detect_version(args.path)
     except OSError as e:
         print(f'Error reading {e.filename} ({e.strerror})', file=sys.stderr)
-    except TypeError as e:
-        print(e)
-    except ValueError as e:
-        print(e)
 
 
 if __name__ == '__main__':

@@ -3,91 +3,113 @@
 
 
 import argparse
-from detect_version import load_modules
+
+from detect_version import Changelog
 from typing import Optional
+from os import PathLike
 
 
-def find_changes(name: str, attribute: Optional[str] = None) -> None:
-    """ Find changes matching a specific module or attribute.
+def find_changes(name: str | PathLike,
+                 version: Optional[str] = None,
+                 action: Optional[str] = None
+                 ) -> list[tuple]:
+    """ Query the changelog for specific version changes.
 
-        Args:
-            name (str): The module name.
-            attribute (str, optional): Optional attribute name. Defaults to None.
+    Args:
+        name (str or PathLike): Module or attribute name.
+                                Use a wildcard "*" as the name to match all names.
+                                Use a "%" before or after the name to match like names.
+        version (str, optional): Select a specific version Defaults to None.
+        action (str, optional): Select a specific action ("added", "deprecated", or "removed")
+
+    Returns:
+        list[tuple]: The matching database rows, if any.
     """
-    modules = load_modules('modules.json')
 
-    # Find module
-    try:
-        module = modules[name]
-    except KeyError:
-        print('No module info.')
-        return
+    # Load sqlite database
+    changelog = Changelog()
 
-    if attribute:
-        # Find attribute
-        if attribute in module.attributes.keys():
-            print_requirement(f'{name}.{attribute}', module.attributes[attribute])
-    else:
-        # Print all module info
-        if module.module_info:
-            print_requirement(f'{name} module', module.module_info)
+    # Build sql statement and argument list
+    sqlbuilder = ['SELECT * FROM modules']
+    where = []
+    args = []
 
-        # Print all module attribute info
-        for attribute, changes in module.attributes.items():
-            print_requirement(f'{name}.{attribute}', changes)
-
-
-def print_requirement(feature, changes: dict):
-    print(feature, requirement_string(changes))
-
-
-def requirement_string(changes: dict) -> str:
-    """ Create string from a dictionary. """
-    builder = list()
-
-    added = changes.get('added', None)
-    deprecated = changes.get('deprecated', None)
-    removed = changes.get('removed', None)
-
-    if added:
-        builder.append(f'requires {added}')
-
-    if deprecated:
-        prefix = '(' if added else 'was '
-        builder.append(f'{prefix}deprecated in {deprecated}')
-
-    if removed:
-        if added and deprecated:
-            prefix = ', '
-        elif added:
-            prefix = '('
-        elif deprecated:
-            prefix = 'and '
+    # Wildcard "*" ignores name clause and matches all names.
+    if name != '*':
+        # Match exact name or like name using '%'.
+        if name.startswith('%') or name.endswith('%'):
+            where.append('NAME LIKE ?')
         else:
-            prefix = ''
-        builder.append(f'{prefix}removed in {removed}')
+            where.append('NAME = ?')
+        args.append(name)
 
-    end_curly = ')' if added and (deprecated or removed) else ''
-    return f'{" ".join(builder)}{end_curly}'
+    # WHERE version = ? clause
+    if version:
+        where.append('VERSION = ?')
+        args.append(version)
+
+    # WHERE action = ? clause
+    if action:
+        where.append('ACTION = ?')
+        args.append(action)
+
+    # Add WHERE clauses
+    if where:
+        sqlbuilder.append('WHERE')
+        for index, clause in enumerate(where):
+            if index != 0:
+                sqlbuilder.append('AND')
+            sqlbuilder.append(clause)
+
+    # Sort by version string using custom collate function
+    sqlbuilder.append('ORDER BY name, version COLLATE collate_version')
+
+    # Create sql statement and perform the query
+    sql = ' '.join(sqlbuilder)
+    return changelog.query(sql, args)
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description='Find specific module or attribute changes.',
-        usage='%(prog)s [-h] [-a] module [attribute]')
+    desc = r"""Utility script to find changes in the history database.
 
+To find all names set name to "*" (with quotes and no other characters).
+
+To find similar names use the sql like % pattern. For example:
+
+    example% matches names that start with "example".
+    %example% matches names that have "example" in the middle.
+    %example matches names that end with "example".
+    """
+
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     description=desc)
     parser.add_argument(
         'name',
-        metavar='module [attribute]',
-        help='module with optional attribute name',
-        nargs='+')
+        help='module or attribute name (Use "*" to match all names, "%%" to match similar names)')
+
+    parser.add_argument(
+        '-l', '--like',
+        help='find similar names instead of an exact match',
+        action='store_true')
+
+    parser.add_argument(
+        '-v', '--version',
+        help='optional version number')
+
+    parser.add_argument(
+        '-a', '--action',
+        help='optional action (added, deprecated, or removed)')
 
     args = parser.parse_args()
 
-    if len(args.name) > 2:
-        parser.error('Invalid number of arguments (must be 1 or 2).')
+    results = find_changes(args.name, args.version, args.action)
+
+    if results:
+        for row in results:
+            version, action, name = row
+            print(name, action, 'in', version)
     else:
-        find_changes(*args.name)
+        print('Found 0 rows.')
 
 
 if __name__ == '__main__':
