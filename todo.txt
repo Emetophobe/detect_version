@@ -6,7 +6,4 @@ TODO list:
 4. positional only arguments (Python 3.8 - PEP 570)
 5. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
 6. type hinting generics in standard collections (Python 3.9 - PEP 585)
-7. Add errno.EQFULL and errno.ENOTCAPABLE (Added in 3.11.1 point release)
-8. Add socket module constants
-9. Add typing module changes
-10. Handle changes in random point releases (i.e typing.Text added in Python 3.5.2)
+7. Unit tests
