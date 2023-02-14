@@ -13,13 +13,6 @@ from typing import Optional
 from os import PathLike
 
 
-# ACTION constants
-ACTION_ADDED = 'added'
-ACTION_DEPRECATED = 'deprecated'
-ACTION_REMOVED = 'removed'
-ALL_ACTIONS = (ACTION_ADDED, ACTION_DEPRECATED, ACTION_REMOVED)
-
-
 class Requirement:
     """ A requirement holds the optional added, deprecated, and removed feature versions. """
     def __init__(self, added: Optional[str] = None, deprecated: Optional[str] = None,
@@ -74,6 +67,10 @@ class Changelog:
         cursor.execute(sql, args)
         versions = {row[1]: row[0] for row in cursor.fetchall()}
         return Requirement(**versions)
+
+    def cursor(self):
+        """ Retrieve a database cursor. """
+        return self.conn.cursor()
 
     def close(self):
         """ Close the database connection. """

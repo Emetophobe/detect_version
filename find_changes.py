@@ -62,7 +62,7 @@ def find_changes(name: str | PathLike,
 
     # Create sql statement and perform the query
     sql = ' '.join(sqlbuilder)
-    cursor = changelog.conn.cursor()
+    cursor = changelog.cursor()
     cursor.execute(sql, args)
     return cursor.fetchall()
 
