@@ -13,12 +13,10 @@ def find_changes(name: str | PathLike,
                  version: Optional[str] = None,
                  action: Optional[str] = None
                  ) -> list[tuple]:
-    """ Query the changelog for specific version changes.
+    """ Search the module changelog for specific version changes.
 
     Args:
-        name (str or PathLike): Module or attribute name.
-                                Use a wildcard "*" as the name to match all names.
-                                Use a "%" before or after the name to match like names.
+        name (str or PathLike): Module or attribute name. SQL-like % patterns are allowed.
         version (str, optional): Select a specific version Defaults to None.
         action (str, optional): Select a specific action ("added", "deprecated", or "removed")
 
@@ -34,14 +32,12 @@ def find_changes(name: str | PathLike,
     where = []
     args = []
 
-    # Wildcard "*" ignores name clause and matches all names.
-    if name != '*':
-        # Match exact name or like name using '%'.
-        if name.startswith('%') or name.endswith('%'):
-            where.append('NAME LIKE ?')
-        else:
-            where.append('NAME = ?')
-        args.append(name)
+    # Match exact name or like name using '%'.
+    if name.startswith('%') or name.endswith('%'):
+        where.append('NAME LIKE ?')
+    else:
+        where.append('NAME = ?')
+    args.append(name)
 
     # WHERE version = ? clause
     if version:
@@ -72,19 +68,18 @@ def find_changes(name: str | PathLike,
 
 
 def main():
-    desc = r"""Utility script to find changes in the history database.
+    desc = """Utility script to find specific changes in the changelog.
 
-To find all names set name to "*" (with quotes and no other characters).
+The name argument can use SQL LIKE patterns with the percent %% symbol.
 
-To find similar names use the sql like % pattern. For example:
+For example:
 
-    example% matches names that start with "example".
-    %example% matches names that have "example" in the middle.
-    %example matches names that end with "example".
+    % matches all names
+    example% matches names that start with "example"
+    %%example% matches names that have "example" in the middle
+    %%example matches names that end with "example"
     """
-
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                     description=desc)
+    parser = argparse.ArgumentParser(description=desc)
     parser.add_argument(
         'name',
         help='module or attribute name (Use "*" to match all names, "%%" to match similar names)')
@@ -107,11 +102,12 @@ To find similar names use the sql like % pattern. For example:
     results = find_changes(args.name, args.version, args.action)
 
     if results:
+        columns = '{:<8} {:<15} {}'
+        print(columns.format('Version', 'Action', 'Name'))
         for row in results:
-            version, action, name = row
-            print(name, action, 'in', version)
-    else:
-        print('Found 0 rows.')
+            print(columns.format(*row))
+
+    print('Found', len(results), 'row.' if len(results) == 1 else 'rows.')
 
 
 if __name__ == '__main__':
