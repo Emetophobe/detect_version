@@ -86,9 +86,9 @@ class Changelog:
         # Plain-text csv files are easier to track in a git repository
         # than a binary sqlite file.
         tables = {
-            'modules': 'changelogs/modules.csv',
-            'exceptions': 'changelogs/exceptions.csv',
-            'functions': 'changelogs/functions.csv'
+            'modules': 'data/modules.csv',
+            'exceptions': 'data/exceptions.csv',
+            'functions': 'data/functions.csv'
         }
 
         # Create individual database tables and insert csv rows
@@ -142,10 +142,10 @@ class Analyzer(ast.NodeVisitor):
             print()
             print('Warning: Found deprecated or removed features:')
             for feature, changes in warnings.items():
-                if requirement.deprecated:
-                    print(f'  {feature} deprecated in version {requirement.deprecated}')
-                if requirement.removed:
-                    print(f'  {feature} removed in version {requirement.removed}')
+                if changes.deprecated:
+                    print(f'  {feature} deprecated in version {changes.deprecated}')
+                if changes.removed:
+                    print(f'  {feature} removed in version {changes.removed}')
 
     def update_requirements(self, feature: str, requirement: Requirement) -> None:
         """ Update script requirements.
@@ -342,16 +342,6 @@ class Analyzer(ast.NodeVisitor):
             return str()
 
 
-def detect_version(filename: str | bytes) -> None:
-    """ Analyze Python script and print requirements. """
-    with open(filename, 'r') as source:
-        tree = ast.parse(source.read())
-
-    analyzer = Analyzer(filename)
-    analyzer.visit(tree)
-    analyzer.report()
-
-
 def version_tuple(version: str) -> tuple[int, int, int]:
     """ Split a version string into a tuple. Example: "3.11.1" returns (3, 11, 1) """
     if not version:
@@ -387,6 +377,16 @@ def dump_node(node: ast.AST) -> None:
     print(ast.dump(node, indent=4))
 
 
+def detect_version(filename: str | bytes) -> None:
+    """ Analyze Python script and print requirements. """
+    with open(filename, 'r') as source:
+        tree = ast.parse(source.read())
+
+    analyzer = Analyzer(filename)
+    analyzer.visit(tree)
+    analyzer.report()
+
+
 def main():
     desc = 'Detect the minimum required version of a Python script.'
     parser = argparse.ArgumentParser(description=desc)
@@ -405,8 +405,8 @@ def main():
 
     # For debugging only, print cache info
     if args.debug:
-        print('Changelog.get_module()', Changelog.get_module.cache_info())
-        print('Changelog.get_function()', Changelog.get_function.cache_info())
+        print('get_module()', Changelog.get_module.cache_info())
+        print('get_function()', Changelog.get_function.cache_info())
 
 
 if __name__ == '__main__':
