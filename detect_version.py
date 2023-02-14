@@ -5,8 +5,9 @@
 import ast
 import csv
 import sys
-import sqlite3
 import argparse
+import sqlite3
+import functools
 
 from typing import Optional
 from os import PathLike
@@ -17,6 +18,21 @@ ACTION_ADDED = 'added'
 ACTION_DEPRECATED = 'deprecated'
 ACTION_REMOVED = 'removed'
 ALL_ACTIONS = (ACTION_ADDED, ACTION_DEPRECATED, ACTION_REMOVED)
+
+
+class Requirement:
+    """ A requirement holds the optional added, deprecated, and removed feature versions. """
+    def __init__(self, added: Optional[str] = None, deprecated: Optional[str] = None,
+                 removed: Optional[str] = None) -> None:
+        self.added = added
+        self.deprecated = deprecated
+        self.removed = removed
+
+    def __iter__(self):
+        return (self.added, self.deprecated, self.removed)
+
+    def __str__(self) -> str:
+        return f'{self.added}, {self.deprecated}, {self.removed}'
 
 
 class Changelog:
@@ -30,31 +46,34 @@ class Changelog:
     """
 
     def __init__(self) -> None:
-        """ Initialize the database connection. """
+        """ Initialize the database. """
         self.conn = sqlite3.connect(':memory:')
         self.conn.create_collation('collate_version', compare_version)
         self._create_tables()
 
-    def get_module(self, module: str) -> list[tuple]:
-        """ Get module changes matching the specified module name. """
+    @functools.lru_cache()
+    def get_module(self, module: str) -> Requirement:
+        """ Find module changes matching the specified module name. """
         sql = 'SELECT * FROM modules WHERE name = ?'
         return self.query(sql, (module,))
 
-    def get_function(self, function: str) -> list[tuple]:
-        """ Get function changes matching the specified function name. """
+    @functools.lru_cache()
+    def get_function(self, function: str) -> Requirement:
+        """ Find function changes matching the specified function name. """
         sql = 'SELECT * FROM functions WHERE name = ?;'
         return self.query(sql, (function,))
 
-    def get_exception(self, exception: str) -> list[tuple]:
-        """ Get exception changes matching the specified exception name. """
+    def get_exception(self, exception: str) -> Requirement:
+        """ Find exception changes matching the specified exception name. """
         sql = 'SELECT * FROM exceptions WHERE name = ?;'
         return self.query(sql, (exception,))
 
-    def query(self, sql: str, args: tuple | list) -> list[tuple]:
-        """ Convenience method to query the database. """
+    def query(self, sql: str, args: tuple | list) -> Requirement:
+        """ Query the database and create a Requirement. """
         cursor = self.conn.cursor()
         cursor.execute(sql, args)
-        return cursor.fetchall()
+        versions = {row[1]: row[0] for row in cursor.fetchall()}
+        return Requirement(**versions)
 
     def close(self):
         """ Close the database connection. """
@@ -105,35 +124,30 @@ class Analyzer(ast.NodeVisitor):
 
         # Sort requirements by version (compare strings by converting to a tuple first)
         requirements = sorted(self.requirements.items(),
-                              key=lambda a: (version_tuple(a[1][0]), a[0]))
+                              key=lambda a: (version_tuple(a[1].added), a[0]))
 
         # Print minimum detected script version and detailed requirements
         print(f'{self.script}: requires {self.min_version}')
-        for feature, changes in requirements:
-            added, removed, deprecated = changes
+        for feature, requirement in requirements:
             # Print requirements
-            if added:
-                print(f'  {feature} requires {added}')
+            if requirement.added:
+                print(f'  {feature} requires {requirement.added}')
 
             # Build dictionary of deprecations and removals
-            elif deprecated or removed:
-                warnings[feature] = (deprecated, removed)
+            elif requirement.deprecated or requirement.removed:
+                warnings[feature] = requirement
 
         # Print warning about deprecations and removals
         if warnings:
             print()
             print('Warning: Found deprecated or removed features:')
             for feature, changes in warnings.items():
-                deprecated, removed = changes
-                if deprecated:
-                    print(f'  {feature} deprecated in version {deprecated}')
-                if removed:
-                    print(f'  {feature} removed in version {removed}')
+                if requirement.deprecated:
+                    print(f'  {feature} deprecated in version {requirement.deprecated}')
+                if requirement.removed:
+                    print(f'  {feature} removed in version {requirement.removed}')
 
-        # Close database
-        self.changelog.close()
-
-    def update_requirements(self, feature: str, changes: tuple | list[tuple]) -> None:
+    def update_requirements(self, feature: str, requirement: Requirement) -> None:
         """ Update script requirements.
 
         Args:
@@ -143,27 +157,17 @@ class Analyzer(ast.NodeVisitor):
         Raises:
             TypeError: If the changes are an invalid type.
         """
-        # Convert tuple to a list of tuples
-        if isinstance(changes, tuple):
-            changes = [changes]
-        if not isinstance(changes, list):
-            raise TypeError(f'Unsupported type. Expected a tuple or list,'
-                            f' received a {type(changes)}')
-
-        # Convert changes to a 3-tuple of version strings (added, deprecated, removed)
-        # TODO: find a much nicer way to implement this
-        versions = {}
-        for row in changes:
-            versions[row[1]] = row[0]
-        requirements = tuple(versions.get(version, None) for version in ALL_ACTIONS)
+        if not isinstance(requirement, Requirement):
+            raise TypeError(f'Unsupported type. Expected a Requirement,'
+                            f' received a {type(requirement)}')
 
         # Check if the feature is already added
-        if feature in self.requirements.keys() and self.requirements[feature] == requirements:
+        if feature in self.requirements.keys() and self.requirements[feature] == requirement:
             return
 
         # Update requirements
-        self.update_version(requirements[0])
-        self.requirements[feature] = requirements
+        self.update_version(requirement.added)
+        self.requirements[feature] = requirement
 
     def update_version(self, version: str) -> None:
         """ Update minimum script version.
@@ -175,7 +179,7 @@ class Analyzer(ast.NodeVisitor):
             return
 
         # Convert version strings to tuples temporarily for comparison
-        if version_tuple(version) > version_tuple(self.min_version):
+        if compare_version(version, self.min_version) > 0:
             self.min_version = version
 
     def visit_Import(self, node: ast.Import) -> None:
@@ -260,22 +264,20 @@ class Analyzer(ast.NodeVisitor):
             node.kind: "u" for unicode string, None otherwise.
         """
         if node.kind == 'u':
-            self.update_requirements('unicode literal', self._create_requirement('3.3'))
+            self.update_requirements('unicode literal', Requirement('3.3'))
         self.generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AST):
         """ Check for async/await reserved keywords which were added in Python 3.7
 
-            Python 3.5 introduced async/await but they were only treated as keywords
-            inside the body of a coroutine function.
+            Python 3.5 introduced async and await but they were only treated as
+            keywords inside the body of a coroutine function.
 
-            Python 3.7 changed async/await to reserved keywords (like 'if' and 'else')
-
-            This introduced some backwards incompatible syntax changes between the 3.5
-            and 3.7 versions of async/await. I will only be testing against Python 3.7
-            where they became full reserved keywords.
+            Python 3.7 changed async/await to reserved keywords. This introduced
+            some backwards incompatible syntax changes between the 3.5 and 3.7
+            versions of async/await.
         """
-        self.update_requirements('async and await', self._create_requirement('3.7'))
+        self.update_requirements('async and await', Requirement('3.7'))
         self.generic_visit(node)
 
     # Use same method for all async/await visitors
@@ -283,28 +285,28 @@ class Analyzer(ast.NodeVisitor):
 
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
         """ Check for fstring literals which were added in Python 3.6 """
-        self.update_requirements('fstring literal', self._create_requirement('3.6'))
+        self.update_requirements('fstring literal', Requirement('3.6'))
         self.generic_visit(node)
 
     def visit_NamedExpr(self, node: ast.NamedExpr) -> None:
         """ Check for walrus operators which were added in Python 3.8 """
-        self.update_requirements('walrus operator', self._create_requirement('3.8'))
+        self.update_requirements('walrus operator', Requirement('3.8'))
         self.generic_visit(node)
 
     def visit_Match(self, node: ast.Match) -> None:
         """ Check for match/case statements which were added in Python 3.10 """
-        self.update_requirements('match statement', self._create_requirement('3.10'))
+        self.update_requirements('match statement', Requirement('3.10'))
         self.generic_visit(node)
 
     def visit_With(self, node: ast.With) -> None:
         """ Check for multiple context managers which were added in Python 3.1 """
         if len(node.items) > 1:
-            self.update_requirements('multiple with clauses', self._create_requirement('3.1'))
+            self.update_requirements('multiple with clauses', Requirement('3.1'))
         self.generic_visit(node)
 
     def visit_YieldFrom(self, node: ast.YieldFrom) -> None:
         """ Check for "yield from" expressions which were added in Python 3.3 """
-        self.update_requirements('yield from expression', self._create_requirement('3.3'))
+        self.update_requirements('yield from expression', Requirement('3.3'))
         self.generic_visit(node)
 
     def _check_exception(self, exception: str) -> None:
@@ -317,7 +319,7 @@ class Analyzer(ast.NodeVisitor):
         """ Check for new function names. """
         changes = self.changelog.get_function(function)
         if changes:
-            self.update_requirements(f'{function} function', changes)
+            self.update_requirements(function + ' function', changes)
 
     def _check_module(self, module: str) -> None:
         """ Check for module changes. """
@@ -327,7 +329,7 @@ class Analyzer(ast.NodeVisitor):
 
     def _check_attribute(self, node: ast.Attribute) -> None:
         """ Check for module attribute changes. """
-        # Get full module+attribute name from a potentially nested Attribute
+        # Get the full module.attribute name from a potentially nested Attribute
         self._check_module(self._get_attribute(node))
 
     def _get_attribute(self, node: ast.Name | ast.Attribute) -> str:
@@ -338,11 +340,6 @@ class Analyzer(ast.NodeVisitor):
             return str(self._get_attribute(node.value) + '.' + node.attr)
         else:
             return str()
-
-    def _create_requirement(self, version: str, action: Optional[str] = ACTION_ADDED,
-                            name: Optional[str] = None) -> tuple:
-        """ Convenience method to create a single requirement tuple. """
-        return (version, action, name)
 
 
 def detect_version(filename: str | bytes) -> None:
@@ -363,7 +360,7 @@ def version_tuple(version: str) -> tuple[int, int, int]:
 
 
 def compare_version(version1: str, version2: str) -> bool:
-    """ Compare two version strings by temporarily converting them to tuples. """
+    """ Compare two version strings by converting them to tuples. """
     if version_tuple(version1) > version_tuple(version2):
         return 1
     elif version_tuple(version1) == version_tuple(version2):
@@ -395,6 +392,7 @@ def main():
     parser = argparse.ArgumentParser(description=desc)
     parser.add_argument('path', help='python script to scan')
     parser.add_argument('-d', '--dump', help='dump ast to stdout', action='store_true')
+    parser.add_argument('--debug', help=argparse.SUPPRESS, action='store_true')
     args = parser.parse_args()
 
     try:
@@ -404,6 +402,11 @@ def main():
             detect_version(args.path)
     except OSError as e:
         print(f'Error reading {e.filename} ({e.strerror})', file=sys.stderr)
+
+    # For debugging only, print cache info
+    if args.debug:
+        print('Changelog.get_module()', Changelog.get_module.cache_info())
+        print('Changelog.get_function()', Changelog.get_function.cache_info())
 
 
 if __name__ == '__main__':
