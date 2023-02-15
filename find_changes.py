@@ -13,15 +13,15 @@ def find_changes(name: str | PathLike,
                  version: Optional[str] = None,
                  action: Optional[str] = None
                  ) -> list[tuple]:
-    """ Search the module changelog for specific version changes.
+    """ Search the module database for specific changes.
 
     Args:
-        name (str or PathLike): Module or attribute name. SQL-like % patterns are allowed.
-        version (str, optional): Select a specific version Defaults to None.
-        action (str, optional): Select a specific action ("added", "deprecated", or "removed")
+        name (str or PathLike): Module or attribute name.
+        version (str, optional): Optional version string.
+        action (str, optional): Optioanl action name.
 
     Returns:
-        list[tuple]: The matching database rows, if any.
+        list[tuple]: The database rows, if any.
     """
 
     # Load sqlite database
@@ -57,47 +57,32 @@ def find_changes(name: str | PathLike,
                 sqlbuilder.append('AND')
             sqlbuilder.append(clause)
 
-    # Sort by version string using custom collate function
-    sqlbuilder.append('ORDER BY version COLLATE collate_version')
-
     # Create sql statement and perform the query
     sql = ' '.join(sqlbuilder)
-    cursor = changelog.cursor()
-    cursor.execute(sql, args)
-    return cursor.fetchall()
+    return changelog.query(sql, args)
 
 
 def main():
-    desc = """Utility script to find specific changes in the changelog.
+    desc = r"""Utility script to find specific module changes.
 
-The name argument can use SQL LIKE patterns with the percent %% symbol.
+The name argument supports SQL-LIKE patterns using the percent % symbol:
 
-For example:
-
-    % matches all names
-    example% matches names that start with "example"
-    %%example% matches names that have "example" in the middle
-    %%example matches names that end with "example"
+    %       matches all names
+    start%  matches names that begin with "start"
+    %text%  matches names that have "text" in the middle
+    %stop   matches names that end with "stop"
     """
-    parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument(
-        'name',
-        help='module or attribute name (Use "*" to match all names, "%%" to match similar names)')
-
-    parser.add_argument(
-        '-v', '--version',
-        help='optional version number')
-
-    parser.add_argument(
-        '-a', '--action',
-        help='optional action (added, deprecated, or removed)')
-
+    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
+                                     description=desc)
+    parser.add_argument('name', help='module or attribute name')
+    parser.add_argument('-v', '--version', help='optional version number')
+    parser.add_argument('-a', '--action', help='optional action name')
     args = parser.parse_args()
 
     results = find_changes(args.name, args.version, args.action)
 
     if results:
-        columns = '{:<8} {:<15} {}'
+        columns = '{:<8} {:<13} {}'
         print(columns.format('Version', 'Action', 'Name'))
         for row in results:
             print(columns.format(*row))

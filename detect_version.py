@@ -37,12 +37,13 @@ class Requirement:
         return False
 
     def __eq__(self, other: object) -> bool:
-        """ Compare two instances for equality. """
+        """ Compare two requirements for equality. """
         if not isinstance(other, Requirement):
             return False
 
-        return (self.added == other.added and self.deprecated == other.deprecated
-                and self.removed == other.removed)
+        return (self.added == other.added and
+                self.deprecated == other.deprecated and
+                self.removed == other.removed)
 
     def __iter__(self):
         """ Turns a requirement into an iterable. """
@@ -55,10 +56,10 @@ class Requirement:
 
 
 class Changelog:
-    """ A simple changelog database backed by csv files.
+    """ A simple sqlite3 database backed by csv files.
 
         Changelogs are stored as csv files (plain text) instead of
-        sqlite (binary) for easier git diffs and tracking changes.
+        sqlite files (binary) for easier git diffs and updates.
 
         This class simply creates an in-memory sqlite3 database
         with rows loaded from csv files.
@@ -68,69 +69,103 @@ class Changelog:
         """ Initialize the database. """
         self.conn = sqlite3.connect(':memory:')
         self.conn.create_collation('collate_version', compare_version)
-        self._create_tables()
+        self._create_table('modules', 'data/modules.csv')
+        self._create_table('exceptions', 'data/exceptions.csv')
+        self._create_table('functions', 'data/functions.csv')
 
-    @functools.lru_cache()
-    def get_module(self, module: str) -> Requirement:
-        """ Find module changes matching the specified module name. """
-        sql = 'SELECT * FROM modules WHERE name = ?'
-        return self.query(sql, (module,))
+    def query(self, sql: str, args: tuple | list, sort: bool = True) -> list[tuple]:
+        """ Query the database for changes.
 
-    @functools.lru_cache()
-    def get_function(self, function: str) -> Requirement:
-        """ Find function changes matching the specified function name. """
-        sql = 'SELECT * FROM functions WHERE name = ?'
-        return self.query(sql, (function,))
+        Args:
+            sql (str): The sql statement.
+            args (tuple | list): Parameterized arguments
+            sort (bool, optional): Sort rows by version. Defaults to True.
 
-    def get_exception(self, exception: str) -> Requirement:
-        """ Find exception changes matching the specified exception name. """
-        sql = 'SELECT * FROM exceptions WHERE name = ?'
-        return self.query(sql, (exception,))
+        Returns:
+            list[tuple]: A list of rows. Return an empty list if no rows are found.
+        """
 
-    def query(self, sql: str, args: tuple | list) -> Requirement:
-        """ Query the database and and get a list of rows. """
-        # Append sort order
-        sql = sql + ' ORDER BY version COLLATE collate_version'
+        if sort:
+            sql += ' ORDER BY version COLLATE collate_version'
 
         cursor = self.cursor()
         cursor.execute(sql, args)
+        return cursor.fetchall()
 
-        # Get most recent version requirements
-        versions = {row[1]: row[0] for row in cursor.fetchall()}
-        return Requirement(**versions)
+    def get_requirement(self, sql: str, args: tuple | list) -> Requirement:
+        """ Get a Requirement from the database.
 
-    def cursor(self):
-        """ Retrieve a database cursor. """
-        return self.conn.cursor()
+        Args:
+            sql (str): The sql statement.
+            args (tuple | list): Sequence of parameterized arguments
 
-    def close(self):
+        Returns:
+            Requirement: The version requirements (if any).
+        """
+        # Covert rows to dictionary to get unique actions and latest versions
+        requirements = {row[1]: row[0] for row in self.query(sql, args)}
+        return Requirement(**requirements)
+
+    @functools.lru_cache()
+    def get_module(self, module: str) -> Requirement:
+        """ Find module and attribute changes.
+
+        Args:
+            module (str): Name of the module or attribute.
+
+        Returns:
+            Requirement: The version requirements.
+        """
+        sql = 'SELECT * FROM modules WHERE name = ?'
+        return self.get_requirement(sql, (module,))
+
+    @functools.lru_cache()
+    def get_function(self, function: str) -> Requirement:
+        """ Find function changes.
+
+        Args:
+            function (str): Name of the function.
+
+        Returns:
+            Requirement: The version requirements.
+        """
+        sql = 'SELECT * FROM functions WHERE name = ?'
+        return self.get_requirement(sql, (function,))
+
+    def get_exception(self, exception: str) -> Requirement:
+        """ Find exception changes.
+
+        Args:
+            exception (str): Name of the exception.
+
+        Returns:
+            Requirement: The version requirements.
+        """
+        sql = 'SELECT * FROM exceptions WHERE name = ?'
+        return self.get_requirement(sql, (exception,))
+
+    def close(self) -> None:
         """ Close the database connection. """
         if self.conn:
             self.conn.close()
 
-    def _create_tables(self):
-        """ Initialize the database tables. """
-        # Dictionary of table names and their associated csv files
-        # Plain-text csv files are easier to track in a git repository
-        # than a binary sqlite file.
-        tables = {
-            'modules': 'data/modules.csv',
-            'exceptions': 'data/exceptions.csv',
-            'functions': 'data/functions.csv'
-        }
+    def cursor(self) -> sqlite3.Cursor:
+        """ Convenience method to retrieve a database cursor. """
+        return self.conn.cursor()
 
-        # Create individual database tables and insert csv rows
-        for table, filename in tables.items():
-            cur = self.conn.cursor()
-            cur.execute(f'CREATE TABLE {table} (version TEXT NOT NULL, action TEXT NOT NULL, '
-                        'name TEXT NOT NULL);')
-            cur.executemany(f'INSERT INTO {table} (version, action, name) VALUES '
-                            '(?, ?, ?);', load_changes(filename))
-            self.conn.commit()
+    def _create_table(self, tablename: str, filename: str) -> None:
+        """ Create a database table and insert rows from file. """
+        rows = load_changes(filename)
+        cur = self.conn.cursor()
+        cur.execute(f'CREATE TABLE {tablename} (version TEXT NOT NULL,'
+                     'action TEXT NOT NULL, name TEXT NOT NULL);')
+        cur.executemany(f'INSERT INTO {tablename} (version, action, name) '
+                         'VALUES (?, ?, ?);', rows)
+        self.conn.commit()
 
 
 class Analyzer(ast.NodeVisitor):
-    """ Parse abstract syntax tree and determine a minimum required script version. """
+    """ Parse abstract syntax tree and determine script requirements. """
 
     def __init__(self, script: PathLike) -> None:
         """ Initialize node analyzer.
@@ -142,8 +177,8 @@ class Analyzer(ast.NodeVisitor):
         self.requirements = {}
         self.script = script
 
-        # Versions are internally stored as strings instead of floats to
-        # prevent Python versions like 3.10 being simplified down to 3.1
+        # Python versions are always stored as strings instead of floats
+        # to prevent versions like 3.10 being truncated down to 3.1
         self.min_version = '3.0'
 
     def report(self) -> None:
@@ -176,16 +211,22 @@ class Analyzer(ast.NodeVisitor):
                 if changes.removed:
                     print(f'  {feature} removed in version {changes.removed}')
 
+        # Close database
+        self.changelog.close()
+
     def update_requirements(self, feature: str, requirement: Requirement) -> None:
         """ Update script requirements.
 
         Args:
             feature (str): Name of the feature.
-            changes (tuple | list[tuple]): Single change or a list of changes.
+            requirement (Requirement): Version requirements (if any).
 
         Raises:
             TypeError: If the changes are an invalid type.
         """
+        if not requirement:
+            return
+
         if not isinstance(requirement, Requirement):
             raise TypeError(f'Unsupported type. Expected a Requirement,'
                             f' received a {type(requirement)}')
@@ -207,7 +248,7 @@ class Analyzer(ast.NodeVisitor):
         if not version:
             return
 
-        # Convert version strings to tuples temporarily for comparison
+        # Update version if higher
         if compare_version(version, self.min_version) > 0:
             self.min_version = version
 
@@ -388,11 +429,11 @@ def compare_version(version1: str, version2: str) -> bool:
         return -1
 
 
-def load_changes(filename: str | PathLike) -> None:
-    """ Load changelog from csv file. """
-    csv.register_dialect('custom_csv', 'unix', skipinitialspace=True)
+def load_changes(filename: str | PathLike) -> list[list]:
+    """ Load list of changes from a csv file. """
+    csv.register_dialect('changelog', 'unix', skipinitialspace=True)
     with open(filename, 'r', newline='') as infile:
-        return list(csv.reader(infile, dialect='custom_csv'))
+        return list(csv.reader(infile, dialect='changelog'))
 
 
 def dump_file(path: str | PathLike) -> None:
@@ -406,7 +447,7 @@ def dump_node(node: ast.AST) -> None:
     print(ast.dump(node, indent=4))
 
 
-def detect_version(filename: str | bytes) -> None:
+def detect_version(filename: str | PathLike) -> None:
     """ Analyze Python script and print requirements. """
     with open(filename, 'r') as source:
         tree = ast.parse(source.read())
