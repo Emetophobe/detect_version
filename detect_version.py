@@ -21,8 +21,34 @@ class Requirement:
         self.deprecated = deprecated
         self.removed = removed
 
+    def __lt__(self, other: object) -> bool:
+        """ Less than operator is used for sorting requirements. """
+        if not isinstance(other, Requirement):
+            raise TypeError(f'Expected a Requirement, received a {type(other).__name__}')
+
+        # zip both instances and compare their added, deprecated, and removed versions
+        for version, other_ver in zip(self, other):
+            if compare_version(version, other_ver) < 0:
+                return True
+            elif compare_version(version, other_ver) == 0:
+                continue
+            else:
+                return False
+        return False
+
+    def __eq__(self, other: object) -> bool:
+        """ Compare two instances for equality. """
+        if not isinstance(other, Requirement):
+            return False
+
+        return (self.added == other.added and self.deprecated == other.deprecated
+                and self.removed == other.removed)
+
     def __iter__(self):
-        return (self.added, self.deprecated, self.removed)
+        """ Turns a requirement into an iterable. """
+        yield self.added
+        yield self.deprecated
+        yield self.removed
 
     def __str__(self) -> str:
         return f'{self.added}, {self.deprecated}, {self.removed}'
@@ -53,18 +79,23 @@ class Changelog:
     @functools.lru_cache()
     def get_function(self, function: str) -> Requirement:
         """ Find function changes matching the specified function name. """
-        sql = 'SELECT * FROM functions WHERE name = ?;'
+        sql = 'SELECT * FROM functions WHERE name = ?'
         return self.query(sql, (function,))
 
     def get_exception(self, exception: str) -> Requirement:
         """ Find exception changes matching the specified exception name. """
-        sql = 'SELECT * FROM exceptions WHERE name = ?;'
+        sql = 'SELECT * FROM exceptions WHERE name = ?'
         return self.query(sql, (exception,))
 
     def query(self, sql: str, args: tuple | list) -> Requirement:
-        """ Query the database and create a Requirement. """
-        cursor = self.conn.cursor()
+        """ Query the database and and get a list of rows. """
+        # Append sort order
+        sql = sql + ' ORDER BY version COLLATE collate_version'
+
+        cursor = self.cursor()
         cursor.execute(sql, args)
+
+        # Get most recent version requirements
         versions = {row[1]: row[0] for row in cursor.fetchall()}
         return Requirement(**versions)
 
@@ -116,17 +147,18 @@ class Analyzer(ast.NodeVisitor):
         self.min_version = '3.0'
 
     def report(self) -> None:
-        """ Report script requirements. """
-        warnings = {}
+        """ Print script requirements. """
 
-        # Sort requirements by version (compare strings by converting to a tuple first)
-        requirements = sorted(self.requirements.items(),
-                              key=lambda a: (version_tuple(a[1].added), a[0]))
+        # Sort requirements by version, feature
+        requirements = sorted(self.requirements.items(), key=lambda a: (a[1], a[0]))
 
-        # Print minimum detected script version and detailed requirements
+        # Print script version
         print(f'{self.script}: requires {self.min_version}')
+
+        # Print script requirements
+        warnings = {}
         for feature, requirement in requirements:
-            # Print requirements
+            # Print added features
             if requirement.added:
                 print(f'  {feature} requires {requirement.added}')
 
@@ -134,7 +166,7 @@ class Analyzer(ast.NodeVisitor):
             elif requirement.deprecated or requirement.removed:
                 warnings[feature] = requirement
 
-        # Print warning about deprecations and removals
+        # Print warning about deprecated and removed features
         if warnings:
             print()
             print('Warning: Found deprecated or removed features:')
