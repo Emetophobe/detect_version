@@ -6,56 +6,42 @@ import argparse
 
 from detect_version import Changelog
 from typing import Optional
-from os import PathLike
 
 
-def find_changes(name: str | PathLike,
+def find_changes(name: str,
                  version: Optional[str] = None,
                  action: Optional[str] = None
                  ) -> list[tuple]:
     """ Search the module database for specific changes.
 
     Args:
-        name (str or PathLike): Module or attribute name.
-        version (str, optional): Optional version string.
-        action (str, optional): Optioanl action name.
+        name (str): Module or attribute name.
+        version (str, optional): Filter rows by version.
+        action (str, optional): Filter rows by action.
 
     Returns:
-        list[tuple]: The database rows, if any.
+        list[tuple]: List of matching rows, or an empty list if no rows were found.
     """
-
-    # Load sqlite database
+    # Open database
     changelog = Changelog()
 
-    # Build sql statement and argument list
-    sqlbuilder = ['SELECT * FROM modules']
-    where = []
-    args = []
-
-    # Match exact name or like name using '%'.
+    # Name filter. Match exact name or like names.
     if name.startswith('%') or name.endswith('%'):
-        where.append('NAME LIKE ?')
+        sqlbuilder = ['SELECT * FROM modules WHERE name LIKE ?']
     else:
-        where.append('NAME = ?')
-    args.append(name)
+        sqlbuilder = ['SELECT * FROM modules WHERE name ?']
 
-    # WHERE version = ? clause
+    args = [name]
+
+    # Version filter
     if version:
-        where.append('VERSION = ?')
+        sqlbuilder.append('AND VERSION = ?')
         args.append(version)
 
-    # WHERE action = ? clause
+    # Action filter
     if action:
-        where.append('ACTION = ?')
+        sqlbuilder.append('AND ACTION = ?')
         args.append(action)
-
-    # Add WHERE clauses
-    if where:
-        sqlbuilder.append('WHERE')
-        for index, clause in enumerate(where):
-            if index != 0:
-                sqlbuilder.append('AND')
-            sqlbuilder.append(clause)
 
     # Create sql statement and perform the query
     sql = ' '.join(sqlbuilder)
@@ -75,9 +61,13 @@ The name argument supports SQL-LIKE patterns using the percent % symbol:
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description=desc)
     parser.add_argument('name', help='module or attribute name')
-    parser.add_argument('-v', '--version', help='optional version number')
-    parser.add_argument('-a', '--action', help='optional action name')
+    parser.add_argument('-v', '--version', help='Filter rows by version')
+    parser.add_argument('-a', '--action', help='Filter rows by action')
     args = parser.parse_args()
+
+    if args.action and args.action not in ('added', 'deprecated', 'removed'):
+        parser.exit(f'Error: Invalid action: {args.action!r} (valid actions: '
+                     'added, removed, deprecated)')
 
     results = find_changes(args.name, args.version, args.action)
 
