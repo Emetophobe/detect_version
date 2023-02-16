@@ -25,12 +25,11 @@ def find_changes(name: str,
     # Open database
     changelog = Changelog()
 
-    # Name filter. Match exact name or like names.
+    # Match exact name or like names.
     if name.startswith('%') or name.endswith('%'):
         sqlbuilder = ['SELECT * FROM modules WHERE name LIKE ?']
     else:
-        sqlbuilder = ['SELECT * FROM modules WHERE name ?']
-
+        sqlbuilder = ['SELECT * FROM modules WHERE name = ?']
     args = [name]
 
     # Version filter
@@ -45,7 +44,7 @@ def find_changes(name: str,
 
     # Create sql statement and perform the query
     sql = ' '.join(sqlbuilder)
-    return changelog.query(sql, args)
+    return changelog.query(sql, args, sort=True)
 
 
 def main():
