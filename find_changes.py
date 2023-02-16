@@ -22,40 +22,42 @@ def find_changes(name: str,
     Returns:
         list[tuple]: List of matching rows, or an empty list if no rows were found.
     """
-    # Open database
-    changelog = Changelog()
-
-    # Match exact name or like names.
-    if name.startswith('%') or name.endswith('%'):
-        sqlbuilder = ['SELECT * FROM modules WHERE name LIKE ?']
+    # Match like names or exact names.
+    if '%' in name or '_' in name:
+        sql = 'SELECT * FROM modules WHERE name LIKE ?'
     else:
-        sqlbuilder = ['SELECT * FROM modules WHERE name = ?']
+        sql = 'SELECT * FROM modules WHERE name = ?'
     args = [name]
 
-    # Version filter
     if version:
-        sqlbuilder.append('AND VERSION = ?')
+        sql += ' AND VERSION = ?'
         args.append(version)
 
-    # Action filter
     if action:
-        sqlbuilder.append('AND ACTION = ?')
+        sql += ' AND ACTION = ?'
         args.append(action)
 
-    # Create sql statement and perform the query
-    sql = ' '.join(sqlbuilder)
+    changelog = Changelog()
     return changelog.query(sql, args, sort=True)
 
 
 def main():
     desc = r"""Utility script to find specific module changes.
 
-The name argument supports SQL-LIKE patterns using the percent % symbol:
+The name argument supports SQL-LIKE patterns.
+
+The percent % wildcard matches any sequence of zero or more characters:
 
     %       matches all names
     start%  matches names that begin with "start"
     %text%  matches names that have "text" in the middle
     %stop   matches names that end with "stop"
+
+The underscore _ wildcard matches any single character:
+
+    h_llo   matches names that have 1 character between h and llo.
+
+
     """
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
                                      description=desc)
