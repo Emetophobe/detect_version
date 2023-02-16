@@ -14,19 +14,51 @@ from os import PathLike
 
 
 class Requirement:
-    """ A requirement holds the optional added, deprecated, and removed feature versions. """
+    """ The requirement class is used to store a feature's version history.
+
+    Attributes:
+
+        added: Version when feature was introduced.
+        deprecated: Version when feature was deprecated.
+        removed: Version when feature was removed.
+
+    A requirement can have any of the versions or None of them (no requirement).
+
+    Versions are stored as strings because there is no way to represent versions
+    like "3.11.1" as a float. The downside to strings is that the versions need
+    to be converted to tuples temporarily when sorting.
+
+    Examples:
+
+        Requirement(None, None, None)       # no requirements
+        Requirement("3.11.1", None, None)   # added in 3.11.1
+        Requirement(None, "3.9", "3.12")    # deprecated in 3.9, removed in 3.12
+
+    """
     def __init__(self, added: Optional[str] = None, deprecated: Optional[str] = None,
                  removed: Optional[str] = None) -> None:
+        """ Initialize feature requirement.
+
+        Args:
+            added (str, optional):
+                Version when feature was introduced. Defaults to None.
+
+            deprecated (str, optional):
+                Version when feature was deprecated. Defaults to None.
+
+            removed (str, optional):
+                Version when feature was removed. Defaults to None.
+        """
         self.added = added
         self.deprecated = deprecated
         self.removed = removed
 
     def __lt__(self, other: object) -> bool:
-        """ Less than operator is used for sorting requirements. """
+        """ Less than "<" operator. Used for sorting requirements. """
         if not isinstance(other, Requirement):
             raise TypeError(f'Expected a Requirement, received a {type(other).__name__}')
 
-        # zip both instances and compare their added, deprecated, and removed versions
+        # zip both instances and compare added, deprecated, and removed one at a time
         for version, other_ver in zip(self, other):
             if compare_version(version, other_ver) < 0:
                 return True
@@ -37,7 +69,7 @@ class Requirement:
         return False
 
     def __eq__(self, other: object) -> bool:
-        """ Compare two requirements for equality. """
+        """ Equal "==" operator. Compare two requirements. """
         if not isinstance(other, Requirement):
             return False
 
@@ -46,7 +78,6 @@ class Requirement:
                 self.removed == other.removed)
 
     def __iter__(self):
-        """ Turns a requirement into an iterable. """
         yield self.added
         yield self.deprecated
         yield self.removed
@@ -56,7 +87,7 @@ class Requirement:
 
 
 class Changelog:
-    """ A simple sqlite3 database backed by csv files.
+    """ A simple sqlite3 database for searching csv files.
 
         Changelogs are stored as csv files (plain text) instead of
         sqlite files (binary) for easier git diffs and updates.
@@ -73,16 +104,22 @@ class Changelog:
         self._create_table('exceptions', 'data/exceptions.csv')
         self._create_table('functions', 'data/functions.csv')
 
-    def query(self, sql: str, args: tuple | list, sort: bool = True) -> list[tuple]:
+    def query(self, sql: str, args: list | tuple, sort: bool = True) -> list[tuple]:
         """ Query the database for changes.
 
         Args:
-            sql (str): The sql statement.
-            args (tuple | list): Parameterized arguments
-            sort (bool, optional): Sort rows by version. Defaults to True.
+            sql (str):
+                The sql statement to execute.
+
+            args (list | tuple):
+                Sequence of parameterized arguments.
+
+            sort (bool, optional):
+                Sort rows by version. Defaults to True.
 
         Returns:
-            list[tuple]: A list of rows. Return an empty list if no rows are found.
+            list[tuple]:
+                A list of rows or an empty list if no rows are found.
         """
 
         if sort:
@@ -92,32 +129,34 @@ class Changelog:
         cursor.execute(sql, args)
         return cursor.fetchall()
 
-    def get_requirement(self, sql: str, args: tuple | list) -> Requirement:
+    def get_requirement(self, sql: str, args: list | tuple) -> Requirement:
         """ Get a Requirement from the database.
 
         Args:
-            sql (str): The sql statement.
-            args (tuple | list): Sequence of parameterized arguments
-
-        Returns:
-            Requirement: The version requirements (if any).
-        """
-        # Covert rows to dictionary to get unique actions and latest versions
-        requirements = {row[1]: row[0] for row in self.query(sql, args)}
-        return Requirement(**requirements)
-
-    @functools.lru_cache()
-    def get_module(self, module: str) -> Requirement:
-        """ Find module and attribute changes.
-
-        Args:
-            module (str): Name of the module or attribute.
+            sql (str): The sql statement to execute.
+            args (list | tuple): Sequence of parameterized arguments.
 
         Returns:
             Requirement: The version requirements.
         """
+        # Build requirements from query rows (key=action, value=version)
+        requirements = {row[1]: row[0] for row in self.query(sql, args)}
+        if not requirements:
+            return None
+        return Requirement(**requirements)
+
+    @functools.lru_cache()
+    def get_module(self, name: str) -> Requirement:
+        """ Find module and attribute changes.
+
+        Args:
+            name (str): Name of the module or attribute.
+
+        Returns:
+            Requirement: The module requirements.
+        """
         sql = 'SELECT * FROM modules WHERE name = ?'
-        return self.get_requirement(sql, (module,))
+        return self.get_requirement(sql, (name,))
 
     @functools.lru_cache()
     def get_function(self, function: str) -> Requirement:
@@ -127,7 +166,7 @@ class Changelog:
             function (str): Name of the function.
 
         Returns:
-            Requirement: The version requirements.
+            Requirement: The function requirements.
         """
         sql = 'SELECT * FROM functions WHERE name = ?'
         return self.get_requirement(sql, (function,))
@@ -139,7 +178,7 @@ class Changelog:
             exception (str): Name of the exception.
 
         Returns:
-            Requirement: The version requirements.
+            Requirement: The exception requirements.
         """
         sql = 'SELECT * FROM exceptions WHERE name = ?'
         return self.get_requirement(sql, (exception,))
@@ -165,32 +204,35 @@ class Changelog:
 
 
 class Analyzer(ast.NodeVisitor):
-    """ Parse abstract syntax tree and determine script requirements. """
+    """ Parse abstract syntax tree and find script requirements. """
 
-    def __init__(self, script: PathLike) -> None:
+    def __init__(self, filename: str | PathLike) -> None:
         """ Initialize node analyzer.
 
         Args:
-            script (PathLike): script filename.
+            filename (PathLike): Filename of the script.
         """
+        self.filename = filename
         self.changelog = Changelog()
         self.requirements = {}
-        self.script = script
 
-        # Python versions are always stored as strings instead of floats
-        # to prevent versions like 3.10 being truncated down to 3.1
+        # Set minimum version to Python 3.0 (this has not be tested with 2.x)
         self.min_version = '3.0'
+        # Note: Python versions are always stored as strings. There is no way
+        # represent versions like "3.11.1" with a float. Floats also remove
+        # trailing 0s and turn versions like 3.10 into 3.1
+
 
     def report(self) -> None:
         """ Print script requirements. """
 
-        # Sort requirements by version, feature
+        # Sort requirements by version then feature
         requirements = sorted(self.requirements.items(), key=lambda a: (a[1], a[0]))
 
-        # Print script version
-        print(f'{self.script}: requires {self.min_version}')
+        # Print minimum version
+        print(f'{self.filename}: requires {self.min_version}')
 
-        # Print script requirements
+        # Print requirements
         warnings = {}
         for feature, requirement in requirements:
             # Print added features
@@ -219,14 +261,11 @@ class Analyzer(ast.NodeVisitor):
 
         Args:
             feature (str): Name of the feature.
-            requirement (Requirement): Version requirements (if any).
+            requirement (Requirement): The feature requirements.
 
         Raises:
-            TypeError: If the changes are an invalid type.
+            TypeError: If the requirement is an invalid type.
         """
-        if not requirement:
-            return
-
         if not isinstance(requirement, Requirement):
             raise TypeError(f'Unsupported type. Expected a Requirement,'
                             f' received a {type(requirement)}')
@@ -239,6 +278,7 @@ class Analyzer(ast.NodeVisitor):
         self.update_version(requirement.added)
         self.requirements[feature] = requirement
 
+
     def update_version(self, version: str) -> None:
         """ Update minimum script version.
 
@@ -248,7 +288,7 @@ class Analyzer(ast.NodeVisitor):
         if not version:
             return
 
-        # Update version if higher
+        # Update version if newer
         if compare_version(version, self.min_version) > 0:
             self.min_version = version
 
@@ -400,27 +440,49 @@ class Analyzer(ast.NodeVisitor):
     def _check_attribute(self, node: ast.Attribute) -> None:
         """ Check for module attribute changes. """
         # Get the full module.attribute name from a potentially nested Attribute
-        self._check_module(self._get_attribute(node))
+        self._check_module(self._get_attribute_name(node))
 
-    def _get_attribute(self, node: ast.Name | ast.Attribute) -> str:
-        """ Combine nested attributes into a single string. """
+    def _get_attribute_name(self, node: ast.Name | ast.Attribute) -> str:
+        """ Combine nested attribute name into a single string. """
         if isinstance(node, ast.Name):
             return str(node.id)
         elif isinstance(node, ast.Attribute):
-            return str(self._get_attribute(node.value) + '.' + node.attr)
+            return str(self._get_attribute_name(node.value) + '.' + node.attr)
         else:
             return str()
 
 
 def version_tuple(version: str) -> tuple[int, int, int]:
-    """ Split a version string into a tuple. Example: "3.11.1" returns (3, 11, 1) """
+    """ Split a version string into a tuple. For example "3.11.1" returns (3, 11, 1)
+
+    Args:
+        version (str):
+            The version number.
+
+    Returns:
+        tuple[int, int, int]:
+            Tuple of major, minor, micro versions.
+    """
     if not version:
         return tuple()
     return tuple(map(int, (version.split('.'))))
 
 
-def compare_version(version1: str, version2: str) -> bool:
-    """ Compare two version strings by converting them to tuples. """
+def compare_version(version1: str, version2: str) -> int:
+    """ Compare two version strings.
+
+    Args:
+        version1 (str):
+            First version.
+
+        version2 (str):
+            Second version.
+
+    Returns:
+        int:
+            A number based on the result of the comparison.
+            1 for greater than, 0 for equal, -1 for less than.
+    """
     if version_tuple(version1) > version_tuple(version2):
         return 1
     elif version_tuple(version1) == version_tuple(version2):
@@ -430,25 +492,50 @@ def compare_version(version1: str, version2: str) -> bool:
 
 
 def load_changes(filename: str | PathLike) -> list[list]:
-    """ Load list of changes from a csv file. """
+    """ Load changelog from a csv file.
+
+    Args:
+        filename (str | PathLike):
+            Name of the csv file.
+
+    Returns:
+        list[list]:
+            The list of csv rows.
+    """
     csv.register_dialect('changelog', 'unix', skipinitialspace=True)
     with open(filename, 'r', newline='') as infile:
         return list(csv.reader(infile, dialect='changelog'))
 
 
-def dump_file(path: str | PathLike) -> None:
-    """ Parse script and dump tree to stdout. """
-    with open(path, 'r') as source:
+def dump_file(filename: str | PathLike) -> None:
+    """ Parse script and dump ast to stdout.
+
+    Args:
+        filename (str | PathLike):
+            Filename of the script.
+    """
+    with open(filename, 'r') as source:
         dump_node(ast.parse(source.read()))
 
 
 def dump_node(node: ast.AST) -> None:
-    """ Convenience function to print contents of a node. """
+    """ Print an ast node to stdout.
+
+    Args:
+        node (ast.AST):
+            The ast node. Can also be any of the ast.AST node subclasses.
+
+    """
     print(ast.dump(node, indent=4))
 
 
 def detect_version(filename: str | PathLike) -> None:
-    """ Analyze Python script and print requirements. """
+    """Analyze a Python script and print the requirements.
+
+    Args:
+        filename (str | PathLike):
+            Filename of the script.
+    """
     with open(filename, 'r') as source:
         tree = ast.parse(source.read())
 
@@ -458,10 +545,10 @@ def detect_version(filename: str | PathLike) -> None:
 
 
 def main():
-    desc = 'Detect the minimum required version of a Python script.'
+    desc = 'Detect Python script requirements using abstract syntax trees.'
     parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument('path', help='python script to scan')
-    parser.add_argument('-d', '--dump', help='dump ast to stdout', action='store_true')
+    parser.add_argument('path', help='python script (.py file)')
+    parser.add_argument('-d', '--dump', help='dump script ast', action='store_true')
     parser.add_argument('--debug', help=argparse.SUPPRESS, action='store_true')
     args = parser.parse_args()
 
