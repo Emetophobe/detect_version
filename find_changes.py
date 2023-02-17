@@ -5,11 +5,11 @@
 import argparse
 import fnmatch
 
-from detect_version import Changelog, Requirement, version_tuple
+from detect_version import Changelog, Requirement
 from typing import Optional
 
-# Constants
-VALID_ACTIONS = ('added', 'removed', 'deprecated')
+
+VALID_ACTIONS = ('added', 'deprecated', 'removed')
 
 
 def find_changes(changelog: Changelog,
@@ -30,14 +30,20 @@ def find_changes(changelog: Changelog,
     """
     results = {}
     for name, changes in changelog.items():
-        if fnmatch.fnmatch(name, pattern):
-            if action and action not in changes.keys():
-                continue
+        # Name filter
+        if not fnmatch.fnmatch(name, pattern):
+            continue
 
-            if version and version not in changes.values():
-                continue
+        # Action filter
+        if action and action not in changes.keys():
+            continue
 
-            results[name] = changes
+        # Version filter
+        if version and version not in changes.values():
+            continue
+
+        results[name] = changelog.get_requirement(name)
+
     return results
 
 
@@ -50,10 +56,6 @@ The name argument supports fnmatch-style pattern matching:
     ? - matches any single character
     [seq] - matches any character in seq
     [!seq] - matches any character not in seq
-
-Wildcards * need to be escaped with quotes when used from a command line.
-
-    For example "os.*"
     """
 
     parser = argparse.ArgumentParser(
@@ -62,7 +64,7 @@ Wildcards * need to be escaped with quotes when used from a command line.
 
     parser.add_argument(
         'name',
-        help='name of the module, class, attribute, function, or exception')
+        help='name or search pattern')
 
     parser.add_argument(
         '-v', '--version',
@@ -104,11 +106,17 @@ Wildcards * need to be escaped with quotes when used from a command line.
         help='include results that have removed versions',
         action='store_true'
     )
+
+    parser.add_argument(
+        '-s', '--sort-name',
+        help='sort by name instead of version (default: False)',
+        action='store_true')
+
     args = parser.parse_args()
 
     # Get changelog category
     if args.exceptions:
-         changelog = Changelog('data/exceptions.json')
+        changelog = Changelog('data/exceptions.json')
     elif args.functions:
         changelog = Changelog('data/functions.json')
     else:
@@ -125,14 +133,28 @@ Wildcards * need to be escaped with quotes when used from a command line.
         action = None
 
     # Search for matches
-    results = find_changes(changelog, args.name, args.version, action)
-    if results:
-        column = '{:<30} {}'
-        for name, changes in results.items():
-            print(column.format(name, changes))
+    changes = find_changes(changelog, args.name, args.version, action)
+    if changes:
+        # Sort by name or by requirement first
+        if args.sort_name:
+            changes = sorted(changes.items())
+        else:
+            changes = sorted(changes.items(), key=lambda a: (a[1], a[0]))
 
-    matches = 'match.' if len(results) == 1 else 'matches.'
-    print('Found', len(results), matches)
+        # Print header
+        column = '{:<40} {:<12} {:<12} {:<12}'
+        print(column.format('Name', 'Added', 'Deprecated', 'Removed'))
+
+        # Print table
+        blank_char = '-'
+        for name, requirement in changes:
+            print(column.format(name,
+                                requirement.added or blank_char,
+                                requirement.deprecated or blank_char,
+                                requirement.removed or blank_char))
+
+    matches = 'match.' if len(changes) == 1 else 'matches.'
+    print('Found', len(changes), matches)
 
 
 if __name__ == '__main__':
