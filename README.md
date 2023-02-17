@@ -1,4 +1,4 @@
-# detect_version.py
+# detect_version.py - Alpha version
 
 Detect the minimum version required to run a Python script.
 
@@ -20,15 +20,14 @@ Things that are not checked:
 
 Example output:
 
-    ```
-    $ python detect_version.py detect_version.py
-
+    $ ./detect_version.py detect_version.py
     detect_version.py: requires 3.6
       argparse requires 3.2
-      ast.Constant requires 3.6
-      fstring requires Python 3.6
+      yield from expression requires 3.3
       os.PathLike requires 3.6
-    ```
+      fstring literal requires 3.6
+      ast.Constant requires 3.6
+
 
 ### Requirements:
 
