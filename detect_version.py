@@ -141,8 +141,6 @@ class Changelog:
         """
         # Build requirements from query rows (key=action, value=version)
         requirements = {row[1]: row[0] for row in self.query(sql, args)}
-        if not requirements:
-            return None
         return Requirement(**requirements)
 
     @functools.lru_cache()
