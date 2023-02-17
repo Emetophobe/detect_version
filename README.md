@@ -2,21 +2,16 @@
 
 Detect the minimum version required to run a Python script.
 
-Can detect most API changes between Python 3.0 and Python 3.11 (with preliminary support for Python 3.12). This includes new modules, constants, functions, and exceptions. New features are also checked such as async/await in 3.5, fstrings in 3.6, and structural pattern matching in 3.10.
+Can detect most API changes between Python 3.0 and Python 3.11 (with experimental support for Python 3.12).  Changes include new, deprecated, and removed modules, constants, functions, and exceptions. New language features are also checked such as fstrings in 3.6 and structural pattern matching in 3.10.
 
 Things that are currently checked:
 
-* Changes to built-in functions, exceptions, and modules between Python 3.0 and 3.11
-* Multiple context managers which were added in Python 3.1
-* "yield from" statements added in Python 3.3
-* Unicode literals in added Python 3.3 (example: u"this is a unicode literal")
-* Formatted string literals (fstrings) in Python 3.6
-* Async coroutines with the asyncio module in Python 3.4 and async/await keywords in Python 3.7
-* Structural pattern matching (match/case statement) in Python 3.10
+* Changes to built-in functions, exceptions, and modules between Python 3.0 and Python 3.11.
+* Changes to the language itself such as "yield from" expressions in 3.3, unicode literals in 3.5, and fstrings in 3.6.
 
 Things that are not checked:
 
-* Class methods and attribute changes. For example the `str` class added the `format_map()` method in Python 3.2 and the `case_fold()` method in Python 3.3. This would require much deeper code analysis that is not currently possible with the ast library.
+* Changes to class methods and attributes. For example the `str` class added the `format_map` method in Python 3.2. There is no easy way to test for this using the ast library (as far as I know). This may change in the future.
 
 Example output:
 
