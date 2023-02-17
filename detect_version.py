@@ -85,7 +85,6 @@ class Changelog(dict):
             changelog = json.load(infile)
             super().__init__(changelog)
 
-
     def get_requirement(self, name: str) -> Requirement:
         """ Get feature requirements (added, deprecated, and removed versions).
 
@@ -120,11 +119,12 @@ class Analyzer(ast.NodeVisitor):
         self.exceptions = Changelog('data/exceptions.json')
         self.functions = Changelog('data/functions.json')
 
-
     def report(self) -> None:
         """ Print script requirements. """
 
-        # Sort requirements by version then feature
+        # TODO: redesign output. Separate language features and module changes.
+
+        # Sort by requirement then by feature name
         requirements = sorted(self.requirements.items(), key=lambda a: (a[1], a[0]))
 
         # Print minimum version
@@ -151,7 +151,6 @@ class Analyzer(ast.NodeVisitor):
                 if changes.removed:
                     print(f'  {feature} removed in version {changes.removed}')
 
-
     def visit_Import(self, node: ast.Import) -> None:
         """ Check import statements for module changes.
 
@@ -164,7 +163,6 @@ class Analyzer(ast.NodeVisitor):
         for alias in node.names:
             self._check_module(alias.name)
         self.generic_visit(node)
-
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
         """ Check import from statements for module changes.
@@ -182,7 +180,6 @@ class Analyzer(ast.NodeVisitor):
             else:
                 self._check_module(node.module + '.' + alias.name)
 
-
     def visit_Attribute(self, node: ast.Attribute) -> None:
         """ Check attribute accesses for changes.
 
@@ -191,7 +188,6 @@ class Analyzer(ast.NodeVisitor):
         """
         self._check_attribute(node)
         self.generic_visit(node)
-
 
     def visit_Call(self, node: ast.Call) -> None:
         """ Check function calls for changes.
@@ -205,7 +201,6 @@ class Analyzer(ast.NodeVisitor):
             self._check_attribute(node.func)
         self.generic_visit(node)
 
-
     def visit_Raise(self, node: ast.Raise) -> None:
         """ Check raised exceptions for new exceptions types.
 
@@ -218,7 +213,6 @@ class Analyzer(ast.NodeVisitor):
             self._check_exception(node.exc.id)
         self.generic_visit(node)
 
-
     def visit_ExceptHandler(self, node: ast.ExceptHandler) -> None:
         """ Check caught exceptions for new exceptions types.
 
@@ -227,7 +221,6 @@ class Analyzer(ast.NodeVisitor):
         """
         self._check_exception(node.type.id)
         self.generic_visit(node)
-
 
     def visit_Constant(self, node: ast.Constant) -> None:
         """ Check for unicode literals which were added in Python 3.3
@@ -239,7 +232,6 @@ class Analyzer(ast.NodeVisitor):
             self.update_requirements('unicode literal', Requirement('3.3'))
         self.generic_visit(node)
 
-
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
         """ Check for fstring literals which were added in Python 3.6
 
@@ -248,7 +240,6 @@ class Analyzer(ast.NodeVisitor):
         """
         self.update_requirements('fstring literal', Requirement('3.6'))
         self.generic_visit(node)
-
 
     def visit_NamedExpr(self, node: ast.NamedExpr) -> None:
         """ Check for walrus operators which were added in Python 3.8
@@ -259,7 +250,6 @@ class Analyzer(ast.NodeVisitor):
         self.update_requirements('walrus operator', Requirement('3.8'))
         self.generic_visit(node)
 
-
     def visit_Match(self, node: ast.Match) -> None:
         """ Check for match statements which were added in Python 3.10
 
@@ -268,7 +258,6 @@ class Analyzer(ast.NodeVisitor):
         """
         self.update_requirements('match statement', Requirement('3.10'))
         self.generic_visit(node)
-
 
     def visit_With(self, node: ast.With) -> None:
         """ Check for multiple context managers which were added in Python 3.1
@@ -283,7 +272,6 @@ class Analyzer(ast.NodeVisitor):
             self.update_requirements('multiple context managers', Requirement('3.1'))
         self.generic_visit(node)
 
-
     def visit_YieldFrom(self, node: ast.YieldFrom) -> None:
         """ Check for "yield from" expressions which were added in Python 3.3
 
@@ -292,7 +280,6 @@ class Analyzer(ast.NodeVisitor):
         """
         self.update_requirements('yield from expression', Requirement('3.3'))
         self.generic_visit(node)
-
 
     def generic_visit(self, node: ast.AST) -> None:
         """ Generic node visitor. Handle nodes not covered by a specific visitor method.
@@ -307,7 +294,6 @@ class Analyzer(ast.NodeVisitor):
         # Let the super class handle remaining nodes.
         # This must be called for child nodes to be traversed.
         super().generic_visit(node)
-
 
     def update_requirements(self, feature: str, requirement: Requirement) -> None:
         """ Update script requirements.
@@ -334,7 +320,6 @@ class Analyzer(ast.NodeVisitor):
         # Add requirement
         self.requirements[feature] = requirement
 
-
     def _check_exception(self, exception: str) -> None:
         """ Check for new exception types.
 
@@ -344,7 +329,6 @@ class Analyzer(ast.NodeVisitor):
         changes = self.exceptions.get_requirement(exception)
         if changes:
             self.update_requirements(exception, changes)
-
 
     def _check_function(self, function: str) -> None:
         """ Check for calls to new functions.
@@ -356,7 +340,6 @@ class Analyzer(ast.NodeVisitor):
         if changes:
             self.update_requirements(function + ' function', changes)
 
-
     def _check_module(self, module: str) -> None:
         """ Check for module or attribute changes.
 
@@ -367,7 +350,6 @@ class Analyzer(ast.NodeVisitor):
         if changes:
             self.update_requirements(module, changes)
 
-
     def _check_attribute(self, node: ast.Attribute) -> None:
         """ Check for attribute changes.
 
@@ -376,7 +358,6 @@ class Analyzer(ast.NodeVisitor):
         """
         # Check full attribute name
         self._check_module(self._get_attribute_name(node))
-
 
     def _get_attribute_name(self, node: ast.Name | ast.Attribute) -> str:
         """ Combine nested attribute name into a single string.
@@ -466,7 +447,6 @@ def main():
             detect_version(args.path)
     except OSError as e:
         print(f'Error reading {e.filename} ({e.strerror})', file=sys.stderr)
-
 
 
 if __name__ == '__main__':
