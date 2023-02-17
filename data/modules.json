@@ -3189,10 +3189,6 @@
         "added": "3.5.2",
         "deprecated": "3.9"
     },
-    "typing.BinaryIO": {
-        "deprecated": "3.8",
-        "removed": "3.13"
-    },
     "typing.ByteString": {
         "deprecated": "3.9"
     },
@@ -3251,10 +3247,6 @@
     "typing.Generator": {
         "deprecated": "3.9"
     },
-    "typing.IO": {
-        "deprecated": "3.8",
-        "removed": "3.13"
-    },
     "typing.ItemsView": {
         "deprecated": "3.9"
     },
@@ -3283,8 +3275,7 @@
         "deprecated": "3.9"
     },
     "typing.Match": {
-        "deprecated": "3.8",
-        "removed": "3.13"
+        "deprecated": "3.9"
     },
     "typing.MutableMapping": {
         "deprecated": "3.9"
@@ -3321,8 +3312,7 @@
         "added": "3.10"
     },
     "typing.Pattern": {
-        "deprecated": "3.8",
-        "removed": "3.13"
+        "deprecated": "3.9"
     },
     "typing.Protocol": {
         "added": "3.8"
@@ -3351,10 +3341,6 @@
     "typing.Text": {
         "added": "3.5.2",
         "deprecated": "3.11"
-    },
-    "typing.TextIO": {
-        "deprecated": "3.8",
-        "removed": "3.13"
     },
     "typing.Tuple": {
         "deprecated": "3.9"
@@ -3405,8 +3391,16 @@
     "typing.get_overloads": {
         "added": "3.11"
     },
+    "typing.io": {
+        "deprecated": "3.8",
+        "removed": "3.13"
+    },
     "typing.is_typeddict": {
         "added": "3.10"
+    },
+    "typing.re": {
+        "deprecated": "3.8",
+        "removed": "3.13"
     },
     "typing.reveal_type": {
         "added": "3.11"
