@@ -1,0 +1,3593 @@
+{
+    "_thread.TIMEOUT_MAX": {
+        "added": "3.2"
+    },
+    "_thread.get_native_id": {
+        "added": "3.8"
+    },
+    "abc.ABC": {
+        "added": "3.4"
+    },
+    "abc.abstractclassmethod": {
+        "added": "3.2",
+        "deprecated": "3.3"
+    },
+    "abc.abstractproperty": {
+        "deprecated": "3.3"
+    },
+    "abc.abstractstaticmethod": {
+        "added": "3.2",
+        "deprecated": "3.3"
+    },
+    "abc.get_cache_token": {
+        "added": "3.4"
+    },
+    "abc.update_abstractmethods": {
+        "added": "3.10"
+    },
+    "aifc": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "argparse": {
+        "added": "3.2"
+    },
+    "argparse.BooleanOptionalAction": {
+        "added": "3.9"
+    },
+    "ast.Bytes": {
+        "deprecated": "3.8"
+    },
+    "ast.Constant": {
+        "added": "3.6"
+    },
+    "ast.Ellipsis": {
+        "deprecated": "3.8"
+    },
+    "ast.ExtSlice": {
+        "deprecated": "3.9"
+    },
+    "ast.Index": {
+        "deprecated": "3.9"
+    },
+    "ast.NameConstant": {
+        "deprecated": "3.8"
+    },
+    "ast.Num": {
+        "deprecated": "3.8"
+    },
+    "ast.PyCF_ALLOW_TOP_LEVEL_AWAIT": {
+        "added": "3.8"
+    },
+    "ast.PyCF_TYPE_COMMENTS": {
+        "added": "3.8"
+    },
+    "ast.Str": {
+        "deprecated": "3.8"
+    },
+    "ast.get_source_segment": {
+        "added": "3.8"
+    },
+    "ast.unparse": {
+        "added": "3.9"
+    },
+    "asynchat": {
+        "deprecated": "3.6",
+        "removed": "3.12"
+    },
+    "asyncio": {
+        "added": "3.4"
+    },
+    "asyncio.Barrier": {
+        "added": "3.11"
+    },
+    "asyncio.BrokenBarrierError": {
+        "added": "3.11"
+    },
+    "asyncio.BufferedProtocol": {
+        "added": "3.7"
+    },
+    "asyncio.PidfdChildWatcher": {
+        "added": "3.9"
+    },
+    "asyncio.Runner": {
+        "added": "3.11"
+    },
+    "asyncio.TaskGroup": {
+        "added": "3.11"
+    },
+    "asyncio.Timeout": {
+        "added": "3.11"
+    },
+    "asyncio.all_tasks": {
+        "added": "3.7"
+    },
+    "asyncio.create_task": {
+        "added": "3.7"
+    },
+    "asyncio.current_task": {
+        "added": "3.7"
+    },
+    "asyncio.get_running_loop": {
+        "added": "3.7"
+    },
+    "asyncio.isfuture": {
+        "added": "3.5"
+    },
+    "asyncio.loop.shutdown_asyncgens": {
+        "added": "3.6"
+    },
+    "asyncio.loop.shutdown_default_executor": {
+        "added": "3.9"
+    },
+    "asyncio.run": {
+        "added": "3.7"
+    },
+    "asyncio.run_coroutine_threadsafe": {
+        "added": "3.5.1"
+    },
+    "asyncio.timeout": {
+        "added": "3.11"
+    },
+    "asyncio.timeout_at": {
+        "added": "3.11"
+    },
+    "asyncio.to_thread": {
+        "added": "3.9"
+    },
+    "asyncore": {
+        "deprecated": "3.6",
+        "removed": "3.12"
+    },
+    "audioop": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "audioop.byteswap": {
+        "added": "3.4"
+    },
+    "base64.a85decode": {
+        "added": "3.4"
+    },
+    "base64.a85encode": {
+        "added": "3.4"
+    },
+    "base64.b32hexdecode": {
+        "added": "3.10"
+    },
+    "base64.b32hexencode": {
+        "added": "3.10"
+    },
+    "base64.b85decode": {
+        "added": "3.4"
+    },
+    "base64.b85encode": {
+        "added": "3.4"
+    },
+    "base64.decodebytes": {
+        "added": "3.1"
+    },
+    "base64.encodebytes": {
+        "added": "3.1"
+    },
+    "bytearray.maketrans": {
+        "added": "3.1"
+    },
+    "bytes.maketrans": {
+        "added": "3.1"
+    },
+    "bz2.open": {
+        "added": "3.3"
+    },
+    "cgi": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "cgitb": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "chunk": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "cmath.inf": {
+        "added": "3.6"
+    },
+    "cmath.infj": {
+        "added": "3.6"
+    },
+    "cmath.isclose": {
+        "added": "3.5"
+    },
+    "cmath.isfinite": {
+        "added": "3.2"
+    },
+    "cmath.nan": {
+        "added": "3.6"
+    },
+    "cmath.nanj": {
+        "added": "3.6"
+    },
+    "cmath.tau": {
+        "added": "3.6"
+    },
+    "codecs.namereplace_errors": {
+        "added": "3.5"
+    },
+    "codecs.unregister": {
+        "added": "3.10"
+    },
+    "collections.ChainMap": {
+        "added": "3.3"
+    },
+    "collections.Counter": {
+        "added": "3.1"
+    },
+    "collections.OrderedDict": {
+        "added": "3.1"
+    },
+    "collections.abc": {
+        "added": "3.3"
+    },
+    "collections.abc.AsyncGenerator": {
+        "added": "3.6"
+    },
+    "collections.abc.AsyncIterable": {
+        "added": "3.5"
+    },
+    "collections.abc.AsyncIterator": {
+        "added": "3.5"
+    },
+    "collections.abc.Awaitable": {
+        "added": "3.5"
+    },
+    "collections.abc.Collection": {
+        "added": "3.6"
+    },
+    "collections.abc.Coroutine": {
+        "added": "3.5"
+    },
+    "collections.abc.Generator": {
+        "added": "3.5"
+    },
+    "collections.abc.Reversible": {
+        "added": "3.6"
+    },
+    "compileall.compile_file": {
+        "added": "3.2"
+    },
+    "concurrent.futures": {
+        "added": "3.2"
+    },
+    "concurrent.futures.BrokenExecutor": {
+        "added": "3.7"
+    },
+    "concurrent.futures.InvalidStateError": {
+        "added": "3.8"
+    },
+    "concurrent.futures.process.BrokenProcessPool": {
+        "added": "3.3"
+    },
+    "concurrent.futures.thread.BrokenThreadPool": {
+        "added": "3.7"
+    },
+    "contextlib.AbstractAsyncContextManager": {
+        "added": "3.7"
+    },
+    "contextlib.AbstractContextManager": {
+        "added": "3.6"
+    },
+    "contextlib.AsyncContextDecorator": {
+        "added": "3.10"
+    },
+    "contextlib.AsyncExitStack": {
+        "added": "3.7"
+    },
+    "contextlib.ContextDecorator": {
+        "added": "3.2"
+    },
+    "contextlib.ExitStack": {
+        "added": "3.3"
+    },
+    "contextlib.aclosing": {
+        "added": "3.10"
+    },
+    "contextlib.asynccontextmanager": {
+        "added": "3.7"
+    },
+    "contextlib.chdir": {
+        "added": "3.11"
+    },
+    "contextlib.nullcontext": {
+        "added": "3.7"
+    },
+    "contextlib.redirect_stderr": {
+        "added": "3.5"
+    },
+    "contextlib.redirect_stdout": {
+        "added": "3.4"
+    },
+    "contextlib.suppress": {
+        "added": "3.4"
+    },
+    "contextvars": {
+        "added": "3.7"
+    },
+    "crypt": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "crypt.METHOD_BLOWFISH": {
+        "added": "3.7"
+    },
+    "crypt.METHOD_CRYPT": {
+        "added": "3.3"
+    },
+    "crypt.METHOD_MD5": {
+        "added": "3.3"
+    },
+    "crypt.METHOD_SHA256": {
+        "added": "3.3"
+    },
+    "crypt.METHOD_SHA512": {
+        "added": "3.3"
+    },
+    "crypt.methods": {
+        "added": "3.3"
+    },
+    "crypt.mksalt": {
+        "added": "3.3"
+    },
+    "csv.unix_dialect": {
+        "added": "3.2"
+    },
+    "ctypes.BigEndianUnion": {
+        "added": "3.11"
+    },
+    "ctypes.LittleEndianUnion": {
+        "added": "3.11"
+    },
+    "ctypes.c_ssize_t": {
+        "added": "3.2"
+    },
+    "curses.A_ITALIC": {
+        "added": "3.7"
+    },
+    "curses.get_escdelay": {
+        "added": "3.9"
+    },
+    "curses.get_tabsize": {
+        "added": "3.9"
+    },
+    "curses.has_extended_color_support": {
+        "added": "3.10"
+    },
+    "curses.ncurses_version": {
+        "added": "3.8"
+    },
+    "curses.set_escdelay": {
+        "added": "3.9"
+    },
+    "curses.set_tabsize": {
+        "added": "3.9"
+    },
+    "curses.unget_wch": {
+        "added": "3.3"
+    },
+    "curses.update_lines_cols": {
+        "added": "3.5"
+    },
+    "dataclasses": {
+        "added": "3.7"
+    },
+    "dataclasses.KW_ONLY": {
+        "added": "3.10"
+    },
+    "datetime.UTC": {
+        "added": "3.11"
+    },
+    "datetime.timezone": {
+        "added": "3.2"
+    },
+    "decimal.HAVE_CONTEXTVAR": {
+        "added": "3.9"
+    },
+    "decimal.HAVE_THREADS": {
+        "deprecated": "3.9"
+    },
+    "difflib.diff_bytes": {
+        "added": "3.5"
+    },
+    "dis.Bytecode": {
+        "added": "3.4"
+    },
+    "dis.Instruction": {
+        "added": "3.4"
+    },
+    "dis.Positions": {
+        "added": "3.11"
+    },
+    "dis.code_info": {
+        "added": "3.2"
+    },
+    "dis.get_instructions": {
+        "added": "3.4"
+    },
+    "dis.hasarg": {
+        "added": "3.12"
+    },
+    "dis.show_code": {
+        "added": "3.2"
+    },
+    "dis.stack_effect": {
+        "added": "3.4"
+    },
+    "distutils.sysconfig": {
+        "deprecated": "3.10",
+        "removed": "3.12"
+    },
+    "doctest.FAIL_FAST": {
+        "added": "3.4"
+    },
+    "email.as_bytes": {
+        "added": "3.4"
+    },
+    "email.contentmanager": {
+        "added": "3.6"
+    },
+    "email.generator.BytesGenerator": {
+        "added": "3.2"
+    },
+    "email.headerregistry": {
+        "added": "3.6"
+    },
+    "email.message": {
+        "added": "3.6"
+    },
+    "email.message_from_binary_file": {
+        "added": "3.2"
+    },
+    "email.message_from_bytes": {
+        "added": "3.2"
+    },
+    "email.parser.BytesFeedParser": {
+        "added": "3.2"
+    },
+    "email.parser.BytesHeaderParser": {
+        "added": "3.3"
+    },
+    "email.parser.BytesParser": {
+        "added": "3.2"
+    },
+    "email.policy": {
+        "added": "3.3"
+    },
+    "email.utils.format_datetime": {
+        "added": "3.3"
+    },
+    "email.utils.localtime": {
+        "added": "3.3"
+    },
+    "email.utils.parsedate_to_datetime": {
+        "added": "3.3"
+    },
+    "ensurepip": {
+        "added": "3.4"
+    },
+    "enum": {
+        "added": "3.4"
+    },
+    "enum.EnumCheck": {
+        "added": "3.11"
+    },
+    "enum.EnumType": {
+        "added": "3.11"
+    },
+    "enum.Flag": {
+        "added": "3.6"
+    },
+    "enum.FlagBoundary": {
+        "added": "3.11"
+    },
+    "enum.IntFlag": {
+        "added": "3.6"
+    },
+    "enum.ReprEnum": {
+        "added": "3.11"
+    },
+    "enum.StrEnum": {
+        "added": "3.11"
+    },
+    "enum.auto": {
+        "added": "3.6"
+    },
+    "enum.global_enum": {
+        "added": "3.11"
+    },
+    "enum.member": {
+        "added": "3.11"
+    },
+    "enum.nonmember": {
+        "added": "3.11"
+    },
+    "enum.property": {
+        "added": "3.11"
+    },
+    "enum.show_flag_values": {
+        "added": "3.11"
+    },
+    "enum.verify": {
+        "added": "3.11"
+    },
+    "errno.ENOTCAPABLE": {
+        "added": "3.11.1"
+    },
+    "errno.EQFULL": {
+        "added": "3.11"
+    },
+    "faulthandler": {
+        "added": "3.3"
+    },
+    "fcntl.F_ADD_SEALS": {
+        "added": "3.8"
+    },
+    "fcntl.F_DUP2FD": {
+        "added": "3.11"
+    },
+    "fcntl.F_DUP2FD_CLOEXEC": {
+        "added": "3.11"
+    },
+    "fcntl.F_GETPATH": {
+        "added": "3.9"
+    },
+    "fcntl.F_GETPIPE_SZ": {
+        "added": "3.10"
+    },
+    "fcntl.F_GET_SEALS": {
+        "added": "3.8"
+    },
+    "fcntl.F_OFD_GETLK": {
+        "added": "3.9"
+    },
+    "fcntl.F_OFD_SETLK": {
+        "added": "3.9"
+    },
+    "fcntl.F_OFD_SETLKW": {
+        "added": "3.9"
+    },
+    "fcntl.F_SEAL_GROW": {
+        "added": "3.8"
+    },
+    "fcntl.F_SEAL_SEAL": {
+        "added": "3.8"
+    },
+    "fcntl.F_SEAL_SHRINK": {
+        "added": "3.8"
+    },
+    "fcntl.F_SEAL_WRITE": {
+        "added": "3.8"
+    },
+    "fcntl.F_SETPIPE_SZ": {
+        "added": "3.10"
+    },
+    "filecmp.DEFAULT_IGNORES": {
+        "added": "3.4"
+    },
+    "filecmp.clear_cache": {
+        "added": "3.4"
+    },
+    "fileinput.hook_encoded": {
+        "deprecated": "3.10"
+    },
+    "ftplib.FTP_TLS": {
+        "added": "3.2"
+    },
+    "functools.cache": {
+        "added": "3.9"
+    },
+    "functools.cached_property": {
+        "added": "3.8"
+    },
+    "functools.cmp_to_key": {
+        "added": "3.2"
+    },
+    "functools.lru_cache": {
+        "added": "3.2"
+    },
+    "functools.partialmethod": {
+        "added": "3.4"
+    },
+    "functools.singledispatch": {
+        "added": "3.4"
+    },
+    "functools.singledispatchmethod": {
+        "added": "3.8"
+    },
+    "functools.total_ordering": {
+        "added": "3.2"
+    },
+    "gc.callbacks": {
+        "added": "3.3"
+    },
+    "gc.freeze": {
+        "added": "3.7"
+    },
+    "gc.get_freeze_count": {
+        "added": "3.7"
+    },
+    "gc.get_stats": {
+        "added": "3.4"
+    },
+    "gc.is_finalized": {
+        "added": "3.9"
+    },
+    "gc.is_tracked": {
+        "added": "3.1"
+    },
+    "gc.unfreeze": {
+        "added": "3.7"
+    },
+    "gettext.dnpgettext": {
+        "added": "3.8"
+    },
+    "gettext.dpgettext": {
+        "added": "3.8"
+    },
+    "gettext.npgettext": {
+        "added": "3.8"
+    },
+    "gettext.pgettext": {
+        "added": "3.8"
+    },
+    "glob.escape": {
+        "added": "3.4"
+    },
+    "graphlib": {
+        "added": "3.9"
+    },
+    "gzip.BadGzipFile": {
+        "added": "3.8"
+    },
+    "gzip.compress": {
+        "added": "3.2"
+    },
+    "gzip.decompress": {
+        "added": "3.2"
+    },
+    "hashlib.algorithms_available": {
+        "added": "3.2"
+    },
+    "hashlib.algorithms_guaranteed": {
+        "added": "3.2"
+    },
+    "hashlib.blake2b": {
+        "added": "3.6"
+    },
+    "hashlib.blake2s": {
+        "added": "3.6"
+    },
+    "hashlib.file_digest": {
+        "added": "3.11"
+    },
+    "hashlib.pbkdf2_hmac": {
+        "added": "3.4"
+    },
+    "hashlib.scrypt": {
+        "added": "3.6"
+    },
+    "hashlib.sha3_224": {
+        "added": "3.6"
+    },
+    "hashlib.sha3_256": {
+        "added": "3.6"
+    },
+    "hashlib.sha3_384": {
+        "added": "3.6"
+    },
+    "hashlib.sha3_512": {
+        "added": "3.6"
+    },
+    "hashlib.shake_128": {
+        "added": "3.6"
+    },
+    "hashlib.shake_256": {
+        "added": "3.6"
+    },
+    "hmac.compare_digest": {
+        "added": "3.3"
+    },
+    "hmac.digest": {
+        "added": "3.7"
+    },
+    "html.entities.html5": {
+        "added": "3.3"
+    },
+    "html.escape": {
+        "added": "3.2"
+    },
+    "html.unescape": {
+        "added": "3.4"
+    },
+    "http.HTTPMethod": {
+        "added": "3.11"
+    },
+    "http.HTTPStatus": {
+        "added": "3.5"
+    },
+    "http.client.RemoteDisconnected": {
+        "added": "3.5"
+    },
+    "http.server.ThreadingHTTPServer": {
+        "added": "3.7"
+    },
+    "imghdr": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "imp": {
+        "deprecated": "3.4",
+        "removed": "3.12"
+    },
+    "importlib": {
+        "added": "3.1"
+    },
+    "importlib.abc.FileLoader": {
+        "added": "3.3"
+    },
+    "importlib.abc.Finder": {
+        "deprecated": "3.3"
+    },
+    "importlib.abc.MetaPathFinder": {
+        "added": "3.3"
+    },
+    "importlib.abc.PathEntryFinder": {
+        "added": "3.3"
+    },
+    "importlib.abc.ResourceLoader": {
+        "deprecated": "3.7"
+    },
+    "importlib.find_loader": {
+        "added": "3.3"
+    },
+    "importlib.invalidate_caches": {
+        "added": "3.3"
+    },
+    "importlib.machinery.BYTECODE_SUFFIXES": {
+        "added": "3.3"
+    },
+    "importlib.machinery.DEBUG_BYTECODE_SUFFIXES": {
+        "added": "3.3",
+        "deprecated": "3.5"
+    },
+    "importlib.machinery.EXTENSION_SUFFIXES": {
+        "added": "3.3"
+    },
+    "importlib.machinery.ExtensionFileLoader": {
+        "added": "3.3"
+    },
+    "importlib.machinery.FileFinder": {
+        "added": "3.3"
+    },
+    "importlib.machinery.ModuleSpec": {
+        "added": "3.4"
+    },
+    "importlib.machinery.NamespaceLoader": {
+        "added": "3.11"
+    },
+    "importlib.machinery.OPTIMIZED_BYTECODE_SUFFIXES": {
+        "added": "3.3",
+        "deprecated": "3.5"
+    },
+    "importlib.machinery.SOURCE_SUFFIXES": {
+        "added": "3.3"
+    },
+    "importlib.machinery.SourceFileLoader": {
+        "added": "3.3"
+    },
+    "importlib.machinery.SourcelessFileLoader": {
+        "added": "3.3",
+        "deprecated": "3.6"
+    },
+    "importlib.machinery.WindowsRegistryFinder": {
+        "added": "3.3",
+        "deprecated": "3.6"
+    },
+    "importlib.machinery.all_suffixes": {
+        "added": "3.3"
+    },
+    "importlib.machinery.module_from_spec": {
+        "added": "3.5"
+    },
+    "importlib.metadata": {
+        "added": "3.8"
+    },
+    "importlib.metadata.packages_distributions": {
+        "added": "3.10"
+    },
+    "importlib.reload": {
+        "added": "3.4"
+    },
+    "importlib.resources": {
+        "added": "3.7"
+    },
+    "importlib.resources.abc": {
+        "added": "3.11"
+    },
+    "importlib.resources.as_file": {
+        "added": "3.9"
+    },
+    "importlib.resources.contents": {
+        "deprecated": "3.11"
+    },
+    "importlib.resources.files": {
+        "added": "3.9"
+    },
+    "importlib.resources.is_resource": {
+        "deprecated": "3.11"
+    },
+    "importlib.resources.open_binary": {
+        "deprecated": "3.11"
+    },
+    "importlib.resources.open_text": {
+        "deprecated": "3.11"
+    },
+    "importlib.resources.path": {
+        "deprecated": "3.11"
+    },
+    "importlib.resources.read_binary": {
+        "deprecated": "3.11"
+    },
+    "importlib.resources.read_text": {
+        "deprecated": "3.11"
+    },
+    "importlib.util.LazyLoader": {
+        "added": "3.5"
+    },
+    "importlib.util.MAGIC_NUMBER": {
+        "added": "3.4"
+    },
+    "importlib.util.cache_from_source": {
+        "added": "3.4"
+    },
+    "importlib.util.decode_source": {
+        "added": "3.4"
+    },
+    "importlib.util.find_spec": {
+        "added": "3.4"
+    },
+    "importlib.util.module_for_loader": {
+        "deprecated": "3.4"
+    },
+    "importlib.util.module_from_spec": {
+        "added": "3.5"
+    },
+    "importlib.util.resolve_name": {
+        "added": "3.3"
+    },
+    "importlib.util.set_loader": {
+        "deprecated": "3.4"
+    },
+    "importlib.util.set_package": {
+        "deprecated": "3.4"
+    },
+    "importlib.util.source_from_cache": {
+        "added": "3.4"
+    },
+    "importlib.util.source_hash": {
+        "added": "3.7"
+    },
+    "importlib.util.spec_from_file_location": {
+        "added": "3.4"
+    },
+    "importlib.util.spec_from_loader": {
+        "added": "3.4"
+    },
+    "inspect.BoundArguments": {
+        "added": "3.3"
+    },
+    "inspect.CO_ASYNC_GENERATOR": {
+        "added": "3.6"
+    },
+    "inspect.CO_COROUTINE": {
+        "added": "3.5"
+    },
+    "inspect.CO_ITERABLE_COROUTINE": {
+        "added": "3.5"
+    },
+    "inspect.Parameter": {
+        "added": "3.3"
+    },
+    "inspect.Signature": {
+        "added": "3.3"
+    },
+    "inspect.get_annotations": {
+        "added": "3.10"
+    },
+    "inspect.getattr_static": {
+        "added": "3.2"
+    },
+    "inspect.getcallargs": {
+        "added": "3.2",
+        "deprecated": "3.5"
+    },
+    "inspect.getclosurevars": {
+        "added": "3.3"
+    },
+    "inspect.getcoroutinelocals": {
+        "added": "3.5"
+    },
+    "inspect.getcoroutinestate": {
+        "added": "3.5"
+    },
+    "inspect.getgeneratorlocals": {
+        "added": "3.3"
+    },
+    "inspect.getgeneratorstate": {
+        "added": "3.2"
+    },
+    "inspect.getmembers_static": {
+        "added": "3.11"
+    },
+    "inspect.isasyncgen": {
+        "added": "3.6"
+    },
+    "inspect.isasyncgenfunction": {
+        "added": "3.6"
+    },
+    "inspect.isawaitable": {
+        "added": "3.5"
+    },
+    "inspect.iscoroutine": {
+        "added": "3.5"
+    },
+    "inspect.iscoroutinefunction": {
+        "added": "3.5"
+    },
+    "inspect.ismethodwrapper": {
+        "added": "3.11"
+    },
+    "inspect.markcoroutinefunction": {
+        "added": "3.12"
+    },
+    "inspect.signature": {
+        "added": "3.3"
+    },
+    "inspect.unwrap": {
+        "added": "3.4"
+    },
+    "io.SEEK_CUR": {
+        "added": "3.1"
+    },
+    "io.SEEK_END": {
+        "added": "3.1"
+    },
+    "io.SEEK_SET": {
+        "added": "3.1"
+    },
+    "io.open_code": {
+        "added": "3.8"
+    },
+    "io.text_encoding": {
+        "added": "3.10"
+    },
+    "ipaddress": {
+        "added": "3.3"
+    },
+    "itertools.accumulate": {
+        "added": "3.2"
+    },
+    "itertools.combinations_with_replacement": {
+        "added": "3.1"
+    },
+    "itertools.compress": {
+        "added": "3.1"
+    },
+    "itertools.pairwise": {
+        "added": "3.10"
+    },
+    "json.JSONDecodeError": {
+        "added": "3.5"
+    },
+    "keyword.issoftkeyword": {
+        "added": "3.9"
+    },
+    "keyword.softkwlist": {
+        "added": "3.9"
+    },
+    "linecache.lazycache": {
+        "added": "3.5"
+    },
+    "locale.delocalize": {
+        "added": "3.5"
+    },
+    "locale.format": {
+        "deprecated": "3.7"
+    },
+    "locale.getdefaultlocale": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "locale.getencoding": {
+        "added": "3.11"
+    },
+    "locale.localize": {
+        "added": "3.10"
+    },
+    "locale.resetlocale": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "logging.config.dictConfig": {
+        "added": "3.2"
+    },
+    "logging.getLevelNamesMapping": {
+        "added": "3.11"
+    },
+    "logging.getLogRecordFactory": {
+        "added": "3.2"
+    },
+    "logging.handlers.NullHandler": {
+        "added": "3.1"
+    },
+    "logging.handlers.QueueHandler": {
+        "added": "3.2"
+    },
+    "logging.handlers.QueueListener": {
+        "added": "3.2"
+    },
+    "logging.lastResort": {
+        "added": "3.2"
+    },
+    "logging.setLogRecordFactory": {
+        "added": "3.2"
+    },
+    "lzma": {
+        "added": "3.3"
+    },
+    "mailcap": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "math.cbrt": {
+        "added": "3.11"
+    },
+    "math.comb": {
+        "added": "3.8"
+    },
+    "math.dist": {
+        "added": "3.8"
+    },
+    "math.erf": {
+        "added": "3.2"
+    },
+    "math.erfc": {
+        "added": "3.2"
+    },
+    "math.exp2": {
+        "added": "3.11"
+    },
+    "math.expm1": {
+        "added": "3.2"
+    },
+    "math.gamma": {
+        "added": "3.2"
+    },
+    "math.gcd": {
+        "added": "3.5"
+    },
+    "math.inf": {
+        "added": "3.5"
+    },
+    "math.isclose": {
+        "added": "3.5"
+    },
+    "math.isfinite": {
+        "added": "3.2"
+    },
+    "math.isqrt": {
+        "added": "3.8"
+    },
+    "math.lcm": {
+        "added": "3.9"
+    },
+    "math.lgamma": {
+        "added": "3.2"
+    },
+    "math.log2": {
+        "added": "3.3"
+    },
+    "math.nan": {
+        "added": "3.5"
+    },
+    "math.nextafter": {
+        "added": "3.9"
+    },
+    "math.perm": {
+        "added": "3.8"
+    },
+    "math.prod": {
+        "added": "3.8"
+    },
+    "math.remainder": {
+        "added": "3.7"
+    },
+    "math.sumprod": {
+        "added": "3.12"
+    },
+    "math.tau": {
+        "added": "3.6"
+    },
+    "math.ulp": {
+        "added": "3.9"
+    },
+    "mmap.MADV_AUTOSYNC": {
+        "added": "3.8"
+    },
+    "mmap.MADV_CORE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_DODUMP": {
+        "added": "3.8"
+    },
+    "mmap.MADV_DOFORK": {
+        "added": "3.8"
+    },
+    "mmap.MADV_DONTDUMP": {
+        "added": "3.8"
+    },
+    "mmap.MADV_DONTFORK": {
+        "added": "3.8"
+    },
+    "mmap.MADV_DONTNEED": {
+        "added": "3.8"
+    },
+    "mmap.MADV_FREE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_FREE_REUSABLE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_FREE_REUSE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_HUGEPAGE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_HWPOISON": {
+        "added": "3.8"
+    },
+    "mmap.MADV_MERGEABLE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_NOCORE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_NOHUGEPAGE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_NORMAL": {
+        "added": "3.8"
+    },
+    "mmap.MADV_NOSYNC": {
+        "added": "3.8"
+    },
+    "mmap.MADV_PROTECT": {
+        "added": "3.8"
+    },
+    "mmap.MADV_RANDOM": {
+        "added": "3.8"
+    },
+    "mmap.MADV_REMOVE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_SEQUENTIAL": {
+        "added": "3.8"
+    },
+    "mmap.MADV_SOFT_OFFLINE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_UNMERGEABLE": {
+        "added": "3.8"
+    },
+    "mmap.MADV_WILLNEED": {
+        "added": "3.8"
+    },
+    "mmap.MAP_POPULATE": {
+        "added": "3.10"
+    },
+    "mmap.MAP_STACK": {
+        "added": "3.11"
+    },
+    "msilib": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "multiprocessing.Barrier": {
+        "added": "3.3"
+    },
+    "multiprocessing.connection.wait": {
+        "added": "3.3"
+    },
+    "multiprocessing.get_all_start_methods": {
+        "added": "3.4"
+    },
+    "multiprocessing.get_context": {
+        "added": "3.4"
+    },
+    "multiprocessing.get_start_method": {
+        "added": "3.4"
+    },
+    "multiprocessing.parent_process": {
+        "added": "3.8"
+    },
+    "multiprocessing.set_start_method": {
+        "added": "3.4"
+    },
+    "multiprocessing.shared_memory": {
+        "added": "3.8"
+    },
+    "nis": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "nntplib": {
+        "deprecated": "3.11"
+    },
+    "nntplib.NNTP_SSL": {
+        "added": "3.2"
+    },
+    "operator.__call__": {
+        "added": "3.11"
+    },
+    "operator.__imatmul__": {
+        "added": "3.5"
+    },
+    "operator.__matmul__": {
+        "added": "3.5"
+    },
+    "operator.call": {
+        "added": "3.11"
+    },
+    "operator.imatmul": {
+        "added": "3.5"
+    },
+    "operator.length_hint": {
+        "added": "3.4"
+    },
+    "operator.matmul": {
+        "added": "3.5"
+    },
+    "optparse": {
+        "deprecated": "3.2"
+    },
+    "os.CLD_CONTINUED": {
+        "added": "3.3"
+    },
+    "os.CLD_DUMPED": {
+        "added": "3.3"
+    },
+    "os.CLD_EXITED": {
+        "added": "3.3"
+    },
+    "os.CLD_KILLED": {
+        "added": "3.9"
+    },
+    "os.CLD_STOPPED": {
+        "added": "3.9"
+    },
+    "os.CLD_TRAPPED": {
+        "added": "3.3"
+    },
+    "os.DirEntry": {
+        "added": "3.5"
+    },
+    "os.EFD_CLOEXEC": {
+        "added": "3.10"
+    },
+    "os.EFD_NONBLOCK": {
+        "added": "3.10"
+    },
+    "os.EFD_SEMAPHORE": {
+        "added": "3.10"
+    },
+    "os.F_LOCK": {
+        "added": "3.3"
+    },
+    "os.F_TEST": {
+        "added": "3.3"
+    },
+    "os.F_TLOCK": {
+        "added": "3.3"
+    },
+    "os.F_ULOCK": {
+        "added": "3.3"
+    },
+    "os.GRND_NONBLOCK": {
+        "added": "3.6"
+    },
+    "os.GRND_RANDOM": {
+        "added": "3.6"
+    },
+    "os.MFD_ALLOW_SEALING": {
+        "added": "3.8"
+    },
+    "os.MFD_CLOEXEC": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGETLB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_16GB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_16MB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_1GB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_1MB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_256MB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_2GB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_2MB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_32MB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_512KB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_512MB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_64KB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_8MB": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_MASK": {
+        "added": "3.8"
+    },
+    "os.MFD_HUGE_SHIFT": {
+        "added": "3.8"
+    },
+    "os.O_CLOEXEC": {
+        "added": "3.3"
+    },
+    "os.O_EVTONLY": {
+        "added": "3.10"
+    },
+    "os.O_FSYNC": {
+        "added": "3.10"
+    },
+    "os.O_NOFOLLOW_ANY": {
+        "added": "3.10"
+    },
+    "os.O_PATH": {
+        "added": "3.4"
+    },
+    "os.O_SYMLINK": {
+        "added": "3.10"
+    },
+    "os.O_TMPFILE": {
+        "added": "3.4"
+    },
+    "os.PIDFD_NONBLOCK": {
+        "added": "3.12"
+    },
+    "os.POSIX_FADV_DONTNEED": {
+        "added": "3.3"
+    },
+    "os.POSIX_FADV_NOREUSE": {
+        "added": "3.3"
+    },
+    "os.POSIX_FADV_NORMAL": {
+        "added": "3.3"
+    },
+    "os.POSIX_FADV_RANDOM": {
+        "added": "3.3"
+    },
+    "os.POSIX_FADV_SEQUENTIAL": {
+        "added": "3.3"
+    },
+    "os.POSIX_FADV_WILLNEED": {
+        "added": "3.3"
+    },
+    "os.PRIO_PGRP": {
+        "added": "3.3"
+    },
+    "os.PRIO_PROCESS": {
+        "added": "3.3"
+    },
+    "os.PRIO_USER": {
+        "added": "3.3"
+    },
+    "os.P_ALL": {
+        "added": "3.3"
+    },
+    "os.P_PGID": {
+        "added": "3.3"
+    },
+    "os.P_PID": {
+        "added": "3.3"
+    },
+    "os.P_PIDFD": {
+        "added": "3.9"
+    },
+    "os.PathLike": {
+        "added": "3.6"
+    },
+    "os.RTLD_DEEPBIND": {
+        "added": "3.3"
+    },
+    "os.RTLD_GLOBAL": {
+        "added": "3.3"
+    },
+    "os.RTLD_LAZY": {
+        "added": "3.3"
+    },
+    "os.RTLD_LOCAL": {
+        "added": "3.3"
+    },
+    "os.RTLD_NODELETE": {
+        "added": "3.3"
+    },
+    "os.RTLD_NOLOAD": {
+        "added": "3.3"
+    },
+    "os.RTLD_NOW": {
+        "added": "3.3"
+    },
+    "os.RWF_APPEND": {
+        "added": "3.10"
+    },
+    "os.RWF_DSYNC": {
+        "added": "3.7"
+    },
+    "os.RWF_HIPRI": {
+        "added": "3.7"
+    },
+    "os.RWF_NOWAIT": {
+        "added": "3.7"
+    },
+    "os.RWF_SYNC": {
+        "added": "3.7"
+    },
+    "os.SCHED_BATCH": {
+        "added": "3.3"
+    },
+    "os.SCHED_FIFO": {
+        "added": "3.3"
+    },
+    "os.SCHED_IDLE": {
+        "added": "3.3"
+    },
+    "os.SCHED_OTHER": {
+        "added": "3.3"
+    },
+    "os.SCHED_RESET_ON_FORK": {
+        "added": "3.3"
+    },
+    "os.SCHED_RR": {
+        "added": "3.3"
+    },
+    "os.SCHED_SPORADIC": {
+        "added": "3.3"
+    },
+    "os.SEEK_DATA": {
+        "added": "3.3"
+    },
+    "os.SEEK_HOLE": {
+        "added": "3.3"
+    },
+    "os.SF_MNOWAIT": {
+        "added": "3.3"
+    },
+    "os.SF_NOCACHE": {
+        "added": "3.11"
+    },
+    "os.SF_NODISKIO": {
+        "added": "3.3"
+    },
+    "os.SF_SYNC": {
+        "added": "3.3"
+    },
+    "os.SPLICE_F_MORE": {
+        "added": "3.10"
+    },
+    "os.SPLICE_F_MOVE": {
+        "added": "3.10"
+    },
+    "os.SPLICE_F_NONBLOCK": {
+        "added": "3.10"
+    },
+    "os.ST_APPEND": {
+        "added": "3.4"
+    },
+    "os.ST_IMMUTABLE": {
+        "added": "3.4"
+    },
+    "os.ST_MANDLOCK": {
+        "added": "3.4"
+    },
+    "os.ST_NOATIME": {
+        "added": "3.4"
+    },
+    "os.ST_NODEV": {
+        "added": "3.4"
+    },
+    "os.ST_NODIRATIME": {
+        "added": "3.4"
+    },
+    "os.ST_NOEXEC": {
+        "added": "3.4"
+    },
+    "os.ST_NOSUID": {
+        "added": "3.2"
+    },
+    "os.ST_RDONLY": {
+        "added": "3.2"
+    },
+    "os.ST_RELATIME": {
+        "added": "3.4"
+    },
+    "os.ST_SYNCHRONOUS": {
+        "added": "3.4"
+    },
+    "os.ST_WRITE": {
+        "added": "3.4"
+    },
+    "os.WEXITED": {
+        "added": "3.3"
+    },
+    "os.WSTOPPED": {
+        "added": "3.3"
+    },
+    "os.XATTR_CREATE": {
+        "added": "3.3"
+    },
+    "os.XATTR_REPLACE": {
+        "added": "3.3"
+    },
+    "os.XATTR_SIZE_MAX": {
+        "added": "3.3"
+    },
+    "os.copy_file_range": {
+        "added": "3.8"
+    },
+    "os.cpu_count": {
+        "added": "3.4"
+    },
+    "os.environb": {
+        "added": "3.2"
+    },
+    "os.eventfd": {
+        "added": "3.10"
+    },
+    "os.eventfd_read": {
+        "added": "3.10"
+    },
+    "os.eventfd_write": {
+        "added": "3.10"
+    },
+    "os.fsdecode": {
+        "added": "3.2"
+    },
+    "os.fsencode": {
+        "added": "3.2"
+    },
+    "os.fspath": {
+        "added": "3.6"
+    },
+    "os.fwalk": {
+        "added": "3.3"
+    },
+    "os.get_blocking": {
+        "added": "3.5"
+    },
+    "os.get_exec_path": {
+        "added": "3.2"
+    },
+    "os.get_handle_inheritable": {
+        "added": "3.4"
+    },
+    "os.get_inheritable": {
+        "added": "3.4"
+    },
+    "os.get_terminal_size": {
+        "added": "3.3"
+    },
+    "os.getenvb": {
+        "added": "3.2"
+    },
+    "os.getgrouplist": {
+        "added": "3.3"
+    },
+    "os.getpriority": {
+        "added": "3.3"
+    },
+    "os.getrandom": {
+        "added": "3.6"
+    },
+    "os.getresgid": {
+        "added": "3.2"
+    },
+    "os.getresuid": {
+        "added": "3.2"
+    },
+    "os.getxattr": {
+        "added": "3.3"
+    },
+    "os.initgroups": {
+        "added": "3.2"
+    },
+    "os.listxattr": {
+        "added": "3.3"
+    },
+    "os.lockf": {
+        "added": "3.3"
+    },
+    "os.login_tty": {
+        "added": "3.11"
+    },
+    "os.memfd_create": {
+        "added": "3.8"
+    },
+    "os.path.commonpath": {
+        "added": "3.5"
+    },
+    "os.path.isjunction": {
+        "added": "3.12"
+    },
+    "os.path.splitroot": {
+        "added": "3.12"
+    },
+    "os.pidfd_open": {
+        "added": "3.9"
+    },
+    "os.pipe2": {
+        "added": "3.3"
+    },
+    "os.posix_fadvise": {
+        "added": "3.3"
+    },
+    "os.posix_fallocate": {
+        "added": "3.3"
+    },
+    "os.posix_spawn": {
+        "added": "3.8"
+    },
+    "os.posix_spawnp": {
+        "added": "3.8"
+    },
+    "os.pread": {
+        "added": "3.3"
+    },
+    "os.preadv": {
+        "added": "3.7"
+    },
+    "os.putenv": {
+        "added": "3.9"
+    },
+    "os.pwrite": {
+        "added": "3.3"
+    },
+    "os.pwritev": {
+        "added": "3.7"
+    },
+    "os.readv": {
+        "added": "3.3"
+    },
+    "os.register_at_fork": {
+        "added": "3.7"
+    },
+    "os.removexattr": {
+        "added": "3.3"
+    },
+    "os.replace": {
+        "added": "3.3"
+    },
+    "os.scandir": {
+        "added": "3.5"
+    },
+    "os.sched_get_priority_max": {
+        "added": "3.3"
+    },
+    "os.sched_get_priority_min": {
+        "added": "3.3"
+    },
+    "os.sched_getaffinity": {
+        "added": "3.3"
+    },
+    "os.sched_getparam": {
+        "added": "3.3"
+    },
+    "os.sched_getscheduler": {
+        "added": "3.3"
+    },
+    "os.sched_param": {
+        "added": "3.3"
+    },
+    "os.sched_rr_get_interval": {
+        "added": "3.3"
+    },
+    "os.sched_setaffinity": {
+        "added": "3.3"
+    },
+    "os.sched_setparam": {
+        "added": "3.3"
+    },
+    "os.sched_setscheduler": {
+        "added": "3.3"
+    },
+    "os.sched_yield": {
+        "added": "3.3"
+    },
+    "os.sendfile": {
+        "added": "3.3"
+    },
+    "os.set_blocking": {
+        "added": "3.5"
+    },
+    "os.set_handle_inheritable": {
+        "added": "3.4"
+    },
+    "os.set_inheritable": {
+        "added": "3.4"
+    },
+    "os.setpriority": {
+        "added": "3.3"
+    },
+    "os.setresgid": {
+        "added": "3.2"
+    },
+    "os.setresuid": {
+        "added": "3.2"
+    },
+    "os.setxattr": {
+        "added": "3.3"
+    },
+    "os.splice": {
+        "added": "3.10"
+    },
+    "os.supports_bytes_environ": {
+        "added": "3.2"
+    },
+    "os.supports_dir_fd": {
+        "added": "3.3"
+    },
+    "os.supports_effective_ids": {
+        "added": "3.3"
+    },
+    "os.supports_fd": {
+        "added": "3.3"
+    },
+    "os.supports_follow_symlinks": {
+        "added": "3.3"
+    },
+    "os.sync": {
+        "added": "3.3"
+    },
+    "os.terminal_size": {
+        "added": "3.3"
+    },
+    "os.truncate": {
+        "added": "3.3"
+    },
+    "os.unsetenv": {
+        "added": "3.9"
+    },
+    "os.waitid": {
+        "added": "3.3"
+    },
+    "os.waitstatus_to_exitcode": {
+        "added": "3.9"
+    },
+    "os.writev": {
+        "added": "3.3"
+    },
+    "ossaudiodev": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "pathlib": {
+        "added": "3.4"
+    },
+    "pickle.PickleBuffer": {
+        "added": "3.8"
+    },
+    "pipes": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "pkgutil.ImpImporter": {
+        "deprecated": "3.3"
+    },
+    "pkgutil.ImpLoader": {
+        "deprecated": "3.3"
+    },
+    "pkgutil.ModuleInfo": {
+        "added": "3.6"
+    },
+    "pkgutil.resolve_name": {
+        "added": "3.9"
+    },
+    "platform.freedesktop_os_release": {
+        "added": "3.10"
+    },
+    "platform.win32_edition": {
+        "added": "3.8"
+    },
+    "platform.win32_is_iot": {
+        "added": "3.8"
+    },
+    "plistlib.FMT_BINARY": {
+        "added": "3.4"
+    },
+    "plistlib.FMT_XML": {
+        "added": "3.4"
+    },
+    "plistlib.UID": {
+        "added": "3.8"
+    },
+    "plistlib.dump": {
+        "added": "3.4"
+    },
+    "plistlib.dumps": {
+        "added": "3.4"
+    },
+    "plistlib.load": {
+        "added": "3.4"
+    },
+    "plistlib.loads": {
+        "added": "3.4"
+    },
+    "pprint.pp": {
+        "added": "3.8"
+    },
+    "py_compile.PycInvalidationMode": {
+        "added": "3.7"
+    },
+    "queue.SimpleQueue": {
+        "added": "3.7"
+    },
+    "random.choices": {
+        "added": "3.6"
+    },
+    "random.randbytes": {
+        "added": "3.9"
+    },
+    "re.NOFLAG": {
+        "added": "3.11"
+    },
+    "re.fullmatch": {
+        "added": "3.4"
+    },
+    "readline.append_history_file": {
+        "added": "3.5"
+    },
+    "readline.set_auto_history": {
+        "added": "3.6"
+    },
+    "reprlib.recursive_repr": {
+        "added": "3.2"
+    },
+    "resource.RLIMIT_KQUEUES": {
+        "added": "3.10"
+    },
+    "resource.RLIMIT_MSGQUEUE": {
+        "added": "3.4"
+    },
+    "resource.RLIMIT_NICE": {
+        "added": "3.4"
+    },
+    "resource.RLIMIT_NPTS": {
+        "added": "3.4"
+    },
+    "resource.RLIMIT_RTPRIO": {
+        "added": "3.4"
+    },
+    "resource.RLIMIT_RTTIME": {
+        "added": "3.4"
+    },
+    "resource.RLIMIT_SBSIZE": {
+        "added": "3.4"
+    },
+    "resource.RLIMIT_SIGPENDING": {
+        "added": "3.4"
+    },
+    "resource.RLIMIT_SWAP": {
+        "added": "3.4"
+    },
+    "resource.RUSAGE_THREAD": {
+        "added": "3.2"
+    },
+    "resource.prlimit": {
+        "added": "3.4"
+    },
+    "runpy.run_path": {
+        "added": "3.2"
+    },
+    "secrets": {
+        "added": "3.6"
+    },
+    "select.EPOLLEXCLUSIVE": {
+        "added": "3.6"
+    },
+    "select.PIPE_BUF": {
+        "added": "3.2"
+    },
+    "select.devpoll": {
+        "added": "3.3"
+    },
+    "selectors": {
+        "added": "3.4"
+    },
+    "selectors.DevpollSelector": {
+        "added": "3.5"
+    },
+    "shlex.join": {
+        "added": "3.8"
+    },
+    "shlex.quote": {
+        "added": "3.3"
+    },
+    "shutil.SameFileError": {
+        "added": "3.4"
+    },
+    "shutil.chown": {
+        "added": "3.3"
+    },
+    "shutil.disk_usage": {
+        "added": "3.3"
+    },
+    "shutil.get_archive_formats": {
+        "added": "3.2"
+    },
+    "shutil.get_terminal_size": {
+        "added": "3.3"
+    },
+    "shutil.get_unpack_formats": {
+        "added": "3.2"
+    },
+    "shutil.make_archive": {
+        "added": "3.2"
+    },
+    "shutil.register_archive_format": {
+        "added": "3.2"
+    },
+    "shutil.register_unpack_format": {
+        "added": "3.2"
+    },
+    "shutil.rmtree.avoids_symlink_attacks": {
+        "added": "3.3"
+    },
+    "shutil.unpack_archive": {
+        "added": "3.2"
+    },
+    "shutil.unregister_archive_format": {
+        "added": "3.2"
+    },
+    "shutil.unregister_unpack_format": {
+        "added": "3.2"
+    },
+    "shutil.which": {
+        "added": "3.3"
+    },
+    "signal.CTRL_BREAK_EVENT": {
+        "added": "3.2"
+    },
+    "signal.CTRL_C_EVENT": {
+        "added": "3.2"
+    },
+    "signal.Handlers": {
+        "added": "3.5"
+    },
+    "signal.SIGSTKFLT": {
+        "added": "3.11"
+    },
+    "signal.SIG_BLOCK": {
+        "added": "3.3"
+    },
+    "signal.SIG_SETMASK": {
+        "added": "3.3"
+    },
+    "signal.SIG_UNBLOCK": {
+        "added": "3.3"
+    },
+    "signal.Sigmasks": {
+        "added": "3.5"
+    },
+    "signal.Signals": {
+        "added": "3.5"
+    },
+    "signal.pidfd_send_signal": {
+        "added": "3.9"
+    },
+    "signal.pthread_kill": {
+        "added": "3.3"
+    },
+    "signal.pthread_sigmask": {
+        "added": "3.3"
+    },
+    "signal.raise_signal": {
+        "added": "3.8"
+    },
+    "signal.sigpending": {
+        "added": "3.3"
+    },
+    "signal.sigtimedwait": {
+        "added": "3.3"
+    },
+    "signal.sigwait": {
+        "added": "3.3"
+    },
+    "signal.sigwaitinfo": {
+        "added": "3.3"
+    },
+    "signal.strsignal": {
+        "added": "3.8"
+    },
+    "signal.valid_signals": {
+        "added": "3.8"
+    },
+    "site.getsitepackages": {
+        "added": "3.2"
+    },
+    "site.getuserbase": {
+        "added": "3.2"
+    },
+    "site.getusersitepackages": {
+        "added": "3.2"
+    },
+    "smtpd": {
+        "deprecated": "3.6",
+        "removed": "3.12"
+    },
+    "smtplib.SMTPNotSupportedError": {
+        "added": "3.5"
+    },
+    "sndhdr": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "socket.AF_ALG": {
+        "added": "3.6"
+    },
+    "socket.AF_LINK": {
+        "added": "3.4"
+    },
+    "socket.AF_QIPCRTR": {
+        "added": "3.8"
+    },
+    "socket.AF_RDS": {
+        "added": "3.3"
+    },
+    "socket.AF_VSOCK": {
+        "added": "3.7"
+    },
+    "socket.CAN_BCM": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_RX_CHANGED": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_RX_DELETE": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_RX_READ": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_RX_SETUP": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_RX_STATUS": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_RX_TIMEOUT": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_TX_DELETE": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_TX_EXPIRED": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_TX_READ": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_TX_SEND": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_TX_SETUP": {
+        "added": "3.4"
+    },
+    "socket.CAN_BCM_TX_STATUS": {
+        "added": "3.4"
+    },
+    "socket.CAN_ISOTP": {
+        "added": "3.7"
+    },
+    "socket.CAN_J1939": {
+        "added": "3.9"
+    },
+    "socket.CAN_RAW_FD_FRAMES": {
+        "added": "3.5"
+    },
+    "socket.CAN_RAW_JOIN_FILTERS": {
+        "added": "3.9"
+    },
+    "socket.CMSG_LEN": {
+        "added": "3.3"
+    },
+    "socket.CMSG_SPACE": {
+        "added": "3.3"
+    },
+    "socket.IOCTL_VM_SOCKETS_GET_LOCAL_CID": {
+        "added": "3.7"
+    },
+    "socket.IPPROTO_UDPLITE": {
+        "added": "3.9"
+    },
+    "socket.IP_RECVTOS": {
+        "added": "3.10"
+    },
+    "socket.LOCAL_CREDS": {
+        "added": "3.11"
+    },
+    "socket.LOCAL_CREDS_PERSISTENT": {
+        "added": "3.11"
+    },
+    "socket.SCM_CREDS2": {
+        "added": "3.11"
+    },
+    "socket.SIO_LOOPBACK_FAST_PATH": {
+        "added": "3.6"
+    },
+    "socket.SOCK_CLOEXEC": {
+        "added": "3.2"
+    },
+    "socket.SOCK_NONBLOCK": {
+        "added": "3.2"
+    },
+    "socket.SOL_ALG": {
+        "added": "3.6"
+    },
+    "socket.SO_DOMAIN": {
+        "added": "3.6"
+    },
+    "socket.SO_INCOMING_CPU": {
+        "added": "3.11"
+    },
+    "socket.SO_PASSSEC": {
+        "added": "3.6"
+    },
+    "socket.SO_PEERSEC": {
+        "added": "3.6"
+    },
+    "socket.SO_PROTOCOL": {
+        "added": "3.6"
+    },
+    "socket.TCP_CONGESTION": {
+        "added": "3.6"
+    },
+    "socket.TCP_CONNECTION_INFO": {
+        "added": "3.11"
+    },
+    "socket.TCP_FASTOPEN": {
+        "added": "3.6.5"
+    },
+    "socket.TCP_KEEPALIVE": {
+        "added": "3.10"
+    },
+    "socket.TCP_KEEPCNT": {
+        "added": "3.6.5"
+    },
+    "socket.TCP_KEEPIDLE": {
+        "added": "3.7"
+    },
+    "socket.TCP_KEEPINTVL": {
+        "added": "3.7"
+    },
+    "socket.TCP_NOTSENT_LOWAT": {
+        "added": "3.7"
+    },
+    "socket.TCP_USER_TIMEOUT": {
+        "added": "3.6"
+    },
+    "socket.close": {
+        "added": "3.7"
+    },
+    "socket.create_server": {
+        "added": "3.8"
+    },
+    "socket.fromshare": {
+        "added": "3.3"
+    },
+    "socket.has_dualstack_ipv6": {
+        "added": "3.8"
+    },
+    "socket.if_indextoname": {
+        "added": "3.3"
+    },
+    "socket.if_nameindex": {
+        "added": "3.3"
+    },
+    "socket.if_nametoindex": {
+        "added": "3.3"
+    },
+    "socket.recv_fds": {
+        "added": "3.9"
+    },
+    "socket.send_fds": {
+        "added": "3.9"
+    },
+    "socket.sethostname": {
+        "added": "3.3"
+    },
+    "spwd": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "sqlite3.Blob": {
+        "added": "3.11"
+    },
+    "ssl.ALERT_DESCRIPTION_ACCESS_DENIED": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_BAD_CERTIFICATE": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_BAD_CERTIFICATE_HASH_VALUE": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_BAD_CERTIFICATE_STATUS_RESPONSE": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_BAD_RECORD_MAC": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_CERTIFICATE_EXPIRED": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_CERTIFICATE_REVOKED": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_CERTIFICATE_UNKNOWN": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_CERTIFICATE_UNOBTAINABLE": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_CLOSE_NOTIFY": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_DECODE_ERROR": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_DECOMPRESSION_FAILURE": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_DECRYPT_ERROR": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_HANDSHAKE_FAILURE": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_ILLEGAL_PARAMETER": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_INSUFFICIENT_SECURITY": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_INTERNAL_ERROR": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_NO_RENEGOTIATION": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_PROTOCOL_VERSION": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_RECORD_OVERFLOW": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_UNEXPECTED_MESSAGE": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_UNKNOWN_CA": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_UNKNOWN_PSK_IDENTITY": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_UNRECOGNIZED_NAME": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_UNSUPPORTED_CERTIFICATE": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_UNSUPPORTED_EXTENSION": {
+        "added": "3.4"
+    },
+    "ssl.ALERT_DESCRIPTION_USER_CANCELLED": {
+        "added": "3.4"
+    },
+    "ssl.AlertDescription": {
+        "added": "3.6"
+    },
+    "ssl.CHANNEL_BINDING_TYPES": {
+        "added": "3.3"
+    },
+    "ssl.HAS_ALPN": {
+        "added": "3.5"
+    },
+    "ssl.HAS_ECDH": {
+        "added": "3.3"
+    },
+    "ssl.HAS_NEVER_CHECK_COMMON_NAME": {
+        "added": "3.7"
+    },
+    "ssl.HAS_NPN": {
+        "added": "3.3"
+    },
+    "ssl.HAS_SNI": {
+        "added": "3.2"
+    },
+    "ssl.HAS_SSLv2": {
+        "added": "3.7"
+    },
+    "ssl.HAS_SSLv3": {
+        "added": "3.7"
+    },
+    "ssl.HAS_TLSv1": {
+        "added": "3.7"
+    },
+    "ssl.HAS_TLSv1_1": {
+        "added": "3.7"
+    },
+    "ssl.HAS_TLSv1_2": {
+        "added": "3.7"
+    },
+    "ssl.HAS_TLSv1_3": {
+        "added": "3.7"
+    },
+    "ssl.MemoryBIO": {
+        "added": "3.5"
+    },
+    "ssl.OPENSSL_VERSION": {
+        "added": "3.2"
+    },
+    "ssl.OPENSSL_VERSION_INFO": {
+        "added": "3.2"
+    },
+    "ssl.OPENSSL_VERSION_NUMBER": {
+        "added": "3.2"
+    },
+    "ssl.OP_ALL": {
+        "added": "3.2"
+    },
+    "ssl.OP_CIPHER_SERVER_PREFERENCE": {
+        "added": "3.3"
+    },
+    "ssl.OP_ENABLE_MIDDLEBOX_COMPAT": {
+        "added": "3.8"
+    },
+    "ssl.OP_IGNORE_UNEXPECTED_EOF": {
+        "added": "3.10"
+    },
+    "ssl.OP_NO_COMPRESSION": {
+        "added": "3.3"
+    },
+    "ssl.OP_NO_RENEGOTIATION": {
+        "added": "3.7"
+    },
+    "ssl.OP_NO_SSLv2": {
+        "added": "3.2",
+        "deprecated": "3.6"
+    },
+    "ssl.OP_NO_SSLv3": {
+        "added": "3.2",
+        "deprecated": "3.6"
+    },
+    "ssl.OP_NO_TICKET": {
+        "added": "3.6"
+    },
+    "ssl.OP_NO_TLSv1": {
+        "added": "3.2",
+        "deprecated": "3.7"
+    },
+    "ssl.OP_NO_TLSv1_1": {
+        "added": "3.4",
+        "deprecated": "3.7"
+    },
+    "ssl.OP_NO_TLSv1_2": {
+        "added": "3.4",
+        "deprecated": "3.7"
+    },
+    "ssl.OP_NO_TLSv1_3": {
+        "added": "3.7",
+        "deprecated": "3.7"
+    },
+    "ssl.OP_SINGLE_DH_USE": {
+        "added": "3.3"
+    },
+    "ssl.OP_SINGLE_ECDH_USE": {
+        "added": "3.3"
+    },
+    "ssl.PROTOCOL_SSLv2": {
+        "deprecated": "3.6"
+    },
+    "ssl.PROTOCOL_SSLv23": {
+        "deprecated": "3.6"
+    },
+    "ssl.PROTOCOL_SSLv3": {
+        "deprecated": "3.6"
+    },
+    "ssl.PROTOCOL_TLS": {
+        "added": "3.6",
+        "deprecated": "3.10"
+    },
+    "ssl.PROTOCOL_TLS_CLIENT": {
+        "added": "3.6"
+    },
+    "ssl.PROTOCOL_TLS_SERVER": {
+        "added": "3.6"
+    },
+    "ssl.PROTOCOL_TLSv1": {
+        "deprecated": "3.6"
+    },
+    "ssl.PROTOCOL_TLSv1_1": {
+        "added": "3.4",
+        "deprecated": "3.6"
+    },
+    "ssl.PROTOCOL_TLSv1_2": {
+        "added": "3.4",
+        "deprecated": "3.6"
+    },
+    "ssl.Purpose.CLIENT_AUTH": {
+        "added": "3.4"
+    },
+    "ssl.Purpose.SERVER_AUTH": {
+        "added": "3.4"
+    },
+    "ssl.RAND_bytes": {
+        "added": "3.3"
+    },
+    "ssl.RAND_pseudo_bytes": {
+        "added": "3.3",
+        "deprecated": "3.6"
+    },
+    "ssl.SSLCertVerificationError": {
+        "added": "3.7"
+    },
+    "ssl.SSLContext": {
+        "added": "3.2"
+    },
+    "ssl.SSLEOFError": {
+        "added": "3.3"
+    },
+    "ssl.SSLErrorNumber": {
+        "added": "3.6"
+    },
+    "ssl.SSLObject": {
+        "added": "3.5"
+    },
+    "ssl.SSLSession": {
+        "added": "3.6"
+    },
+    "ssl.SSLSyscallError": {
+        "added": "3.3"
+    },
+    "ssl.SSLWantReadError": {
+        "added": "3.3"
+    },
+    "ssl.SSLWantWriteError": {
+        "added": "3.3"
+    },
+    "ssl.SSLZeroReturnError": {
+        "added": "3.3"
+    },
+    "ssl.TLSVersion": {
+        "added": "3.7"
+    },
+    "ssl.TLSVersion.SSLv3": {
+        "deprecated": "3.10"
+    },
+    "ssl.TLSVersion.TLSv1": {
+        "deprecated": "3.10"
+    },
+    "ssl.TLSVersion.TLSv1_1": {
+        "deprecated": "3.10"
+    },
+    "ssl.VERIFY_ALLOW_PROXY_CERTS": {
+        "added": "3.10"
+    },
+    "ssl.VERIFY_CRL_CHECK_CHAIN": {
+        "added": "3.4"
+    },
+    "ssl.VERIFY_CRL_CHECK_LEAF": {
+        "added": "3.4"
+    },
+    "ssl.VERIFY_DEFAULT": {
+        "added": "3.4"
+    },
+    "ssl.VERIFY_X509_PARTIAL_CHAIN": {
+        "added": "3.10"
+    },
+    "ssl.VERIFY_X509_STRICT": {
+        "added": "3.4"
+    },
+    "ssl.VERIFY_X509_TRUSTED_FIRST": {
+        "added": "3.4.4"
+    },
+    "ssl.VerifyFlags": {
+        "added": "3.6"
+    },
+    "ssl.VerifyMode": {
+        "added": "3.6"
+    },
+    "ssl.create_default_context": {
+        "added": "3.4"
+    },
+    "ssl.enum_certificates": {
+        "added": "3.4"
+    },
+    "ssl.enum_crls": {
+        "added": "3.4"
+    },
+    "ssl.get_default_verify_paths": {
+        "added": "3.4"
+    },
+    "ssl.match_hostname": {
+        "added": "3.2",
+        "deprecated": "3.7"
+    },
+    "ssl.wrap_socket": {
+        "deprecated": "3.7"
+    },
+    "stat.FILE_ATTRIBUTE_ARCHIVE": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_COMPRESSED": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_DEVICE": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_DIRECTORY": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_ENCRYPTED": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_HIDDEN": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_INTEGRITY_STREAM": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_NORMAL": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_NO_SCRUB_DATA": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_OFFLINE": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_READONLY": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_REPARSE_POINT": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_SPARSE_FILE": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_SYSTEM": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_TEMPORARY": {
+        "added": "3.5"
+    },
+    "stat.FILE_ATTRIBUTE_VIRTUAL": {
+        "added": "3.5"
+    },
+    "stat.IO_REPARSE_TAG_APPEXECLIN": {
+        "added": "3.8"
+    },
+    "stat.IO_REPARSE_TAG_MOUNT_POINT": {
+        "added": "3.8"
+    },
+    "stat.IO_REPARSE_TAG_SYMLINK": {
+        "added": "3.8"
+    },
+    "stat.S_IFDOOR": {
+        "added": "3.4"
+    },
+    "stat.S_IFPORT": {
+        "added": "3.4"
+    },
+    "stat.S_IFWHT": {
+        "added": "3.4"
+    },
+    "stat.S_ISDOOR": {
+        "added": "3.4"
+    },
+    "stat.S_ISPORT": {
+        "added": "3.4"
+    },
+    "stat.S_ISWHT": {
+        "added": "3.4"
+    },
+    "stat.filemode": {
+        "added": "3.3"
+    },
+    "statistics": {
+        "added": "3.4"
+    },
+    "statistics.NormalDist": {
+        "added": "3.8"
+    },
+    "statistics.correlation": {
+        "added": "3.10"
+    },
+    "statistics.covariance": {
+        "added": "3.10"
+    },
+    "statistics.fmean": {
+        "added": "3.8"
+    },
+    "statistics.geometric_mean": {
+        "added": "3.8"
+    },
+    "statistics.harmonic_mean": {
+        "added": "3.6"
+    },
+    "statistics.linear_regression": {
+        "added": "3.10"
+    },
+    "statistics.multimode": {
+        "added": "3.8"
+    },
+    "statistics.quantiles": {
+        "added": "3.8"
+    },
+    "struct.iter_unpack": {
+        "added": "3.4"
+    },
+    "subprocess.ABOVE_NORMAL_PRIORITY_CLASS": {
+        "added": "3.7"
+    },
+    "subprocess.BELOW_NORMAL_PRIORITY_CLASS": {
+        "added": "3.7"
+    },
+    "subprocess.CREATE_BREAKAWAY_FROM_JOB": {
+        "added": "3.7"
+    },
+    "subprocess.CREATE_DEFAULT_ERROR_MODE": {
+        "added": "3.7"
+    },
+    "subprocess.CREATE_NO_WINDOW": {
+        "added": "3.7"
+    },
+    "subprocess.CompletedProcess": {
+        "added": "3.5"
+    },
+    "subprocess.DETACHED_PROCESS": {
+        "added": "3.7"
+    },
+    "subprocess.DEVNULL": {
+        "added": "3.3"
+    },
+    "subprocess.HIGH_PRIORITY_CLASS": {
+        "added": "3.7"
+    },
+    "subprocess.IDLE_PRIORITY_CLASS": {
+        "added": "3.7"
+    },
+    "subprocess.NORMAL_PRIORITY_CLASS": {
+        "added": "3.7"
+    },
+    "subprocess.REALTIME_PRIORITY_CLASS": {
+        "added": "3.7"
+    },
+    "subprocess.SubprocessError": {
+        "added": "3.3"
+    },
+    "subprocess.TimeoutExpired": {
+        "added": "3.3"
+    },
+    "subprocess._USE_POSIX_SPAWN": {
+        "added": "3.8"
+    },
+    "subprocess._USE_VFORK": {
+        "added": "3.11"
+    },
+    "subprocess.check_output": {
+        "added": "3.1"
+    },
+    "subprocess.run": {
+        "added": "3.5"
+    },
+    "sunau": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "sys.__breakpointhook__": {
+        "added": "3.7"
+    },
+    "sys.__interactivehook__": {
+        "added": "3.4"
+    },
+    "sys.__unraisablehook__": {
+        "added": "3.8"
+    },
+    "sys._debugmallocstats": {
+        "added": "3.3"
+    },
+    "sys._emscripten_info": {
+        "added": "3.11"
+    },
+    "sys._enablelegacywindowsfsencoding": {
+        "added": "3.6"
+    },
+    "sys._xoptions": {
+        "added": "3.2"
+    },
+    "sys.abi_flags": {
+        "added": "3.2"
+    },
+    "sys.activate_stack_trampoline": {
+        "added": "3.12"
+    },
+    "sys.addaudithook": {
+        "added": "3.8"
+    },
+    "sys.audit": {
+        "added": "3.8"
+    },
+    "sys.base_exec_prefix": {
+        "added": "3.3"
+    },
+    "sys.base_prefix": {
+        "added": "3.3"
+    },
+    "sys.breakpointhook": {
+        "added": "3.7"
+    },
+    "sys.deactivate_stack_trampoline": {
+        "added": "3.12"
+    },
+    "sys.exception": {
+        "added": "3.11"
+    },
+    "sys.float_repr_style": {
+        "added": "3.1"
+    },
+    "sys.get_asyncgen_hooks": {
+        "added": "3.6"
+    },
+    "sys.get_coroutine_origin_tracking_depth": {
+        "added": "3.7"
+    },
+    "sys.get_int_max_str_digits": {
+        "added": "3.11"
+    },
+    "sys.getallocatedblocks": {
+        "added": "3.4"
+    },
+    "sys.getandroidapilevel": {
+        "added": "3.7"
+    },
+    "sys.getfilesystemencodeerrors": {
+        "added": "3.6"
+    },
+    "sys.getswitchinterval": {
+        "added": "3.2"
+    },
+    "sys.hash_info": {
+        "added": "3.2"
+    },
+    "sys.implementation": {
+        "added": "3.3"
+    },
+    "sys.int_info": {
+        "added": "3.1"
+    },
+    "sys.is_finalizing": {
+        "added": "3.5"
+    },
+    "sys.is_stack_trampoline_active": {
+        "added": "3.12"
+    },
+    "sys.orig_argv": {
+        "added": "3.10"
+    },
+    "sys.platlibdir": {
+        "added": "3.9"
+    },
+    "sys.pycache_prefix": {
+        "added": "3.8"
+    },
+    "sys.set_asyncgen_hooks": {
+        "added": "3.6"
+    },
+    "sys.set_coroutine_origin_tracking_depth": {
+        "added": "3.7"
+    },
+    "sys.set_int_max_str_digits": {
+        "added": "3.11"
+    },
+    "sys.setswitchinterval": {
+        "added": "3.2"
+    },
+    "sys.stdlib_module_names": {
+        "added": "3.10"
+    },
+    "sys.thread_info": {
+        "added": "3.3"
+    },
+    "sys.unraisablehook": {
+        "added": "3.8"
+    },
+    "sysconfig": {
+        "added": "3.2"
+    },
+    "sysconfig._get_preferred_schemes": {
+        "added": "3.10"
+    },
+    "sysconfig.get_default_scheme": {
+        "added": "3.10"
+    },
+    "sysconfig.get_preferred_scheme": {
+        "added": "3.10"
+    },
+    "telnetlib": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "tempfile.TemporaryDirectory": {
+        "added": "3.2"
+    },
+    "tempfile.gettempdirb": {
+        "added": "3.5"
+    },
+    "tempfile.gettempprefixb": {
+        "added": "3.5"
+    },
+    "termios.tcgetwinsize": {
+        "added": "3.11"
+    },
+    "termios.tcsetwinsize": {
+        "added": "3.11"
+    },
+    "test.support.adjust_int_max_str_digits": {
+        "added": "3.11"
+    },
+    "test.support.bytecode_helper": {
+        "added": "3.9"
+    },
+    "test.support.catch_unraisable_exception": {
+        "added": "3.8"
+    },
+    "test.support.check__all__": {
+        "added": "3.6"
+    },
+    "test.support.check_disallow_instantiation": {
+        "added": "3.10"
+    },
+    "test.support.detect_api_mismatch": {
+        "added": "3.5"
+    },
+    "test.support.flush_std_streams": {
+        "added": "3.11"
+    },
+    "test.support.import_helper": {
+        "added": "3.10"
+    },
+    "test.support.os_helper": {
+        "added": "3.10"
+    },
+    "test.support.print_warning": {
+        "added": "3.9"
+    },
+    "test.support.skip_if_broken_multiprocessing_synchronize": {
+        "added": "3.10"
+    },
+    "test.support.socket_helper": {
+        "added": "3.9"
+    },
+    "test.support.threading_helper": {
+        "added": "3.10"
+    },
+    "test.support.wait_process": {
+        "added": "3.9"
+    },
+    "test.support.warnings_helper": {
+        "added": "3.10"
+    },
+    "textwrap.indent": {
+        "added": "3.3"
+    },
+    "textwrap.shorten": {
+        "added": "3.4"
+    },
+    "threading.Barrier": {
+        "added": "3.2"
+    },
+    "threading.TIMEOUT_MAX": {
+        "added": "3.2"
+    },
+    "threading.__excepthook__": {
+        "added": "3.10"
+    },
+    "threading.excepthook": {
+        "added": "3.8"
+    },
+    "threading.get_ident": {
+        "added": "3.3"
+    },
+    "threading.get_native_id": {
+        "added": "3.8"
+    },
+    "threading.getprofile": {
+        "added": "3.10"
+    },
+    "threading.gettrace": {
+        "added": "3.10"
+    },
+    "threading.main_thread": {
+        "added": "3.4"
+    },
+    "threading.setprofile_all_threads": {
+        "added": "3.12"
+    },
+    "threading.settrace_all_threads": {
+        "added": "3.12"
+    },
+    "time.CLOCK_BOOTTIME": {
+        "added": "3.7"
+    },
+    "time.CLOCK_HIGHRES": {
+        "added": "3.3"
+    },
+    "time.CLOCK_MONOTONIC": {
+        "added": "3.3"
+    },
+    "time.CLOCK_MONOTONIC_RAW": {
+        "added": "3.3"
+    },
+    "time.CLOCK_PROCESS_CPUTIME_ID": {
+        "added": "3.3"
+    },
+    "time.CLOCK_PROF": {
+        "added": "3.7"
+    },
+    "time.CLOCK_REALTIME": {
+        "added": "3.3"
+    },
+    "time.CLOCK_TAI": {
+        "added": "3.9"
+    },
+    "time.CLOCK_THREAD_CPUTIME_ID": {
+        "added": "3.3"
+    },
+    "time.CLOCK_UPTIME": {
+        "added": "3.7"
+    },
+    "time.CLOCK_UPTIME_RAW": {
+        "added": "3.8"
+    },
+    "time.clock_getres": {
+        "added": "3.3"
+    },
+    "time.clock_gettime": {
+        "added": "3.3"
+    },
+    "time.clock_gettime_ns": {
+        "added": "3.7"
+    },
+    "time.clock_settime": {
+        "added": "3.3"
+    },
+    "time.clock_settime_ns": {
+        "added": "3.7"
+    },
+    "time.get_clock_info": {
+        "added": "3.3"
+    },
+    "time.monotonic": {
+        "added": "3.3"
+    },
+    "time.monotonic_ns": {
+        "added": "3.7"
+    },
+    "time.perf_counter": {
+        "added": "3.3"
+    },
+    "time.perf_counter_ns": {
+        "added": "3.7"
+    },
+    "time.process_time": {
+        "added": "3.3"
+    },
+    "time.process_time_ns": {
+        "added": "3.7"
+    },
+    "time.pthread_getcpuclockid": {
+        "added": "3.7"
+    },
+    "time.thread_time": {
+        "added": "3.7"
+    },
+    "time.thread_time_ns": {
+        "added": "3.7"
+    },
+    "time.time_ns": {
+        "added": "3.7"
+    },
+    "tkinter.tix": {
+        "deprecated": "3.6"
+    },
+    "token.ASYNC": {
+        "added": "3.8"
+    },
+    "token.AWAIT": {
+        "added": "3.8"
+    },
+    "token.COLONEQUAL": {
+        "added": "3.8"
+    },
+    "token.COMMENT": {
+        "added": "3.7"
+    },
+    "token.ENCODING": {
+        "added": "3.7"
+    },
+    "token.NL": {
+        "added": "3.7"
+    },
+    "token.TYPE_COMMENT": {
+        "added": "3.8"
+    },
+    "token.TYPE_IGNORE": {
+        "added": "3.8"
+    },
+    "tokenize.open": {
+        "added": "3.2"
+    },
+    "tomllib": {
+        "added": "3.11"
+    },
+    "traceback.FrameSummary": {
+        "added": "3.5"
+    },
+    "traceback.StackSummary": {
+        "added": "3.5"
+    },
+    "traceback.TracebackException": {
+        "added": "3.5"
+    },
+    "traceback.clear_frames": {
+        "added": "3.4"
+    },
+    "traceback.walk_stack": {
+        "added": "3.5"
+    },
+    "traceback.walk_tb": {
+        "added": "3.5"
+    },
+    "tracemalloc": {
+        "added": "3.4"
+    },
+    "tracemalloc.DomainFilter": {
+        "added": "3.6"
+    },
+    "tracemalloc.reset_peak": {
+        "added": "3.9"
+    },
+    "turtle.settiltangle": {
+        "deprecated": "3.1"
+    },
+    "types.AsyncGeneratorType": {
+        "added": "3.6"
+    },
+    "types.CellType": {
+        "added": "3.8"
+    },
+    "types.ClassMethodDescriptorType": {
+        "added": "3.7"
+    },
+    "types.CoroutineType": {
+        "added": "3.5"
+    },
+    "types.DynamicClassAttribute": {
+        "added": "3.4"
+    },
+    "types.EllipsisType": {
+        "added": "3.10"
+    },
+    "types.GenericAlias": {
+        "added": "3.9"
+    },
+    "types.MappingProxyType": {
+        "added": "3.3"
+    },
+    "types.MethodDescriptorType": {
+        "added": "3.7"
+    },
+    "types.MethodWrapperType": {
+        "added": "3.7"
+    },
+    "types.NoneType": {
+        "added": "3.10"
+    },
+    "types.NotImplementedType": {
+        "added": "3.10"
+    },
+    "types.SimpleNamespace": {
+        "added": "3.3"
+    },
+    "types.UnionType": {
+        "added": "3.10"
+    },
+    "types.WrapperDescriptorType": {
+        "added": "3.7"
+    },
+    "types.coroutine": {
+        "added": "3.5"
+    },
+    "types.new_class": {
+        "added": "3.3"
+    },
+    "types.prepare_class": {
+        "added": "3.3"
+    },
+    "types.resolve_bases": {
+        "added": "3.7"
+    },
+    "typing": {
+        "added": "3.5"
+    },
+    "typing.AbstractSet": {
+        "deprecated": "3.9"
+    },
+    "typing.Annotated": {
+        "added": "3.9"
+    },
+    "typing.AsyncContextManager": {
+        "added": "3.6.2",
+        "deprecated": "3.9"
+    },
+    "typing.AsyncGenerator": {
+        "added": "3.6.1",
+        "deprecated": "3.9"
+    },
+    "typing.AsyncIterable": {
+        "added": "3.5.2",
+        "deprecated": "3.9"
+    },
+    "typing.AsyncIterator": {
+        "added": "3.5.2",
+        "deprecated": "3.9"
+    },
+    "typing.Awaitable": {
+        "added": "3.5.2",
+        "deprecated": "3.9"
+    },
+    "typing.BinaryIO": {
+        "deprecated": "3.8",
+        "removed": "3.13"
+    },
+    "typing.ByteString": {
+        "deprecated": "3.9"
+    },
+    "typing.Callable": {
+        "deprecated": "3.9"
+    },
+    "typing.ChainMap": {
+        "added": "3.6.1",
+        "deprecated": "3.9"
+    },
+    "typing.ClassVar": {
+        "added": "3.5.3"
+    },
+    "typing.Collection": {
+        "added": "3.6",
+        "deprecated": "3.9"
+    },
+    "typing.Concatenate": {
+        "added": "3.10"
+    },
+    "typing.Container": {
+        "deprecated": "3.9"
+    },
+    "typing.ContextManager": {
+        "added": "3.6",
+        "deprecated": "3.9"
+    },
+    "typing.Coroutine": {
+        "added": "3.5.3",
+        "deprecated": "3.9"
+    },
+    "typing.Counter": {
+        "added": "3.6.1",
+        "deprecated": "3.9"
+    },
+    "typing.DefaultDict": {
+        "added": "3.5.2",
+        "deprecated": "3.9"
+    },
+    "typing.Deque": {
+        "added": "3.6.1",
+        "deprecated": "3.9"
+    },
+    "typing.Dict": {
+        "deprecated": "3.9"
+    },
+    "typing.Final": {
+        "added": "3.8"
+    },
+    "typing.ForwardRef": {
+        "added": "3.7.4"
+    },
+    "typing.FrozenSet": {
+        "deprecated": "3.9"
+    },
+    "typing.Generator": {
+        "deprecated": "3.9"
+    },
+    "typing.IO": {
+        "deprecated": "3.8",
+        "removed": "3.13"
+    },
+    "typing.ItemsView": {
+        "deprecated": "3.9"
+    },
+    "typing.Iterable": {
+        "deprecated": "3.9"
+    },
+    "typing.Iterator": {
+        "deprecated": "3.9"
+    },
+    "typing.KeysView": {
+        "deprecated": "3.9"
+    },
+    "typing.List": {
+        "deprecated": "3.9"
+    },
+    "typing.Literal": {
+        "added": "3.8"
+    },
+    "typing.LiteralString": {
+        "added": "3.11"
+    },
+    "typing.Mapping": {
+        "deprecated": "3.9"
+    },
+    "typing.MappingView": {
+        "deprecated": "3.9"
+    },
+    "typing.Match": {
+        "deprecated": "3.8",
+        "removed": "3.13"
+    },
+    "typing.MutableMapping": {
+        "deprecated": "3.9"
+    },
+    "typing.MutableSequence": {
+        "deprecated": "3.9"
+    },
+    "typing.MutableSet": {
+        "deprecated": "3.9"
+    },
+    "typing.Never": {
+        "added": "3.11"
+    },
+    "typing.NewType": {
+        "added": "3.5.2"
+    },
+    "typing.NoReturn": {
+        "added": "3.6.2"
+    },
+    "typing.NotRequired": {
+        "added": "3.11"
+    },
+    "typing.OrderedDict": {
+        "added": "3.7.2",
+        "deprecated": "3.9"
+    },
+    "typing.ParamSpec": {
+        "added": "3.10"
+    },
+    "typing.ParamSpecArgs": {
+        "added": "3.10"
+    },
+    "typing.ParamSpecKwargs": {
+        "added": "3.10"
+    },
+    "typing.Pattern": {
+        "deprecated": "3.8",
+        "removed": "3.13"
+    },
+    "typing.Protocol": {
+        "added": "3.8"
+    },
+    "typing.Required": {
+        "added": "3.11"
+    },
+    "typing.Reversible": {
+        "deprecated": "3.9"
+    },
+    "typing.Self": {
+        "added": "3.11"
+    },
+    "typing.Sequence": {
+        "deprecated": "3.9"
+    },
+    "typing.Set": {
+        "deprecated": "3.9"
+    },
+    "typing.SupportsIndex": {
+        "added": "3.8"
+    },
+    "typing.TYPE_CHECKING": {
+        "added": "3.5.2"
+    },
+    "typing.Text": {
+        "added": "3.5.2",
+        "deprecated": "3.11"
+    },
+    "typing.TextIO": {
+        "deprecated": "3.8",
+        "removed": "3.13"
+    },
+    "typing.Tuple": {
+        "deprecated": "3.9"
+    },
+    "typing.Type": {
+        "added": "3.5.2",
+        "deprecated": "3.9"
+    },
+    "typing.TypeAlias": {
+        "added": "3.10"
+    },
+    "typing.TypeGuard": {
+        "added": "3.10"
+    },
+    "typing.TypeVarTuple": {
+        "added": "3.11"
+    },
+    "typing.TypedDict": {
+        "added": "3.8"
+    },
+    "typing.Unpack": {
+        "added": "3.11"
+    },
+    "typing.ValuesView": {
+        "deprecated": "3.9"
+    },
+    "typing.assert_never": {
+        "added": "3.11"
+    },
+    "typing.assert_type": {
+        "added": "3.11"
+    },
+    "typing.clear_overloads": {
+        "added": "3.11"
+    },
+    "typing.dataclass_transform": {
+        "added": "3.11"
+    },
+    "typing.final": {
+        "added": "3.8"
+    },
+    "typing.get_args": {
+        "added": "3.8"
+    },
+    "typing.get_origin": {
+        "added": "3.8"
+    },
+    "typing.get_overloads": {
+        "added": "3.11"
+    },
+    "typing.is_typeddict": {
+        "added": "3.10"
+    },
+    "typing.reveal_type": {
+        "added": "3.11"
+    },
+    "typing.runtime_checkable": {
+        "added": "3.8"
+    },
+    "unicodedata.is_normalized": {
+        "added": "3.8"
+    },
+    "unittest.IsolatedAsyncioTestCase": {
+        "added": "3.8"
+    },
+    "unittest.SkipTest": {
+        "added": "3.1"
+    },
+    "unittest.TextTestResult": {
+        "added": "3.2"
+    },
+    "unittest.addModuleCleanup": {
+        "added": "3.8"
+    },
+    "unittest.doModuleCleanups": {
+        "added": "3.8"
+    },
+    "unittest.enterModuleContext": {
+        "added": "3.11"
+    },
+    "unittest.expectedFailure": {
+        "added": "3.1"
+    },
+    "unittest.installHandler": {
+        "added": "3.2"
+    },
+    "unittest.mock": {
+        "added": "3.3"
+    },
+    "unittest.mock.AsyncMock": {
+        "added": "3.8"
+    },
+    "unittest.mock.seal": {
+        "added": "3.7"
+    },
+    "unittest.registerResult": {
+        "added": "3.2"
+    },
+    "unittest.removeHandler": {
+        "added": "3.2"
+    },
+    "unittest.removeResult": {
+        "added": "3.2"
+    },
+    "unittest.skip": {
+        "added": "3.1"
+    },
+    "unittest.skipIf": {
+        "added": "3.1"
+    },
+    "unittest.skipUnless": {
+        "added": "3.1"
+    },
+    "urllib.parse.DefragResult": {
+        "added": "3.2"
+    },
+    "urllib.parse.DefragResultBytes": {
+        "added": "3.2"
+    },
+    "urllib.parse.ParseResultBytes": {
+        "added": "3.2"
+    },
+    "urllib.parse.SplitResultBytes": {
+        "added": "3.2"
+    },
+    "urllib.request.DataHandler": {
+        "added": "3.4"
+    },
+    "urllib.request.FancyURLopener": {
+        "deprecated": "3.3"
+    },
+    "urllib.request.HTTPPasswordMgrWithPriorAuth": {
+        "added": "3.5"
+    },
+    "urllib.request.URLopener": {
+        "deprecated": "3.3"
+    },
+    "uu": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "uuid.SafeUUID": {
+        "added": "3.7"
+    },
+    "venv": {
+        "added": "3.3"
+    },
+    "weakref.WeakMethod": {
+        "added": "3.4"
+    },
+    "weakref.finalize": {
+        "added": "3.4"
+    },
+    "winreg.CreateKeyEx": {
+        "added": "3.2"
+    },
+    "winreg.DeleteKeyEx": {
+        "added": "3.2"
+    },
+    "winreg.REG_QWORD": {
+        "added": "3.6"
+    },
+    "winreg.REG_QWORD_LITTLE_ENDIAN": {
+        "added": "3.6"
+    },
+    "wsgiref.handlers.IISCGIHandler": {
+        "added": "3.2"
+    },
+    "wsgiref.handlers.read_environ": {
+        "added": "3.2"
+    },
+    "wsgiref.types": {
+        "added": "3.11"
+    },
+    "xdrlib": {
+        "deprecated": "3.11",
+        "removed": "3.13"
+    },
+    "xml.etree.ElementTree.C14NWriterTarget": {
+        "added": "3.8"
+    },
+    "xml.etree.ElementTree.XMLPullParser": {
+        "added": "3.4"
+    },
+    "xml.etree.ElementTree.canonicalize": {
+        "added": "3.3"
+    },
+    "xml.etree.ElementTree.fromstringlist": {
+        "added": "3.2"
+    },
+    "xml.etree.ElementTree.indent": {
+        "added": "3.9"
+    },
+    "xml.etree.ElementTree.register_namespace": {
+        "added": "3.2"
+    },
+    "xml.etree.ElementTree.tostringlist": {
+        "added": "3.2"
+    },
+    "xml.parsers.expat.errors.codes": {
+        "added": "3.2"
+    },
+    "xml.parsers.expat.errors.messages": {
+        "added": "3.2"
+    },
+    "xml.sax.handler.LexicalHandler": {
+        "added": "3.10"
+    },
+    "zipapp": {
+        "added": "3.5"
+    },
+    "zipfile.BadZipFile": {
+        "added": "3.2"
+    },
+    "zipfile.BadZipfile": {
+        "deprecated": "3.2"
+    },
+    "zipfile.Path": {
+        "added": "3.8"
+    },
+    "zipfile.ZIP_BZIP2": {
+        "added": "3.3"
+    },
+    "zipfile.ZIP_LZMA": {
+        "added": "3.3"
+    },
+    "zipfile.ZipFile.mkdir": {
+        "added": "3.11"
+    },
+    "zlib.ZLIB_RUNTIME_VERSION": {
+        "added": "3.3"
+    },
+    "zoneinfo": {
+        "added": "3.9"
+    }
+}

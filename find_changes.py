@@ -3,82 +3,136 @@
 
 
 import argparse
+import fnmatch
 
-from detect_version import Changelog
+from detect_version import Changelog, Requirement, version_tuple
 from typing import Optional
 
+# Constants
+VALID_ACTIONS = ('added', 'removed', 'deprecated')
 
-def find_changes(name: str,
+
+def find_changes(changelog: Changelog,
+                 pattern: str,
                  version: Optional[str] = None,
                  action: Optional[str] = None
-                 ) -> list[tuple]:
-    """ Search the module database for specific changes.
+                 ) -> dict[str, Requirement]:
+    """ Find changes based on the search criteria.
 
     Args:
-        name (str): Module or attribute name.
-        version (str, optional): Filter rows by version.
-        action (str, optional): Filter rows by action.
+        changelog (dict): the changelog to search.
+        pattern (str): the search pattern.
+        version (str, optional): limit results to a specific version.
+        action (str, optional): limit results to a specific action.
 
     Returns:
-        list[tuple]: List of matching rows, or an empty list if no rows were found.
+        dict[str, dict]: matching names and their requirements.
     """
-    # Match like names or exact names.
-    if '%' in name or '_' in name:
-        sql = 'SELECT * FROM modules WHERE name LIKE ?'
-    else:
-        sql = 'SELECT * FROM modules WHERE name = ?'
-    args = [name]
+    results = {}
+    for name, changes in changelog.items():
+        if fnmatch.fnmatch(name, pattern):
+            if action and action not in changes.keys():
+                continue
 
-    if version:
-        sql += ' AND VERSION = ?'
-        args.append(version)
+            if version and version not in changes.values():
+                continue
 
-    if action:
-        sql += ' AND ACTION = ?'
-        args.append(action)
-
-    changelog = Changelog()
-    return changelog.query(sql, args, sort=True)
+            results[name] = changes
+    return results
 
 
 def main():
-    desc = r"""Utility script to find specific module changes.
+    desc = r"""Find specific version changes.
 
-The name argument supports SQL-LIKE patterns.
+The name argument supports fnmatch-style pattern matching:
 
-The percent % wildcard matches any sequence of zero or more characters:
+    * - matches everything
+    ? - matches any single character
+    [seq] - matches any character in seq
+    [!seq] - matches any character not in seq
 
-    %       matches all names
-    start%  matches names that begin with "start"
-    %text%  matches names that have "text" in the middle
-    %stop   matches names that end with "stop"
+Wildcards * need to be escaped with quotes when used from a command line.
 
-The underscore _ wildcard matches any single character:
-
-    h_llo   matches names that have 1 character between h and llo.
-
-
+    For example "os.*"
     """
-    parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,
-                                     description=desc)
-    parser.add_argument('name', help='module or attribute name')
-    parser.add_argument('-v', '--version', help='Filter rows by version')
-    parser.add_argument('-a', '--action', help='Filter rows by action')
+
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=desc)
+
+    parser.add_argument(
+        'name',
+        help='name of the module, class, attribute, function, or exception')
+
+    parser.add_argument(
+        '-v', '--version',
+        help='limit results to a specific version')
+
+    category_group = parser.add_mutually_exclusive_group()
+
+    category_group.add_argument(
+        '-m', '--modules',
+        help='search modules (default)',
+        action='store_true')
+
+    category_group.add_argument(
+        '-e', '--exceptions',
+        help='search exceptions',
+        action='store_true')
+
+    category_group.add_argument(
+        '-f', '--functions',
+        help='search functions',
+        action='store_true')
+
+    action_group = parser.add_mutually_exclusive_group()
+
+    action_group.add_argument(
+        '-a', '--added',
+        help='include results that have added versions',
+        action='store_true'
+    )
+
+    action_group.add_argument(
+        '-d', '--deprecated',
+        help='include results that have deprecated versions',
+        action='store_true'
+    )
+
+    action_group.add_argument(
+        '-r', '--removed',
+        help='include results that have removed versions',
+        action='store_true'
+    )
     args = parser.parse_args()
 
-    if args.action and args.action not in ('added', 'deprecated', 'removed'):
-        parser.exit(f'Error: Invalid action: {args.action!r} (valid actions: '
-                     'added, removed, deprecated)')
+    # Get changelog category
+    if args.exceptions:
+         changelog = Changelog('data/exceptions.json')
+    elif args.functions:
+        changelog = Changelog('data/functions.json')
+    else:
+        changelog = Changelog('data/modules.json')
 
-    results = find_changes(args.name, args.version, args.action)
+    # Get action filter
+    if args.added:
+        action = 'added'
+    elif args.deprecated:
+        action = 'deprecated'
+    elif args.removed:
+        action = 'removed'
+    else:
+        action = None
 
+    # Search for matches
+    results = find_changes(changelog, args.name, args.version, action)
     if results:
-        columns = '{:<8} {:<13} {}'
-        print(columns.format('Version', 'Action', 'Name'))
-        for row in results:
-            print(columns.format(*row))
+        column = '{:<30} {}'
+        for name, changes in results.items():
+            print(column.format(name, changes))
 
-    print('Found', len(results), 'row.' if len(results) == 1 else 'rows.')
+    matches = 'match.' if len(results) == 1 else 'matches.'
+    print('Found', len(results), matches)
 
 
 if __name__ == '__main__':

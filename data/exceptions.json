@@ -1,0 +1,65 @@
+{
+    "BlockingIOError": {
+        "added": "3.3"
+    },
+    "BrokenPipeError": {
+        "added": "3.3"
+    },
+    "ChildProcessError": {
+        "added": "3.3"
+    },
+    "ConnectionAbortedError": {
+        "added": "3.3"
+    },
+    "ConnectionError": {
+        "added": "3.3"
+    },
+    "ConnectionRefusedError": {
+        "added": "3.3"
+    },
+    "ConnectionResetError": {
+        "added": "3.3"
+    },
+    "EncodingWarning": {
+        "added": "3.10"
+    },
+    "ExceptionGroup": {
+        "added": "3.11"
+    },
+    "FileExistsError": {
+        "added": "3.3"
+    },
+    "FileNotFoundError": {
+        "added": "3.3"
+    },
+    "InterruptedError": {
+        "added": "3.3"
+    },
+    "IsADirectoryError": {
+        "added": "3.3"
+    },
+    "ModuleNotFoundError": {
+        "added": "3.6"
+    },
+    "NotADirectoryError": {
+        "added": "3.3"
+    },
+    "PermissionError": {
+        "added": "3.3"
+    },
+    "ProcessLookupError": {
+        "added": "3.3"
+    },
+    "RecursionError": {
+        "added": "3.5"
+    },
+    "ResourceWarning": {
+        "added": "3.2"
+    },
+    "StopAsyncIteration": {
+        "added": "3.5"
+    },
+    "TimeoutError": {
+        "added": "3.3"
+    }
+}

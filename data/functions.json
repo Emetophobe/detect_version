@@ -1,0 +1,14 @@
+{
+    "aiter": {
+        "added": "3.10"
+    },
+    "anext": {
+        "added": "3.10"
+    },
+    "breakpoint": {
+        "added": "3.7"
+    },
+    "callable": {
+        "added": "3.2"
+    }
+}
