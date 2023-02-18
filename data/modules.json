@@ -748,7 +748,8 @@
         "deprecated": "3.7"
     },
     "importlib.find_loader": {
-        "added": "3.3"
+        "added": "3.3",
+        "deprecated": "3.4"
     },
     "importlib.invalidate_caches": {
         "added": "3.3"
