@@ -5,11 +5,8 @@
 import argparse
 import fnmatch
 
-from detect_version import Changelog, Requirement
 from typing import Optional
-
-
-VALID_ACTIONS = ('added', 'deprecated', 'removed')
+from detect_version import Changelog, Requirement
 
 
 def find_changes(changelog: Changelog,
@@ -26,7 +23,7 @@ def find_changes(changelog: Changelog,
         action (str, optional): limit results to a specific action.
 
     Returns:
-        dict[str, dict]: matching names and their requirements.
+        dict[str, dict]: dictionary of names and their requirements.
     """
     results = {}
     for name, changes in changelog.items():
