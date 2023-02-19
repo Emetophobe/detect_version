@@ -3,12 +3,11 @@
 
 
 import ast
-import sys
-import argparse
 import json
+import argparse
 
+from pathlib import Path
 from typing import Optional
-from os import PathLike
 
 
 class Requirement:
@@ -20,7 +19,7 @@ class Requirement:
         deprecated: Version when feature was deprecated.
         removed: Version when feature was removed.
 
-    A requirement can have one or more versions, or None of them (no requirement).
+    A requirement can have one or more versions or None of them (no requirement).
 
     Versions are stored as strings because there is no way to represent versions
     like "3.11.1" as a float. The downside to strings is that the versions need
@@ -38,28 +37,22 @@ class Requirement:
                  deprecated: Optional[str] = None,
                  removed: Optional[str] = None
                  ) -> None:
-        """ Initialize feature requirement.
-
-        Args:
-            added (str, optional): the added version, defaults to None.
-            deprecated (str, optional): the deprecated version, defaults to None.
-            removed (str, optional): the removed version, defaults to None.
-        """
+        """ Initialize feature requirement. """
         self.added = added
         self.deprecated = deprecated
         self.removed = removed
 
     def __lt__(self, other: object) -> bool:
-        """ Less than "<" operator. Used for sorting requirements. """
+        """ Less than "<" operator. Used for sorting requirements """
         if not isinstance(other, Requirement):
             raise TypeError(f'Expected a Requirement, received a '
                             f'{type(other).__name__}')
 
-        # zip both instances and compare versions one at a time
+        # zip both instances and compare all 3 versions
         for version, other_ver in zip(self, other):
-            if compare_version(version, other_ver) < 0:
+            if version_tuple(version) < version_tuple(other_ver):
                 return True
-            elif compare_version(version, other_ver) == 0:
+            elif version_tuple(version) == version_tuple(other_ver):
                 continue
             else:
                 return False
@@ -72,40 +65,41 @@ class Requirement:
         return f'{self.added}, {self.deprecated}, {self.removed}'
 
 
-class Changelog(dict):
-    """ A dictionary of changes loaded from a json file. """
+class Changelog:
+    """ A simple changelog dictionary loaded from json. """
 
     def __init__(self, filename: str) -> None:
-        """ Initialize a changelog from json file.
+        """ Initialize changelog from a json file.
 
         Args:
             filename (str): file path of the changelog.
         """
         with open(filename, 'r') as infile:
-            changelog = json.load(infile)
-            super().__init__(changelog)
+            self.changelog = json.load(infile)
 
     def get_requirement(self, name: str) -> Requirement:
-        """ Get feature requirements (added, deprecated, and removed versions).
+        """ Returns a feature's version requirement.
 
         Args:
             name (str): name of the feature.
 
         Returns:
-            Requirement: the feature requirement.
+            Requirement: the feature requirement, or an empty Requirement.
         """
-        requirements = self.get(name, {})
-        return Requirement(**requirements)
+        return Requirement(**self.changelog.get(name, {}))
+
+    def items(self):
+        return self.changelog.items()
 
 
 class Analyzer(ast.NodeVisitor):
     """ Parse abstract syntax tree and determine script requirements. """
 
-    def __init__(self, filename: str | PathLike) -> None:
+    def __init__(self, filename: Path) -> None:
         """ Initialize node analyzer.
 
         Args:
-            filename (str | PathLike): file path of the script.
+            filename (Path): file path of the script.
         """
         self.filename = filename
         self.requirements = {}
@@ -119,16 +113,20 @@ class Analyzer(ast.NodeVisitor):
         self.exceptions = Changelog('data/exceptions.json')
         self.functions = Changelog('data/functions.json')
 
+    def report_minversion(self) -> None:
+        """ Print the minimum script requirement. """
+        print(f'{self.filename}: requires {self.min_version}')
+
     def report(self) -> None:
         """ Print script requirements. """
+        # TODO: generate a prettier report
+        print()
 
-        # TODO: redesign output. Separate language features and module changes.
+        # Print minimum version
+        self.report_minversion()
 
         # Sort by requirement then by feature name
         requirements = sorted(self.requirements.items(), key=lambda a: (a[1], a[0]))
-
-        # Print minimum version
-        print(f'{self.filename}: requires {self.min_version}')
 
         # Print requirements
         warnings = {}
@@ -138,7 +136,7 @@ class Analyzer(ast.NodeVisitor):
                 print(f'  {feature} requires {requirement.added}')
 
             # Build dictionary of deprecations and removals
-            elif requirement.deprecated or requirement.removed:
+            if requirement.deprecated or requirement.removed:
                 warnings[feature] = requirement
 
         # Print warning about deprecated and removed features
@@ -146,10 +144,13 @@ class Analyzer(ast.NodeVisitor):
             print()
             print('Warning: Found deprecated or removed features:')
             for feature, changes in warnings.items():
+                # Build description
+                description = []
                 if changes.deprecated:
-                    print(f'  {feature} deprecated in version {changes.deprecated}')
+                    description.append(f'deprecated in {changes.deprecated}')
                 if changes.removed:
-                    print(f'  {feature} removed in version {changes.removed}')
+                    description.append(f'removed in {changes.removed}')
+                print(f'  {feature} is {" and ".join(description)}')
 
     def visit_Import(self, node: ast.Import) -> None:
         """ Check import statements for module changes.
@@ -197,8 +198,6 @@ class Analyzer(ast.NodeVisitor):
         """
         if isinstance(node.func, ast.Name):
             self._check_function(node.func.id)
-        elif isinstance(node.func, ast.Attribute):
-            self._check_attribute(node.func)
         self.generic_visit(node)
 
     def visit_Raise(self, node: ast.Raise) -> None:
@@ -219,7 +218,14 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.ExceptHandler): a single except clause.
         """
-        self._check_exception(node.type.id)
+        if isinstance(node.type, ast.Tuple):
+            # Handle multiple exceptions grouped in a tuple
+            # i.e: "except (TypeError, ValueError) as e:"
+            for name in node.type.elts:
+                self._check_exception(name.id)
+        elif isinstance(node.type, ast.Name):
+            self._check_exception(node.type.id)
+
         self.generic_visit(node)
 
     def visit_Constant(self, node: ast.Constant) -> None:
@@ -229,7 +235,7 @@ class Analyzer(ast.NodeVisitor):
             node (ast.Constant): a constant value or literal.
         """
         if node.kind == 'u':
-            self.update_requirements('unicode literal', Requirement('3.3'))
+            self._update_requirements('unicode literal', Requirement('3.3'))
         self.generic_visit(node)
 
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
@@ -238,7 +244,7 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.JoinedStr): an fstring literal.
         """
-        self.update_requirements('fstring literal', Requirement('3.6'))
+        self._update_requirements('fstring literal', Requirement('3.6'))
         self.generic_visit(node)
 
     def visit_NamedExpr(self, node: ast.NamedExpr) -> None:
@@ -247,7 +253,7 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.NamedExpr): a named expression.
         """
-        self.update_requirements('walrus operator', Requirement('3.8'))
+        self._update_requirements('walrus operator', Requirement('3.8'))
         self.generic_visit(node)
 
     def visit_Match(self, node: ast.Match) -> None:
@@ -256,7 +262,7 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.Match): a match statement.
         """
-        self.update_requirements('match statement', Requirement('3.10'))
+        self._update_requirements('match statement', Requirement('3.10'))
         self.generic_visit(node)
 
     def visit_With(self, node: ast.With) -> None:
@@ -269,7 +275,7 @@ class Analyzer(ast.NodeVisitor):
             node (ast.With): a with block.
         """
         if len(node.items) > 1:
-            self.update_requirements('multiple context managers', Requirement('3.1'))
+            self._update_requirements('multiple context managers', Requirement('3.1'))
         self.generic_visit(node)
 
     def visit_YieldFrom(self, node: ast.YieldFrom) -> None:
@@ -278,7 +284,7 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.YieldFrom): a yield from expression.
         """
-        self.update_requirements('yield from expression', Requirement('3.3'))
+        self._update_requirements('yield from expression', Requirement('3.3'))
         self.generic_visit(node)
 
     def generic_visit(self, node: ast.AST) -> None:
@@ -289,19 +295,18 @@ class Analyzer(ast.NodeVisitor):
         """
         # Check for async/await reserved keywords which were added in Python 3.7
         if isinstance(node, ast.AsyncFunctionDef | ast.AsyncFor | ast.AsyncWith | ast.Await):
-            self.update_requirements('async and await', Requirement('3.7'))
+            self._update_requirements('async and await', Requirement('3.7'))
 
         # Let the super class handle remaining nodes.
         # This must be called for child nodes to be traversed.
         super().generic_visit(node)
 
-    def update_requirements(self, feature: str, requirement: Requirement) -> None:
+    def _update_requirements(self, name: str, requirement: Requirement) -> None:
         """ Update script requirements.
 
         Args:
-            feature (str): Name of the feature.
-            requirement (Requirement): The feature requirements.
-
+            name (str): name of the feature.
+            requirement (Requirement): the version requirement.
         Raises:
             TypeError: If the requirement is an invalid type.
         """
@@ -309,16 +314,12 @@ class Analyzer(ast.NodeVisitor):
             raise TypeError(f'Unsupported type. Expected a Requirement,'
                             f' received a {type(requirement).__name__}')
 
-        # Check if the feature is already added
-        if feature in self.requirements.keys():
-            return
-
-        # Update minimum version
-        if compare_version(requirement.added, self.min_version) > 0:
-            self.min_version = requirement.added
-
-        # Add requirement
-        self.requirements[feature] = requirement
+        if name not in self.requirements.keys():
+            # Update minimum version
+            if version_tuple(requirement.added) > version_tuple(self.min_version):
+                self.min_version = requirement.added
+            # Update requirements
+            self.requirements[name] = requirement
 
     def _check_exception(self, exception: str) -> None:
         """ Check for new exception types.
@@ -328,7 +329,7 @@ class Analyzer(ast.NodeVisitor):
         """
         changes = self.exceptions.get_requirement(exception)
         if changes:
-            self.update_requirements(exception, changes)
+            self._update_requirements(exception, changes)
 
     def _check_function(self, function: str) -> None:
         """ Check for calls to new functions.
@@ -338,23 +339,26 @@ class Analyzer(ast.NodeVisitor):
         """
         changes = self.functions.get_requirement(function)
         if changes:
-            self.update_requirements(function + ' function', changes)
+            # Special case: join aiter/anext feature names
+            if function in ('aiter', 'anext'):
+                function = 'aiter and anext'
+            self._update_requirements(function, changes)
 
     def _check_module(self, module: str) -> None:
-        """ Check for module or attribute changes.
+        """ Check for module changes.
 
         Args:
             module (str): name of the module or attribute.
         """
         changes = self.modules.get_requirement(module)
         if changes:
-            self.update_requirements(module, changes)
+            self._update_requirements(module, changes)
 
     def _check_attribute(self, node: ast.Attribute) -> None:
         """ Check for attribute changes.
 
         Args:
-            node (ast.Attribute): an attribute node, can be a nested attribute.
+            node (ast.Attribute): an Attribute node, can be a nested Attribute.
         """
         # Check full attribute name
         self._check_module(self._get_attribute_name(node))
@@ -380,73 +384,90 @@ def version_tuple(version: str) -> tuple[int, int, int]:
     """ Split a version string into a tuple. For example "3.11.1" returns (3, 11, 1)
 
     Args:
-        version (str): the version string.
+        version (str):
+            the version string.
 
     Returns:
-        tuple[int, int, int]: a tuple of (major, minor, micro) version numbers.
+        tuple[int, int, int]:
+            a tuple of (major, minor, micro) version numbers.
     """
     if not version:
         return tuple()
     return tuple(map(int, (version.split('.'))))
 
 
-def compare_version(version1: str, version2: str) -> int:
-    """ Compare two version strings.
+def detect_version(path: str | Path, quiet: bool = False) -> None:
+    """Analyze a Python script (.py file) and print requirements.
 
     Args:
-        version1 (str): first version.
-        version2 (str): second version.
-
-    Returns:
-        int: a number based on the result of the comparison.
-             1 for greater than, 0 for equal, -1 for less than.
+        path (str | Path): file path of the script.
+        dump_ast (bool, optional): print ast to stdout. Defaults to False.
     """
-    if version_tuple(version1) > version_tuple(version2):
-        return 1
-    elif version_tuple(version1) == version_tuple(version2):
-        return 0
-    else:
-        return -1
+    try:
+        with open(path, 'r') as source:
+            tree = ast.parse(source.read())
+
+            analyzer = Analyzer(path)
+            analyzer.visit(tree)
+
+            if quiet:
+                analyzer.report_minversion()
+            else:
+                analyzer.report()
+
+    except SyntaxError:
+        raise ValueError(f'Error reading {path}. Not a valid python 3 script.')
 
 
-def detect_version(filename: str | PathLike) -> None:
-    """Analyze a Python script and print the requirements.
+def detect_directory(path: str | Path, quiet: bool = False) -> None:
+    """ Detect requirements of all python scripts in a directory.
 
     Args:
-        filename (str | PathLike): file path of the script.
+        path (str | Path): directory path.
+        dump_ast (bool, optional): print ast to stdout. Defaults to False.
+
+    Raises:
+        ValueError: if the path is invalid.
     """
-    with open(filename, 'r') as source:
-        tree = ast.parse(source.read())
+    path = Path(path)
+    if not path.is_dir():
+        raise ValueError('Error reading directory. Not a valid directory path.')
 
-    analyzer = Analyzer(filename)
-    analyzer.visit(tree)
-    analyzer.report()
+    script_files = list(path.rglob('[!.]*.py'))
+    if not script_files:
+        raise ValueError('Error reading directory. No python scripts found.')
 
-
-def dump_file(filename: str | PathLike) -> None:
-    """ Parse script and dump ast to stdout.
-
-    Args:
-        filename (str | PathLike): file path of the script.
-    """
-    with open(filename, 'r') as source:
-        print(ast.dump(ast.parse(source.read()), indent=4))
+    for script in script_files:
+        detect_version(script, quiet)
 
 
 def main():
-    desc = 'Detect Python script requirements using abstract syntax trees.'
-    parser = argparse.ArgumentParser(description=desc)
-    parser.add_argument('path', help='python script (.py file)')
-    parser.add_argument('-d', '--dump', help='dump script ast', action='store_true')
+    parser = argparse.ArgumentParser(
+        description='Detect Python script requirements using abstract syntax trees.')
+
+    parser.add_argument(
+        'path',
+        help='python script or a directory of scripts',
+        type=Path)
+
+    parser.add_argument(
+        '-q', '--quiet',
+        help="don't show details",
+        action='store_true')
+
     args = parser.parse_args()
 
     try:
-        if args.dump:
-            dump_file(args.path)
+        if args.path.is_file():
+            detect_version(args.path, args.quiet)
+        elif args.path.is_dir():
+            detect_directory(args.path, args.quiet)
         else:
-            detect_version(args.path)
+            parser.error('Invalid path. Not a file or directory.')
     except OSError as e:
-        print(f'Error reading {e.filename} ({e.strerror})', file=sys.stderr)
+        raise SystemExit(f'Error reading {e.filename} ({e.strerror})')
+    except ValueError as e:
+        raise SystemExit(e)
 
 
 if __name__ == '__main__':
