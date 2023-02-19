@@ -7,6 +7,7 @@ import json
 import argparse
 
 from pathlib import Path
+from collections.abc import ItemsView
 from typing import Optional
 
 
@@ -88,18 +89,18 @@ class Changelog:
         """
         return Requirement(**self.changelog.get(name, {}))
 
-    def items(self):
+    def items(self) -> ItemsView:
         return self.changelog.items()
 
 
 class Analyzer(ast.NodeVisitor):
     """ Parse abstract syntax tree and determine script requirements. """
 
-    def __init__(self, filename: Path) -> None:
+    def __init__(self, filename: str | Path) -> None:
         """ Initialize node analyzer.
 
         Args:
-            filename (Path): file path of the script.
+            filename (str | Path): file path of the script.
         """
         self.filename = filename
         self.requirements = {}
@@ -294,7 +295,8 @@ class Analyzer(ast.NodeVisitor):
             node (ast.AST): an ast node, can be any node type.
         """
         # Check for async/await reserved keywords which were added in Python 3.7
-        if isinstance(node, ast.AsyncFunctionDef | ast.AsyncFor | ast.AsyncWith | ast.Await):
+        if isinstance(node, ast.AsyncFunctionDef | ast.AsyncFor | ast.AsyncWith |
+                      ast.Await):
             self._update_requirements('async and await', Requirement('3.7'))
 
         # Let the super class handle remaining nodes.
@@ -416,7 +418,7 @@ def detect_version(path: str | Path, quiet: bool = False) -> None:
                 analyzer.report()
 
     except SyntaxError:
-        raise ValueError(f'Error reading {path}. Not a valid python 3 script.')
+        raise ValueError(f'Error parsing {path}. Not a valid python 3 script.')
 
 
 def detect_directory(path: str | Path, quiet: bool = False) -> None:
@@ -430,10 +432,12 @@ def detect_directory(path: str | Path, quiet: bool = False) -> None:
         ValueError: if the path is invalid.
     """
     path = Path(path)
+
     if not path.is_dir():
         raise ValueError('Error reading directory. Not a valid directory path.')
 
-    script_files = list(path.rglob('[!.]*.py'))
+    script_files = list(path.rglob('[!.]*.py'))  # exclude dotfiles
+
     if not script_files:
         raise ValueError('Error reading directory. No python scripts found.')
 
@@ -452,7 +456,7 @@ def main():
 
     parser.add_argument(
         '-q', '--quiet',
-        help="don't show details",
+        help='only show minimum version requirements',
         action='store_true')
 
     args = parser.parse_args()
