@@ -436,6 +436,15 @@
     "email.contentmanager": {
         "added": "3.6"
     },
+    "email.errors.CloseBoundaryNotFoundDefect": {
+        "added": "3.3"
+    },
+    "email.errors.MalformedHeaderDefect": {
+        "deprecated": "3.3"
+    },
+    "email.errors.MissingHeaderBodySeparatorDefect": {
+        "added": "3.3"
+    },
     "email.generator.BytesGenerator": {
         "added": "3.2"
     },
@@ -3102,7 +3111,8 @@
         "added": "3.9"
     },
     "turtle.settiltangle": {
-        "deprecated": "3.1"
+        "deprecated": "3.1",
+        "removed": "3.13"
     },
     "types.AsyncGeneratorType": {
         "added": "3.6"
