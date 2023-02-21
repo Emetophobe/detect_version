@@ -44,9 +44,20 @@ Things that are currently **not** checked:
 
 ### Usage:
 
-    python detect_version.py <script>
+    usage: detect_version.py [-h] [-n] [-q] [-d] path [path ...]
 
-### Example output:
+    Detect Python script requirements using abstract syntax trees.
+
+    positional arguments:
+    path         list of python files or directories
+
+    options:
+    -h, --help   show this help message and exit
+    -n, --notes  show feature notes
+    -q, --quiet  only show minimum version requirements
+    -d, --dump   print ast to stdout (only works with a single file)
+
+### Example output (work in progress):
 
     $ python detect_version.py detect_version.py
 
@@ -62,4 +73,4 @@ Things that are currently **not** checked:
         pathlib requires 3.4
 
 
-## This script is currently in development. Bug reports or suggestions are welcome. Use at your own risk.
+## This script is currently in development. Bug reports or suggestions are welcome.
