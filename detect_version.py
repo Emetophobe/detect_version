@@ -50,12 +50,12 @@ def main():
 
     parser.add_argument(
         'path',
-        help='list of python script files or directories',
+        help='list of python files or directories',
         nargs='+')
 
     parser.add_argument(
         '-n', '--notes',
-        help='show extra requirement notes (default: False)',
+        help='show feature notes',
         action='store_true')
 
     # TODO: add argument for min/max/target version
