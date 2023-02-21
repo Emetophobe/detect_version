@@ -20,11 +20,14 @@ UNICODE_LITERALS = 'unicode literals'
 # Python 3.5: PEP 492 - Coroutines with async and await syntax
 ASYNC_AND_AWAIT = 'async and await'
 
+# Python 3.6: PEP 498 - Literal String Interpolation (fstrings)
+FSTRING_LITERALS = 'f-string literals'
+
 # Python 3.6: PEP 525 - Asynchronous Generators
 AITER_AND_ANEXT = 'aiter and anext'
 
-# Python 3.6: PEP 498 - Literal String Interpolation (fstrings)
-FSTRING_LITERALS = 'f-string literals'
+# Python 3.6: PEP 530 - Asynchronous Comprehensions
+ASYNC_COMPREHENSIONS = 'asynchronous comprehensions'
 
 # Python 3.8: PEP 570 - Python Positional-Only Parameters
 POSONLY_ARGUMENTS = 'positional-only arguments'

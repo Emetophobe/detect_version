@@ -69,11 +69,11 @@ class Analyzer(ast.NodeVisitor):
             for feature, requirement in requirements:
                 if requirement.added:
                     if show_notes and requirement.note:
-                        note = f'({requirement.note})'
+                        note = f' ({requirement.note})'
                     else:
                         note = ''
 
-                    print(f'  {feature} requires {requirement.added}', note)
+                    print(f'  {feature} requires {requirement.added}{note}')
 
                 if requirement.deprecated or requirement.removed:
                     warnings[feature] = requirement
@@ -124,12 +124,12 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
-        """ Check attribute accesses for changes to built-in modules.
+        """ Check attribute for changes to built-in modules.
 
         Args:
             node (ast.Attribute): an attribute access.
         """
-        # Get the full attribute name; i.e "self.conn.cursor"
+        # Get full attribute name; i.e "self.conn.cursor"
         if attribute_name := self._get_attribute_name(node):
             self._check_module(attribute_name)
         self.generic_visit(node)
@@ -176,6 +176,8 @@ class Analyzer(ast.NodeVisitor):
     def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
         """ Check function definitions.
 
+        Function arguments are handled by visit_arguments().
+
         Args:
             node (ast.FunctionDef): a function definition.
         """
@@ -184,12 +186,12 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
-        """ Check for async function definitions.
+        """ Check async function definitions.
 
         Args:
             node (ast.AsyncFunctionDef): an async function.
         """
-        # Add async/await feature requirement
+        # Add requirement for async/await coroutines (PEP 492)
         self.add_language_feature(constants.ASYNC_AND_AWAIT)
 
         # Check return type for annotations
@@ -197,16 +199,16 @@ class Analyzer(ast.NodeVisitor):
         self.generic_visit(node)
 
     def visit_arguments(self, node: ast.arguments) -> None:
-        """ Check function (and async function) arguments.
+        """ Check function arguments for language changes.
 
         Args:
             node (ast.arguments): the function arguments.
         """
-        # Add language requirement for positional-only parameters (PEP 570)
+        # Add requirement for positional-only parameters (PEP 570)
         if node.posonlyargs:
             self.add_language_feature(constants.POSONLY_ARGUMENTS)
 
-        # Check arguments for annotations
+        # Check all argument annotations
         for arg in itertools.chain(node.args, node.posonlyargs, node.kwonlyargs):
             self._check_annotation(arg.annotation)
 
@@ -221,10 +223,16 @@ class Analyzer(ast.NodeVisitor):
 
             `a: int = 5`
 
+        This also works with class variable annotations:
+
+        class Example:
+            data: str
+            value: int = 5
+
         Args:
-            node (ast.AnnAssign): an assignment with type annotation.
+            node (ast.AnnAssign): the annotated assignment.
         """
-        # Add language requirement for variable annotations (PEP 526)
+        # Add requirement for variable annotations (PEP 526)
         self.add_language_feature(constants.VARIABLE_ANNOTATIONS)
 
         # Also check the annotation type
@@ -237,6 +245,7 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.Constant): a constant value or literal.
         """
+        # Add requirement for explicit unicode literals ()
         if node.kind == 'u':
             self.add_language_feature(constants.UNICODE_LITERALS)
         self.generic_visit(node)
@@ -291,9 +300,20 @@ class Analyzer(ast.NodeVisitor):
             node (ast.YieldFrom): a yield from expression.
 
         """
-        # Add language requirement for yield from expressions (PEP 380)
+        # Add requirement for yield from expressions (PEP 380)
         self.add_language_feature(constants.YIELD_FROM_EXPRESSION)
         self.generic_visit(node)
+
+    def visit_comprehension(self, node: ast.comprehension) -> None:
+        """ Check for async comprehensions (Python 3.6).
+
+        Args:
+            node (ast.comprehension): a single comprehension.
+        """
+        # Add requirement for async comprehensions (PEP 530)
+        if node.is_async:
+            self.add_language_feature(constants.ASYNC_COMPREHENSIONS)
+        super().generic_visit(node)
 
     def generic_visit(self, node: ast.AST) -> None:
         """ Generic node visitor. Handles all other nodes.
@@ -351,7 +371,7 @@ class Analyzer(ast.NodeVisitor):
             self.module_requirements[name] = requirement
 
     def update_version(self, version: str) -> None:
-        """ Update detected Python version.
+        """ Update minimum Python version.
 
         Args:
             version (str): the version string.
@@ -389,8 +409,7 @@ class Analyzer(ast.NodeVisitor):
         """
         if requirement := self.functions.get_requirement(function):
             if function in ('aiter', 'anext'):
-                # Special case for aiter/anext
-                # Combine aiter/anext functions into one requirement
+                # Special case for aiter/anext, join both into one name
                 function = constants.AITER_AND_ANEXT
 
             # Update requirements
@@ -435,7 +454,7 @@ class Analyzer(ast.NodeVisitor):
 
         # Annotation can be a binary operation; i.e str | bytes
         elif isinstance(node, ast.BinOp):
-            # Add language requirement for PEP 604
+            # Add requirement for union type hints (PEP 604)
             self.add_language_feature(constants.UNION_TYPE_HINTING)
 
             # Check left and right side annotations

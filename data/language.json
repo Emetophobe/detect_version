@@ -22,6 +22,10 @@
         "added": "3.6",
         "note": "PEP 526"
     },
+    "asynchronous comprehensions": {
+        "added": "3.6",
+        "note": "PEP 530"
+    },
     "positional-only arguments": {
         "added": "3.8",
         "note": "PEP 570"
