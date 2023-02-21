@@ -1,0 +1,84 @@
+{
+    "multiple context managers": {
+        "added": "3.1"
+    },
+    "yield from expressions": {
+        "added": "3.3",
+        "note": "PEP 380"
+    },
+    "unicode literals": {
+        "added": "3.3",
+        "note": "PEP 414"
+    },
+    "async and await": {
+        "added": "3.5",
+        "note": "PEP 492"
+    },
+    "f-string literals": {
+        "added": "3.6",
+        "note": "PEP 498"
+    },
+    "variable annotations": {
+        "added": "3.6",
+        "note": "PEP 526"
+    },
+    "positional-only arguments": {
+        "added": "3.8",
+        "note": "PEP 570"
+    },
+    "assignment expressions": {
+        "added": "3.8",
+        "note": "PEP 572"
+    },
+    "type hinting generics": {
+        "added": "3.9",
+        "note": "PEP 585",
+        "items": [
+            "list",
+            "dict",
+            "set",
+            "frozenset",
+            "type",
+            "collections.deque",
+            "collections.defaultdict",
+            "collections.OrderedDict",
+            "collections.Counter",
+            "collections.ChainMap",
+            "collections.abc.Awaitable",
+            "collections.abc.Coroutine",
+            "collections.abc.AsyncIterable",
+            "collections.abc.AsyncIterator",
+            "collections.abc.AsyncGenerator",
+            "collections.abc.Iterable",
+            "collections.abc.Iterator",
+            "collections.abc.Generator",
+            "collections.abc.Reversible",
+            "collections.abc.Container",
+            "collections.abc.Collection",
+            "collections.abc.Callable",
+            "collections.abc.Set",
+            "collections.abc.MutableSet",
+            "collections.abc.Mapping",
+            "collections.abc.MutableMapping",
+            "collections.abc.Sequence",
+            "collections.abc.MutableSequence",
+            "collections.abc.ByteString",
+            "collections.abc.MappingView",
+            "collections.abc.KeysView",
+            "collections.abc.ItemsView",
+            "collections.abc.ValuesView",
+            "contextlib.AbstractContextManager",
+            "contextlib.AbstractAsyncContextManager",
+            "re.Pattern",
+            "re.Match"
+        ]
+    },
+    "pattern matching": {
+        "added": "3.10",
+        "note": "PEP 622"
+    },
+    "union type hinting": {
+        "added": "3.10",
+        "note": "PEP 604"
+    }
+}

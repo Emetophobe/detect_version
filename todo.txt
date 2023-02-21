@@ -1,9 +1,6 @@
 TODO list:
 
-1. Check type annotations (Python 3.6 - PEP 526)
-2. Underscores in numeric literals (Python 3.6 - PEP 515)
-3. Asynchronous Generators (Python 3.6 - PEP 525)
-4. positional only arguments (Python 3.8 - PEP 570)
-5. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
-6. type hinting generics in standard collections (Python 3.9 - PEP 585)
-7. Unit tests
+1. Unit tests
+2. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
+3. Add full support for checking annoations aka type hints (mostly complete)
+4. Design a nicer output format for single files and also a directory of files

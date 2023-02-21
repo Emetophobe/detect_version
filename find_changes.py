@@ -4,9 +4,8 @@
 
 import argparse
 import fnmatch
-
+from src import Changelog, Requirement
 from typing import Optional
-from detect_version import Changelog, Requirement
 
 
 def find_changes(changelog: Changelog,
@@ -75,6 +74,11 @@ The name argument supports fnmatch-style pattern matching:
         action='store_true')
 
     category_group.add_argument(
+        '-l', '--language',
+        help='search language changes',
+        action='store_true')
+
+    category_group.add_argument(
         '-e', '--exceptions',
         help='search exceptions',
         action='store_true')
@@ -111,11 +115,13 @@ The name argument supports fnmatch-style pattern matching:
 
     args = parser.parse_args()
 
-    # Get changelog category
+    # Get changelog
     if args.exceptions:
         changelog = Changelog('data/exceptions.json')
     elif args.functions:
         changelog = Changelog('data/functions.json')
+    elif args.language:
+        changelog = Changelog('data/language.json')
     else:
         changelog = Changelog('data/modules.json')
 
