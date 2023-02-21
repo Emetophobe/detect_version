@@ -30,9 +30,6 @@ class Analyzer(ast.NodeVisitor):
         self.functions = Changelog('data/functions.json')
         self.modules = Changelog('data/modules.json')
 
-        # Store list of generic types for convenience
-        self.generic_types = self.features[constants.GENERIC_TYPE_HINTS].items
-
         self.language_requirements = {}
         self.module_requirements = {}
 
@@ -47,22 +44,24 @@ class Analyzer(ast.NodeVisitor):
             show_notes (bool, optional): Show extra details. Defaults to False.
         """
         # Print version requirement
-        print()
-        print(f'{self.filename} requires {self.detected_version}')
+        print('\n  Filename:', self.filename)
+        print('  Detected version:', self.detected_version)
 
-        categories = {
-            'Language': self.language_requirements,
-            'Module': self.module_requirements,
-        }
+        # Sort requirements
+        categories = [
+            sorted(self.language_requirements.items(), key=itemgetter(1, 0)),
+            sorted(self.module_requirements.items(), key=itemgetter(1, 0))
+        ]
 
-        # Print language and module requirements
-        for category, requirements in categories.items():
+        if self.language_requirements or self.module_requirements:
+            print('\n  Requirements:')
+
+        # Print requirements
+        for requirements in categories:
             if not requirements:
                 continue
 
-            requirements = sorted(requirements.items(), key=itemgetter(1, 0))
-
-            print(f'\n{category} requirements:')
+            print()
 
             # Print added feature requirements
             warnings = {}
@@ -73,7 +72,7 @@ class Analyzer(ast.NodeVisitor):
                     else:
                         note = ''
 
-                    print(f'  {feature} requires {requirement.added}{note}')
+                    print(f'    {feature} requires {requirement.added}{note}')
 
                 if requirement.deprecated or requirement.removed:
                     warnings[feature] = requirement
@@ -426,7 +425,7 @@ class Analyzer(ast.NodeVisitor):
         # Search for annotations in all child nodes
         for name in self._find_annotations(node):
             # Check for generic type hints (PEP 585)
-            if name in self.generic_types:
+            if name in self.features[constants.GENERIC_TYPE_HINTS].items:
                 self.add_language_feature(constants.GENERIC_TYPE_HINTS)
 
     def _find_annotations(self, node: ast.AST) -> str:
