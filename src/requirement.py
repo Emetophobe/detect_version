@@ -68,13 +68,11 @@ class Requirement:
 
         # Zip versions from both instances and compare them one by one
         for version, other_ver in zip(self.versions(), other.versions()):
-            if version < other_ver:
+            if Version(version) < Version(other_ver):
                 return True
-            elif version == version:
-                continue  # check the next pair of versions
-            elif version > other_ver:
+            elif Version(version) > Version(other_ver):
                 return False
-        return False
+        return True
 
     def __eq__(self, other: object) -> bool:
         """ Compare two requirements. """
@@ -83,10 +81,9 @@ class Requirement:
 
         return str(self) == str(other)
 
-    def versions(self) -> Version:
-        """ Yield Version tuples of the version strings. """
-        for version in (self.added, self.deprecated, self.removed):
-            yield Version(version)
+    def versions(self) -> tuple[str, str, str]:
+        """ Returns a tuple of three version strings. """
+        return (self.added, self.deprecated, self.removed)
 
     def __str__(self) -> str:
         """ Returns a string representation created from the dictionary values. """

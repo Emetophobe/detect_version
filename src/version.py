@@ -1,31 +1,24 @@
 # Copyright (c) 2019-2023  Mike Cunningham
 
+
 class Version:
     """ The version class is used to compare and sort Python versions.
 
-    Versions are always stored as strings but are converted to tuples for
-    comparison. Strings are dumb when it comes to comparing numbers so
-    this is necessary.
+    Versions are always stored as strings but are converted temporarily
+    to tuples for comparison.
 
-    Example of the problem:
+    Examples:
 
-        # Bad.
-        >> "3.11" > "3.2"
-        False
+        >> ver = Version("3.5.3")
 
-        # Good.
-        >> Version("3.11") > Version("3.2")
+        >> ver
+        "3.5.3"
+
+        >> ver.as_tuple()
+        (3, 5, 3)
+
+        >> Version("3.11.0") > Version("3.2")
         True
-
-    Other examples:
-
-        >> version = Version("3.11.0")
-
-        >> version
-        "3.11.0"
-
-        >> version.as_tuple()
-        (3, 11, 0)
     """
 
     def __init__(self, version: str) -> None:
@@ -36,36 +29,25 @@ class Version:
         """
         self.version = version
 
-    def as_tuple(self) -> tuple[int, int, int]:
-        """ Returns a version tuple of (major, minor, micro) version numbers.
-
-        Example:
-
-            >> v = Version("3.11.1")
-            >> v.as_tuple()
-            (3, 11, 1)
+    def as_tuple(self) -> tuple:
+        """ Convert version into a tuple.
 
         Returns:
-            tuple[int, int, int]: a version tuple.
+            tuple: a version tuple.
         """
         if not self.version:
             return tuple()
         return tuple(int(s) for s in self.version.split('.'))
 
     def __lt__(self, other: object):
-        """ Less than operator for sorting versions. """
         if not isinstance(other, Version):
-            raise TypeError(f'Unsupported type. Expected a Version,'
-                            f' received a {type(other).__name__}')
+            raise TypeError(f'Expected a Version but got a {type(other).__name__}')
         return self.as_tuple() < other.as_tuple()
 
     def __eq__(self, other: object):
-        """ Equals operator for comparing versions. """
         if not isinstance(other, Version):
-            raise TypeError(f'Unsupported type. Expected a Version,'
-                            f' received a {type(other).__name__}')
+            raise TypeError(f'Expected a Version but got a {type(other).__name__}')
         return self.as_tuple() == other.as_tuple()
 
     def __str__(self) -> str:
-        """ Return a string representation of the version. """
         return self.version
