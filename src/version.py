@@ -19,12 +19,12 @@ class Version:
 
     Other examples:
 
-        >> ver = Version("3.11.0")
+        >> version = Version("3.11.0")
 
-        >> ver
+        >> version
         "3.11.0"
 
-        >> ver.as_tuple()
+        >> version.as_tuple()
         (3, 11, 0)
     """
 
@@ -37,14 +37,16 @@ class Version:
         self.version = version
 
     def as_tuple(self) -> tuple[int, int, int]:
-        """ Convert version to a tuple for sorting.
+        """ Returns a version tuple of (major, minor, micro) version numbers.
 
         Example:
-            `version_tuple("3.11.1")` returns `(3, 11, 1)`
+
+            >> v = Version("3.11.1")
+            >> v.as_tuple()
+            (3, 11, 1)
 
         Returns:
-            tuple[int, int, int]:
-                a tuple of (major, minor, micro) version numbers.
+            tuple[int, int, int]: a version tuple.
         """
         if not self.version:
             return tuple()
