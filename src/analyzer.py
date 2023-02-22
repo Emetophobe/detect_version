@@ -44,43 +44,50 @@ class Analyzer(ast.NodeVisitor):
             show_notes (bool, optional): Show extra details. Defaults to False.
         """
         # Print version requirement
-        print('\n  Filename:', self.filename)
-        print('  Detected version:', self.detected_version)
+        print()
+        print('File:', self.filename)
+        print('Detected version:', self.detected_version)
 
-        # Sort requirements
-        categories = [
-            sorted(self.language_requirements.items(), key=itemgetter(1, 0)),
-            sorted(self.module_requirements.items(), key=itemgetter(1, 0))
-        ]
+        # No  requirements
+        if not self.language_requirements and not self.module_requirements:
+            print('Requirements: None')
+            return
 
-        if self.language_requirements or self.module_requirements:
-            print('\n  Requirements:')
+        print('Requirements:')
+        column = '  {:<30} {:<14} {:<30}'
 
-        # Print requirements
-        for requirements in categories:
+        # Print language and module requirements
+        for requirements in (self.language_requirements, self.module_requirements):
             if not requirements:
                 continue
 
             print()
 
-            # Print added feature requirements
+            requirements = sorted(requirements.items(), key=itemgetter(1, 0))
+
+            added = {}
             warnings = {}
+
+            # Build dictionary of required and deprecated features
             for feature, requirement in requirements:
                 if requirement.added:
-                    if show_notes and requirement.notes:
-                        notes = f' ({requirement.notes})'
-                    else:
-                        notes = ''
-
-                    print(f'    {feature} requires {requirement.added}{notes}')
+                    added[feature] = requirement
 
                 if requirement.deprecated or requirement.removed:
                     warnings[feature] = requirement
 
-            # Print deprecated and removed feature requirements
+            # Print added features
+            for feature, requirement in added.items():
+                if show_notes and requirement.notes:
+                    notes = requirement.notes
+                else:
+                    notes = ''
+
+                print(column.format(feature, 'Python ' + requirement.added, notes))
+
+            # Print deprecated and removed features
             if warnings:
-                print()
-                print('  Warning: Found deprecated or removed features:')
+                print('\nWarning: Found deprecated or removed features:\n')
                 for feature, requirement in warnings.items():
                     # Build description
                     description = []
@@ -88,7 +95,7 @@ class Analyzer(ast.NodeVisitor):
                         description.append(f'deprecated in {requirement.deprecated}')
                     if requirement.removed:
                         description.append(f'removed in {requirement.removed}')
-                    print(f'    {feature} is {" and ".join(description)}')
+                    print(f'  {feature} is {" and ".join(description)}')
 
     def visit_Import(self, node: ast.Import) -> None:
         """ Check import statements for changes to built-in modules.
