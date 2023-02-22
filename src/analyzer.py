@@ -7,7 +7,7 @@ from operator import itemgetter
 from src import Version
 from src import Changelog
 from src import Requirement
-from src import constants
+from src import Constants
 
 
 class Analyzer(ast.NodeVisitor):
@@ -22,7 +22,7 @@ class Analyzer(ast.NodeVisitor):
         self.filename = filename
 
         # Set minimum version
-        self.detected_version = constants.MINIMUM_VERSION
+        self.detected_version = Constants.MINIMUM_VERSION
 
         # Load changelog files
         self.features = Changelog('data/language.json')
@@ -101,7 +101,7 @@ class Analyzer(ast.NodeVisitor):
         """
         for alias in node.names:
             self._check_module(alias.name)
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
         """ Check "from ... import" statements for changes to built-in modules.
@@ -120,7 +120,7 @@ class Analyzer(ast.NodeVisitor):
                 # Check both the module and the module import
                 self._check_module(node.module)
                 self._check_module(node.module + '.' + alias.name)
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
         """ Check attribute for changes to built-in modules.
@@ -131,7 +131,7 @@ class Analyzer(ast.NodeVisitor):
         # Get full attribute name; i.e "self.conn.cursor"
         if attribute_name := self._get_attribute_name(node):
             self._check_module(attribute_name)
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_Call(self, node: ast.Call) -> None:
         """ Check function calls for changes to built-in functions.
@@ -141,6 +141,7 @@ class Analyzer(ast.NodeVisitor):
         """
         if isinstance(node.func, ast.Name):
             self._check_function(node.func.id)
+
         self.generic_visit(node)
 
     def visit_Raise(self, node: ast.Raise) -> None:
@@ -154,7 +155,7 @@ class Analyzer(ast.NodeVisitor):
         elif isinstance(node.exc, ast.Call):
             self._check_exception(node.exc.func.id)
 
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_ExceptHandler(self, node: ast.ExceptHandler) -> None:
         """ Check caught exceptions for changes to built-in exceptions.
@@ -166,36 +167,40 @@ class Analyzer(ast.NodeVisitor):
             self._check_exception(node.type.id)
         elif isinstance(node.type, ast.Tuple):
             # Handle multiple exceptions grouped in a tuple
-            # "except (TypeError, ValueError) as e"
+            # "except (Exception1, Exception2) as error:"
             for name in node.type.elts:
                 self._check_exception(name.id)
 
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
-        """ Check function definitions.
+        """ Check function definitions for annotations.
 
-        Function arguments are handled by visit_arguments().
+        This method only checks the return type for annotations (arguments are
+        handled by visit_arguments).
 
         Args:
             node (ast.FunctionDef): a function definition.
         """
-        # Check return type for annotations
+        # Check return type for type hints
         self._check_annotation(node.returns)
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
-        """ Check async function definitions.
+        """ Check for async functions which were added in Python 3.5 (PEP 492).
+
+        This method also checks the return type for annotations (arguments are
+        handled by visit_arguments).
 
         Args:
             node (ast.AsyncFunctionDef): an async function.
         """
         # Add requirement for async/await coroutines (PEP 492)
-        self.add_language_feature(constants.ASYNC_AND_AWAIT)
+        self.add_language_feature(Constants.ASYNC_AND_AWAIT)
 
         # Check return type for annotations
         self._check_annotation(node.returns)
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_arguments(self, node: ast.arguments) -> None:
         """ Check function arguments for language changes.
@@ -205,24 +210,22 @@ class Analyzer(ast.NodeVisitor):
         """
         # Add requirement for positional-only parameters (PEP 570)
         if node.posonlyargs:
-            self.add_language_feature(constants.POSONLY_ARGUMENTS)
+            self.add_language_feature(Constants.POSONLY_ARGUMENTS)
 
-        # Check all argument annotations
+        # Check all arguments for annotations
         for arg in itertools.chain(node.args, node.posonlyargs, node.kwonlyargs):
             self._check_annotation(arg.annotation)
 
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_AnnAssign(self, node: ast.AnnAssign) -> None:
-        """ Check annotated assignment statements.
-
-        Syntax for variable annotations were added in Python 3.6 (PEP 526).
+        """ Check for annotated assignment statements (PEP 526).
 
         Example:
 
             `a: int = 5`
 
-        This also works with class variable annotations:
+        This method also checks class variable annotations:
 
         class Example:
             data: str
@@ -232,54 +235,57 @@ class Analyzer(ast.NodeVisitor):
             node (ast.AnnAssign): the annotated assignment.
         """
         # Add requirement for variable annotations (PEP 526)
-        self.add_language_feature(constants.VARIABLE_ANNOTATIONS)
+        self.add_language_feature(Constants.VARIABLE_ANNOTATIONS)
 
         # Also check the annotation type
         self._check_annotation(node.annotation)
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_Constant(self, node: ast.Constant) -> None:
-        """ Check for unicode literals which were added in Python 3.3
+        """ Check for explicit unicode literals (PEP 414).
+
+        Unicode literals are very easy to test for. They're always Constant nodes
+        with node.kind set to "u".
 
         Args:
             node (ast.Constant): a constant value or literal.
         """
-        # Add requirement for explicit unicode literals ()
         if node.kind == 'u':
-            self.add_language_feature(constants.UNICODE_LITERALS)
-        self.generic_visit(node)
+            self.add_language_feature(Constants.UNICODE_LITERALS)
+        super().generic_visit(node)
 
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
-        """ Check for fstring literals which were added in Python 3.6
+        """ Check for formatted string (fstring) literals (PEP 498).
+
+        An f-string is a JoinedStr node with a series of FormattedValue and
+        Constant nodes.
 
         Args:
-            node (ast.JoinedStr): an fstring literal.
+            node (ast.JoinedStr): a fstring literal.
         """
-        self.add_language_feature(constants.FSTRING_LITERALS)
-        self.generic_visit(node)
+        self.add_language_feature(Constants.FSTRING_LITERALS)
+        super().generic_visit(node)
 
     def visit_NamedExpr(self, node: ast.NamedExpr) -> None:
-        """ Check for assignment expressions (walrus operators)
-        which were added in Python 3.8
+        """ Check for assignment expressions (walrus operators) (PEP 572).
 
         Args:
             node (ast.NamedExpr): a named expression.
         """
-        self.add_language_feature(constants.WALRUS_OPERATOR)
-        self.generic_visit(node)
+        self.add_language_feature(Constants.WALRUS_OPERATOR)
+        super().generic_visit(node)
 
     def visit_Match(self, node: ast.Match) -> None:
-        """ Check for pattern matching (match statement) which was added
-        in Python 3.10
+        """ Check for match statements (PEP 622).
 
         Args:
             node (ast.Match): a match statement.
         """
-        self.add_language_feature(constants.MATCH_STATEMENT)
-        self.generic_visit(node)
+        self.add_language_feature(Constants.MATCH_STATEMENT)
+        super().generic_visit(node)
 
     def visit_With(self, node: ast.With) -> None:
-        """ Check for multiple context managers which were added in Python 3.1
+        """ Check for multiple context managers (Python 3.1)
 
         Example:
             `with open(file1, 'r') as infile, open(file2, 'w') as outfile:`
@@ -289,40 +295,38 @@ class Analyzer(ast.NodeVisitor):
 
         """
         if len(node.items) > 1:
-            self.add_language_feature(constants.MULTIPLE_CONTEXT_MANAGERS)
-        self.generic_visit(node)
+            self.add_language_feature(Constants.MULTIPLE_CONTEXT_MANAGERS)
+        super().generic_visit(node)
 
     def visit_YieldFrom(self, node: ast.YieldFrom) -> None:
-        """ Check for "yield from" expressions which were added in Python 3.3
+        """ Check for "yield from" expressions (PEP 380).
 
         Args:
             node (ast.YieldFrom): a yield from expression.
 
         """
-        # Add requirement for yield from expressions (PEP 380)
-        self.add_language_feature(constants.YIELD_FROM_EXPRESSION)
-        self.generic_visit(node)
+        self.add_language_feature(Constants.YIELD_FROM_EXPRESSION)
+        super().generic_visit(node)
 
     def visit_comprehension(self, node: ast.comprehension) -> None:
-        """ Check for async comprehensions (Python 3.6).
+        """ Check for async comprehensions (PEP 530).
 
         Args:
             node (ast.comprehension): a single comprehension.
         """
-        # Add requirement for async comprehensions (PEP 530)
         if node.is_async:
-            self.add_language_feature(constants.ASYNC_COMPREHENSIONS)
+            self.add_language_feature(Constants.ASYNC_COMPREHENSIONS)
         super().generic_visit(node)
 
     def generic_visit(self, node: ast.AST) -> None:
         """ Generic node visitor. Handles all other nodes.
 
         Args:
-            node (ast.AST): can be any node type.
+            node (ast.AST): AST is the base node class, it can be any node type.
         """
         # Check for async/await which were added in Python 3.5
         if isinstance(node, (ast.AsyncFor, ast.AsyncWith, ast.Await)):
-            self.add_language_feature(constants.ASYNC_AND_AWAIT)
+            self.add_language_feature(Constants.ASYNC_AND_AWAIT)
 
         # This is required to traverse child nodes
         super().generic_visit(node)
@@ -409,7 +413,7 @@ class Analyzer(ast.NodeVisitor):
         if requirement := self.functions.get_requirement(function):
             if function in ('aiter', 'anext'):
                 # Special case for aiter/anext, join both into one name
-                function = constants.AITER_AND_ANEXT
+                function = Constants.AITER_AND_ANEXT
 
             # Update requirements
             self.add_language_requirement(function, requirement)
@@ -425,8 +429,8 @@ class Analyzer(ast.NodeVisitor):
         # Search for annotations in all child nodes
         for name in self._find_annotations(node):
             # Check for generic type hints (PEP 585)
-            if name in self.features[constants.GENERIC_TYPE_HINTS].items:
-                self.add_language_feature(constants.GENERIC_TYPE_HINTS)
+            if name in self.features[Constants.GENERIC_TYPE_HINTS].items:
+                self.add_language_feature(Constants.GENERIC_TYPE_HINTS)
 
     def _find_annotations(self, node: ast.AST) -> str:
         """ Recursively search a node for annotations.
@@ -454,7 +458,7 @@ class Analyzer(ast.NodeVisitor):
         # Annotation can be a binary operation; i.e str | bytes
         elif isinstance(node, ast.BinOp):
             # Add requirement for union type hints (PEP 604)
-            self.add_language_feature(constants.UNION_TYPE_HINTING)
+            self.add_language_feature(Constants.UNION_TYPE_HINTING)
 
             # Check left and right side annotations
             yield from self._find_annotations(node.left)

@@ -6,7 +6,7 @@ import ast
 import argparse
 
 from pathlib import Path
-from src.analyzer import Analyzer, dump_node
+from src import Analyzer, dump_node
 
 # Program version
 __version__ = '0.6.2'
