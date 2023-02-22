@@ -4,39 +4,39 @@
     },
     "yield from expressions": {
         "added": "3.3",
-        "note": "PEP 380"
+        "notes": "PEP 380"
     },
     "unicode literals": {
         "added": "3.3",
-        "note": "PEP 414"
+        "notes": "PEP 414"
     },
     "async and await": {
         "added": "3.5",
-        "note": "PEP 492"
+        "notes": "PEP 492"
     },
     "f-string literals": {
         "added": "3.6",
-        "note": "PEP 498"
+        "notes": "PEP 498"
     },
     "variable annotations": {
         "added": "3.6",
-        "note": "PEP 526"
+        "notes": "PEP 526"
     },
     "asynchronous comprehensions": {
         "added": "3.6",
-        "note": "PEP 530"
+        "notes": "PEP 530"
     },
     "positional-only arguments": {
         "added": "3.8",
-        "note": "PEP 570"
+        "notes": "PEP 570"
     },
     "assignment expressions": {
         "added": "3.8",
-        "note": "PEP 572"
+        "notes": "PEP 572"
     },
     "type hinting generics": {
         "added": "3.9",
-        "note": "PEP 585",
+        "notes": "PEP 585",
         "items": [
             "list",
             "dict",
@@ -79,10 +79,10 @@
     },
     "pattern matching": {
         "added": "3.10",
-        "note": "PEP 622"
+        "notes": "PEP 622"
     },
     "union type hinting": {
         "added": "3.10",
-        "note": "PEP 604"
+        "notes": "PEP 604"
     }
 }

@@ -67,12 +67,12 @@ class Analyzer(ast.NodeVisitor):
             warnings = {}
             for feature, requirement in requirements:
                 if requirement.added:
-                    if show_notes and requirement.note:
-                        note = f' ({requirement.note})'
+                    if show_notes and requirement.notes:
+                        notes = f' ({requirement.notes})'
                     else:
-                        note = ''
+                        notes = ''
 
-                    print(f'    {feature} requires {requirement.added}{note}')
+                    print(f'    {feature} requires {requirement.added}{notes}')
 
                 if requirement.deprecated or requirement.removed:
                     warnings[feature] = requirement

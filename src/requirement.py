@@ -6,12 +6,33 @@ from src import Version
 
 
 class Requirement:
-    """ A requirement holds a feature's changelog. """
+    """ A requirement holds a feature's version requirements (added, deprecated,
+    and removed versions).
+
+    Requirements have one, two, or all three version attributes:
+
+        added:      Version when feature was added.
+        deprecated: Version when feature was deprecated.
+        removed:    Version when feature was removed.
+
+    Requirements can also have extra details. These attributes aren't used by
+    every requirement:
+
+        notes:      optional notes (like PEP number).
+        items:      optional extras.
+
+    Examples:
+
+        Requirement("3.6", None, None)      # added 3.6
+        Requirement("3.6", "3.9", None)     # added 3.6, deprecated 3.6
+
+    """
+
     def __init__(self,
                  added: Optional[str] = None,
                  deprecated: Optional[str] = None,
                  removed: Optional[str] = None,
-                 note: Optional[str] = None,
+                 notes: Optional[str] = None,
                  items: Optional[list[str]] = None,
                  ) -> None:
         """ Initialize feature requirements.
@@ -32,33 +53,41 @@ class Requirement:
             items (list[str], optional):
                 optional item list. Defaults to None.
         """
+        assert any((added, deprecated, removed))
+
         self.added = added
         self.deprecated = deprecated
         self.removed = removed
-        self.note = note
+        self.notes = notes
         self.items = items
 
     def __lt__(self, other: object) -> bool:
+        """ Less than operator is used for sorting multiple requirements. """
         if not isinstance(other, Requirement):
             raise TypeError(f'Expected a Requirement, received a {type(other).__name__}')
 
-        # Compare the 3 version tuples (added, deprecated, removed)
+        # Zip versions from both instances and compare them one by one
         for version, other_ver in zip(self.versions(), other.versions()):
             if version < other_ver:
                 return True
+            elif version == version:
+                continue  # check the next pair of versions
             elif version > other_ver:
                 return False
         return False
 
     def __eq__(self, other: object) -> bool:
-        if not isinstance(other, Requirement):
+        """ Compare two requirements. """
+        if isinstance(other, Requirement):
             return False
 
         return str(self) == str(other)
 
-    def versions(self) -> tuple[Version, Version, Version]:
-        """ Convert string versions to tuple versions. """
-        return Version(self.added), Version(self.deprecated), Version(self.removed)
+    def versions(self) -> Version:
+        """ Yield Version tuples of the version strings. """
+        for version in (self.added, self.deprecated, self.removed):
+            yield Version(version)
 
     def __str__(self) -> str:
-        return f'{self.added}, {self.deprecated}, {self.removed}, {self.note}'
+        """ Returns a string representation created from the dictionary values. """
+        return f'{", ".join(str(s) for s in self.__dict__.values())}'
