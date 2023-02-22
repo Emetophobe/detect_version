@@ -7,26 +7,30 @@ from typing import Optional
 from src import Requirement
 
 
-class Changelog():
-    """ A simple changelog dictionary loaded from a json file. """
+class Changelog:
+    """ A simple changelog dictionary read from a json file. """
 
-    def __init__(self, filename: str | Path) -> None:
-        """ Initialize changelog. """
-        with open(filename, 'r') as source:
+    def __init__(self, path: str | Path) -> None:
+        """ Initialize changelog from a json file.
+
+        Args:
+            path (str | Path): path of the json file.
+        """
+        with open(path, 'r') as source:
             self.changelog = json.load(source)
 
-    def get_requirement(self, name: str) -> Optional[Requirement]:
+    def get_requirement(self, feature: str) -> Optional[Requirement]:
         """ Get a feature requirement from the changelog.
 
         Args:
-            name (str): name of the feature.
+            feature (str): name of the feature.
 
         Returns:
-            Requirement: The feature requirement, or None if no requirement.
+            Requirement: The feature requirement, or None if no feature found.
         """
-        try:
-            return Requirement(**self.changelog[name])
-        except KeyError:
+        if changes := self.changelog.get(feature, None):
+            return Requirement(**changes)
+        else:
             return None
 
     def keys(self) -> KeysView:
@@ -35,8 +39,8 @@ class Changelog():
     def items(self) -> ItemsView:
         return self.changelog.items()
 
-    def __getitem__(self, feature: str) -> Optional[Requirement]:
-        return self.get_requirement(feature)
+    def __getitem__(self, name: str) -> Optional[Requirement]:
+        return self.get_requirement(name)
 
-    def __contains__(self, feature: str) -> bool:
-        return feature in self.changelog.items()
+    def __contains__(self, name: str) -> bool:
+        return name in self.changelog.keys()
