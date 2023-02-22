@@ -38,7 +38,8 @@ def find_changes(changelog: Changelog,
         if version and version not in changes.values():
             continue
 
-        results[name] = changelog.get_requirement(name)
+        if changes := changelog.get_requirement(name):
+            results[name] = changes
 
     return results
 
