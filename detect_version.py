@@ -8,8 +8,8 @@ import argparse
 from pathlib import Path
 from src import Analyzer, dump_node
 
-# Program version
-__version__ = '0.6.2'
+# Script version
+__version__ = '0.6.3'
 
 
 def detect_version(path: str | Path,
@@ -72,19 +72,17 @@ def main():
 
     args = parser.parse_args()
 
-    # Get list of unique paths
-    uniques = {}
+    # Get list of python files
+    files = []
     for path in args.path:
         path = Path(path)
         if path.is_file():
-            uniques[path.resolve()] = path
+            files.append(path)
         elif path.is_dir():
             for filename in path.rglob('[!.]*.py'):
-                uniques[filename.resolve()] = filename
+                files.append(filename)
         else:
             parser.error(f'{path.name!r} is not a file or directory.')
-
-    files = list(uniques.values())
 
     if not files:
         parser.error('Invalid path: No python scripts found.')
@@ -92,7 +90,7 @@ def main():
     if len(files) > 1 and args.dump:
         parser.error('Cannot use --dump with multiple files.')
 
-    # Parse python scripts
+    # Parse files
     try:
         for filename in files:
             if args.dump:
@@ -104,8 +102,7 @@ def main():
     except ValueError as e:
         raise SystemExit(e)
     except SyntaxError:
-        raise SystemExit(f'Error parsing {filename}. Not a valid '
-                         f'Python 3.0 script.') from None
+        raise SystemExit(f'Error parsing {filename}. Not a valid Python 3 script.')
 
 
 if __name__ == '__main__':
