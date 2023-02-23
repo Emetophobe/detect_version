@@ -1,4 +1,7 @@
 {
+    "BaseExceptionGroup": {
+        "added": "3.11"
+    },
     "BlockingIOError": {
         "added": "3.3"
     },
