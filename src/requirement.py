@@ -24,7 +24,7 @@ class Requirement:
     Examples:
 
         Requirement("3.6", None, None)      # added 3.6
-        Requirement("3.6", "3.9", None)     # added 3.6, deprecated 3.6
+        Requirement("3.6", "3.9", None)     # added 3.6, deprecated 3.9
 
     """
 
@@ -62,7 +62,7 @@ class Requirement:
         self.items = items
 
     def __lt__(self, other: object) -> bool:
-        """ Less than operator is used for sorting multiple requirements. """
+        """ Less than operator is used for sorting requirements. """
         if not isinstance(other, Requirement):
             raise TypeError(f'Expected a Requirement, received a {type(other).__name__}')
 
@@ -82,7 +82,7 @@ class Requirement:
         return str(self) == str(other)
 
     def versions(self) -> tuple[str, str, str]:
-        """ Returns a tuple of three version strings. """
+        """ Returns a tuple of the version requirements. """
         return (self.added, self.deprecated, self.removed)
 
     def __str__(self) -> str:

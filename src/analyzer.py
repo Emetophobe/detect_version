@@ -121,7 +121,7 @@ class Analyzer(ast.NodeVisitor):
         """
         for alias in node.names:
             if alias.name == '*':
-                # Handle wildcard "from module import *"
+                # Handle wildcard "*" i.e "from module import *"
                 self._check_module(node.module)
             else:
                 # Check both the module and the module import
@@ -130,7 +130,7 @@ class Analyzer(ast.NodeVisitor):
         super().generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
-        """ Check attribute for changes to built-in modules.
+        """ Check attributes for changes to built-in modules.
 
         Args:
             node (ast.Attribute): an attribute access.
@@ -149,7 +149,7 @@ class Analyzer(ast.NodeVisitor):
         if isinstance(node.func, ast.Name):
             self._check_function(node.func.id)
 
-        self.generic_visit(node)
+        super().generic_visit(node)
 
     def visit_Raise(self, node: ast.Raise) -> None:
         """ Check raised exceptions for changes to built-in exceptions.
@@ -174,7 +174,7 @@ class Analyzer(ast.NodeVisitor):
             self._check_exception(node.type.id)
         elif isinstance(node.type, ast.Tuple):
             # Handle multiple exceptions grouped in a tuple
-            # "except (Exception1, Exception2) as error:"
+            # i.e; "except (Exception1, Exception2) as e:"
             for name in node.type.elts:
                 self._check_exception(name.id)
 
@@ -229,19 +229,12 @@ class Analyzer(ast.NodeVisitor):
         """ Check for annotated assignment statements (PEP 526).
 
         Example:
-
             `a: int = 5`
-
-        This method also checks class variable annotations:
-
-        class Example:
-            data: str
-            value: int = 5
 
         Args:
             node (ast.AnnAssign): the annotated assignment.
         """
-        # Add requirement for variable annotations (PEP 526)
+        # Add requirement for variable annotations
         self.add_language_feature(Constants.VARIABLE_ANNOTATIONS)
 
         # Also check the annotation type
@@ -251,9 +244,6 @@ class Analyzer(ast.NodeVisitor):
     def visit_Constant(self, node: ast.Constant) -> None:
         """ Check for explicit unicode literals (PEP 414).
 
-        Unicode literals are very easy to test for. They're always Constant nodes
-        with node.kind set to "u".
-
         Args:
             node (ast.Constant): a constant value or literal.
         """
@@ -262,10 +252,7 @@ class Analyzer(ast.NodeVisitor):
         super().generic_visit(node)
 
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
-        """ Check for formatted string (fstring) literals (PEP 498).
-
-        An f-string is a JoinedStr node with a series of FormattedValue and
-        Constant nodes.
+        """ Check for formatted string literals (fstrings) (PEP 498).
 
         Args:
             node (ast.JoinedStr): a fstring literal.
@@ -326,10 +313,10 @@ class Analyzer(ast.NodeVisitor):
         super().generic_visit(node)
 
     def generic_visit(self, node: ast.AST) -> None:
-        """ Generic node visitor. Handles all other nodes.
+        """ Generic node visitor. Handle nodes not covered by a specific visitor method.
 
         Args:
-            node (ast.AST): AST is the base node class, it can be any node type.
+            node (ast.AST): AST is the base class for all nodes.
         """
         # Check for async/await which were added in Python 3.5
         if isinstance(node, (ast.AsyncFor, ast.AsyncWith, ast.Await)):
@@ -337,20 +324,6 @@ class Analyzer(ast.NodeVisitor):
 
         # This is required to traverse child nodes
         super().generic_visit(node)
-
-    def add_language_feature(self, feature: str) -> None:
-        """ Add a specific language feature requirement by name.
-
-        Args:
-            feature (str): name of the feature.
-
-        Raises:
-            ValueError: if the feature name is invalid.
-        """
-        if requirement := self.features.get_requirement(feature):
-            self.add_language_requirement(feature, requirement)
-        else:
-            raise RuntimeError(f'Could not find a requirement for {feature}.')
 
     def add_language_requirement(self, feature: str, requirement: Requirement):
         """ Add a language feature requirement.
@@ -370,7 +343,7 @@ class Analyzer(ast.NodeVisitor):
         """ Add a module feature requirement.
 
         Args:
-            feature (str): name of the module or attribute.
+            name (str): name of the module or attribute.
             requirement (Requirement): the feature's requirement.
         """
         if not requirement:
@@ -379,6 +352,20 @@ class Analyzer(ast.NodeVisitor):
         if name not in self.module_requirements.keys():
             self.update_version(requirement.added)
             self.module_requirements[name] = requirement
+
+    def add_language_feature(self, feature: str) -> None:
+        """ Add a language feature requirement by name.
+
+        Args:
+            feature (str): name of the feature.
+
+        Raises:
+            ValueError: if the feature name is invalid.
+        """
+        if requirement := self.features.get_requirement(feature):
+            self.add_language_requirement(feature, requirement)
+        else:
+            raise ValueError(f'Could not find a requirement for {feature}.')
 
     def update_version(self, version: str) -> None:
         """ Update minimum Python version.
@@ -390,7 +377,7 @@ class Analyzer(ast.NodeVisitor):
             self.detected_version = version
 
     def _check_module(self, name: str) -> None:
-        """ Check modules changelog for matching modules or attributes.
+        """ Check modules changelog for matching module or attribute.
 
         Args:
             name (str): name of the module or attribute.
@@ -403,7 +390,7 @@ class Analyzer(ast.NodeVisitor):
             self.add_module_requirement(name, requirement)
 
     def _check_exception(self, exception: str) -> None:
-        """ Check exceptions changelog for matching exceptions.
+        """ Check exceptions changelog for matching exception.
 
         Args:
             exception (str): name of the exception.
@@ -412,14 +399,15 @@ class Analyzer(ast.NodeVisitor):
             self.add_language_requirement(exception, requirement)
 
     def _check_function(self, function: str) -> None:
-        """ Check functions changelog for matching function names.
+        """ Check functions changelog for matching function.
 
         Args:
             function (str): name of the function.
         """
         if requirement := self.functions.get_requirement(function):
             if function in ('aiter', 'anext'):
-                # Special case for aiter/anext, join both into one name
+                # Special case
+                # combine aiter/anext
                 function = Constants.AITER_AND_ANEXT
 
             # Update requirements
@@ -494,7 +482,7 @@ class Analyzer(ast.NodeVisitor):
 
 
 def dump_node(node: ast.AST) -> None:
-    """ Print an ast node to stdout.
+    """ Print a node to stdout.
 
     Args:
         node (ast.AST): an ast node, can be any node type.
