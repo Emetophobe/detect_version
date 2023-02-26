@@ -438,6 +438,10 @@
     "dis.stack_effect": {
         "added": "3.4"
     },
+    "distutils": {
+        "deprecated": "3.10",
+        "removed": "3.12"
+    },
     "distutils.sysconfig": {
         "deprecated": "3.10",
         "removed": "3.12"
