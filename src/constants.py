@@ -1,10 +1,6 @@
 # Copyright (c) 2019-2023  Mike Cunningham
 
 
-# Minimum python version
-# This script is designed for Python 3.x
-MINIMUM_VERSION = '3.0'
-
 # Python 3.1: Multiple "with" clauses
 MULTIPLE_CONTEXT_MANAGERS = 'multiple context managers'
 
@@ -39,7 +35,7 @@ WALRUS_OPERATOR = 'assignment expressions'
 GENERIC_TYPE_HINTS = 'type hinting generics'
 
 # Python 3.10: PEP 604 - Allow writing union types as X | Y
-UNION_TYPE_HINTING = 'union type hinting'
+UNION_TYPE_HINTING = 'union type operator'
 
 # Python 3.10: PEP 622 - Structural Pattern Matching
-MATCH_STATEMENT = 'pattern matching'
+MATCH_STATEMENT = 'match statements'

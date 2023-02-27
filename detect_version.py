@@ -9,29 +9,30 @@ from pathlib import Path
 from src import Analyzer, dump_node
 
 # Script version
-__version__ = '0.6.3'
+__version__ = '0.6.4'
 
 
 def detect_version(path: str | Path,
-                   show_notes: bool = False,
+                   notes: bool = False,
                    quiet: bool = False
                    ) -> None:
     """Analyze a Python script (.py file) and print requirements.
 
     Args:
         path (str | Path): file path of the script.
-        dump_ast (bool, optional): print ast to stdout. Defaults to False.
+        notes (bool, optional): show extra notes (if any). Defaults to False.
+        quiet (bool, optional): only show detected version. Defaults to False.
     """
     with open(path, 'r') as source:
         tree = ast.parse(source.read())
 
-        analyzer = Analyzer(path)
+        analyzer = Analyzer(path, notes)
         analyzer.visit(tree)
 
         if quiet:
             analyzer.report_version()
         else:
-            analyzer.report(show_notes)
+            analyzer.report()
 
 
 def dump_file(path: str | Path) -> None:
@@ -57,9 +58,6 @@ def main():
         '-n', '--notes',
         help='show feature notes',
         action='store_true')
-
-    # TODO: add argument for min/max/target version
-
     parser.add_argument(
         '-q', '--quiet',
         help='only show minimum version requirements',
@@ -89,6 +87,8 @@ def main():
 
     if len(files) > 1 and args.dump:
         parser.error('Cannot use --dump with multiple files.')
+
+    # TODO: test --target version
 
     # Parse files
     try:

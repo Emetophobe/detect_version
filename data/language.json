@@ -77,11 +77,11 @@
             "re.Match"
         ]
     },
-    "pattern matching": {
+    "match statements": {
         "added": "3.10",
         "notes": "PEP 622"
     },
-    "union type hinting": {
+    "union type operator": {
         "added": "3.10",
         "notes": "PEP 604"
     }

@@ -13,18 +13,22 @@ from src import Constants
 class Analyzer(ast.NodeVisitor):
     """ Parse abstract syntax tree and determine script requirements. """
 
-    def __init__(self, filename: str | Path) -> None:
+    def __init__(self,
+                 path: str | Path,
+                 notes: bool = False
+                 ) -> None:
         """ Initialize node analyzer.
 
         Args:
-            filename (str | Path): file path of the script.
+            path (str | Path): file path of the script.
+            notes (str, optional): Show extra notes. Defaults to False.
         """
-        self.filename = filename
+        self.filename = path
+        self.notes = notes
 
-        # Set minimum version
-        self.detected_version = Constants.MINIMUM_VERSION
+        # Set minimum detected version. 3.0 is always the baseline
+        self.detected_version = '3.0'
 
-        # Load changelog files
         self.features = Changelog('data/language.json')
         self.exceptions = Changelog('data/exceptions.json')
         self.functions = Changelog('data/functions.json')
@@ -37,31 +41,25 @@ class Analyzer(ast.NodeVisitor):
         """ Print detected version requirement. """
         print(f'{self.filename} requires: {self.detected_version}')
 
-    def report(self, show_notes: bool = False) -> None:
-        """ Print full script requirements.
-
-        Args:
-            show_notes (bool, optional): Show extra details. Defaults to False.
-        """
-        # Print version requirement
+    def report(self) -> None:
+        """ Print full script requirements. """
         print()
         print('File:', self.filename)
         print('Detected version:', self.detected_version)
 
-        # No  requirements
         if not self.language_requirements and not self.module_requirements:
             print('Requirements: None')
             return
 
         print('Requirements:')
+        print()
+
         column = '  {:<30} {:<14} {:<30}'
 
         # Print language and module requirements
         for requirements in (self.language_requirements, self.module_requirements):
             if not requirements:
                 continue
-
-            print()
 
             requirements = sorted(requirements.items(), key=itemgetter(1, 0))
 
@@ -77,24 +75,26 @@ class Analyzer(ast.NodeVisitor):
                     warnings[feature] = requirement
 
             # Print added features
-            for feature, requirement in added.items():
-                if show_notes and requirement.notes:
-                    notes = requirement.notes
-                else:
-                    notes = ''
+            if added:
+                for feature, requirement in added.items():
+                    if self.notes and requirement.notes:
+                        notes = requirement.notes
+                    else:
+                        notes = ''
 
-                print(column.format(feature, 'Python ' + requirement.added, notes))
+                    print(column.format(feature, 'Python ' + requirement.added, notes))
 
             # Print deprecated and removed features
             if warnings:
                 print('\nWarning: Found deprecated or removed features:\n')
                 for feature, requirement in warnings.items():
-                    # Build description
                     description = []
                     if requirement.deprecated:
                         description.append(f'deprecated in {requirement.deprecated}')
+
                     if requirement.removed:
                         description.append(f'removed in {requirement.removed}')
+
                     print(f'  {feature} is {" and ".join(description)}')
 
     def visit_Import(self, node: ast.Import) -> None:
@@ -137,7 +137,8 @@ class Analyzer(ast.NodeVisitor):
         """
         # Get full attribute name; i.e "self.conn.cursor"
         if attribute_name := self._get_attribute_name(node):
-            self._check_module(attribute_name)
+            if not attribute_name.startswith('self.'):
+                self._check_module(attribute_name)
         super().generic_visit(node)
 
     def visit_Call(self, node: ast.Call) -> None:
@@ -203,7 +204,7 @@ class Analyzer(ast.NodeVisitor):
             node (ast.AsyncFunctionDef): an async function.
         """
         # Add requirement for async/await coroutines (PEP 492)
-        self.add_language_feature(Constants.ASYNC_AND_AWAIT)
+        self.add_feature_requirement(Constants.ASYNC_AND_AWAIT)
 
         # Check return type for annotations
         self._check_annotation(node.returns)
@@ -217,7 +218,7 @@ class Analyzer(ast.NodeVisitor):
         """
         # Add requirement for positional-only parameters (PEP 570)
         if node.posonlyargs:
-            self.add_language_feature(Constants.POSONLY_ARGUMENTS)
+            self.add_feature_requirement(Constants.POSONLY_ARGUMENTS)
 
         # Check all arguments for annotations
         for arg in itertools.chain(node.args, node.posonlyargs, node.kwonlyargs):
@@ -235,7 +236,7 @@ class Analyzer(ast.NodeVisitor):
             node (ast.AnnAssign): the annotated assignment.
         """
         # Add requirement for variable annotations
-        self.add_language_feature(Constants.VARIABLE_ANNOTATIONS)
+        self.add_feature_requirement(Constants.VARIABLE_ANNOTATIONS)
 
         # Also check the annotation type
         self._check_annotation(node.annotation)
@@ -248,7 +249,7 @@ class Analyzer(ast.NodeVisitor):
             node (ast.Constant): a constant value or literal.
         """
         if node.kind == 'u':
-            self.add_language_feature(Constants.UNICODE_LITERALS)
+            self.add_feature_requirement(Constants.UNICODE_LITERALS)
         super().generic_visit(node)
 
     def visit_JoinedStr(self, node: ast.JoinedStr) -> None:
@@ -257,16 +258,16 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.JoinedStr): a fstring literal.
         """
-        self.add_language_feature(Constants.FSTRING_LITERALS)
+        self.add_feature_requirement(Constants.FSTRING_LITERALS)
         super().generic_visit(node)
 
     def visit_NamedExpr(self, node: ast.NamedExpr) -> None:
-        """ Check for assignment expressions (walrus operators) (PEP 572).
+        """ Check for assignment expressions (walrus operator) (PEP 572).
 
         Args:
             node (ast.NamedExpr): a named expression.
         """
-        self.add_language_feature(Constants.WALRUS_OPERATOR)
+        self.add_feature_requirement(Constants.WALRUS_OPERATOR)
         super().generic_visit(node)
 
     def visit_Match(self, node: ast.Match) -> None:
@@ -275,7 +276,7 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.Match): a match statement.
         """
-        self.add_language_feature(Constants.MATCH_STATEMENT)
+        self.add_feature_requirement(Constants.MATCH_STATEMENT)
         super().generic_visit(node)
 
     def visit_With(self, node: ast.With) -> None:
@@ -289,7 +290,7 @@ class Analyzer(ast.NodeVisitor):
 
         """
         if len(node.items) > 1:
-            self.add_language_feature(Constants.MULTIPLE_CONTEXT_MANAGERS)
+            self.add_feature_requirement(Constants.MULTIPLE_CONTEXT_MANAGERS)
         super().generic_visit(node)
 
     def visit_YieldFrom(self, node: ast.YieldFrom) -> None:
@@ -299,7 +300,7 @@ class Analyzer(ast.NodeVisitor):
             node (ast.YieldFrom): a yield from expression.
 
         """
-        self.add_language_feature(Constants.YIELD_FROM_EXPRESSION)
+        self.add_feature_requirement(Constants.YIELD_FROM_EXPRESSION)
         super().generic_visit(node)
 
     def visit_comprehension(self, node: ast.comprehension) -> None:
@@ -309,7 +310,7 @@ class Analyzer(ast.NodeVisitor):
             node (ast.comprehension): a single comprehension.
         """
         if node.is_async:
-            self.add_language_feature(Constants.ASYNC_COMPREHENSIONS)
+            self.add_feature_requirement(Constants.ASYNC_COMPREHENSIONS)
         super().generic_visit(node)
 
     def generic_visit(self, node: ast.AST) -> None:
@@ -320,13 +321,13 @@ class Analyzer(ast.NodeVisitor):
         """
         # Check for async/await which were added in Python 3.5
         if isinstance(node, (ast.AsyncFor, ast.AsyncWith, ast.Await)):
-            self.add_language_feature(Constants.ASYNC_AND_AWAIT)
+            self.add_feature_requirement(Constants.ASYNC_AND_AWAIT)
 
         # This is required to traverse child nodes
         super().generic_visit(node)
 
     def add_language_requirement(self, feature: str, requirement: Requirement):
-        """ Add a language feature requirement.
+        """ Add a language requirement.
 
         Args:
             feature (str): name of the feature.
@@ -340,7 +341,7 @@ class Analyzer(ast.NodeVisitor):
             self.language_requirements[feature] = requirement
 
     def add_module_requirement(self, name: str, requirement: Requirement):
-        """ Add a module feature requirement.
+        """ Add a module requirement.
 
         Args:
             name (str): name of the module or attribute.
@@ -353,8 +354,8 @@ class Analyzer(ast.NodeVisitor):
             self.update_version(requirement.added)
             self.module_requirements[name] = requirement
 
-    def add_language_feature(self, feature: str) -> None:
-        """ Add a language feature requirement by name.
+    def add_feature_requirement(self, feature: str) -> None:
+        """ Convenience method to add a language requirement by name.
 
         Args:
             feature (str): name of the feature.
@@ -373,7 +374,7 @@ class Analyzer(ast.NodeVisitor):
         Args:
             version (str): the version string.
         """
-        if version and Version(version) > Version(self.detected_version):
+        if Version(version) > Version(self.detected_version):
             self.detected_version = version
 
     def _check_module(self, name: str) -> None:
@@ -382,10 +383,6 @@ class Analyzer(ast.NodeVisitor):
         Args:
             name (str): name of the module or attribute.
         """
-        # Ignore self attributes
-        if name.startswith('self.'):
-            return
-
         if requirement := self.modules.get_requirement(name):
             self.add_module_requirement(name, requirement)
 
@@ -406,11 +403,10 @@ class Analyzer(ast.NodeVisitor):
         """
         if requirement := self.functions.get_requirement(function):
             if function in ('aiter', 'anext'):
-                # Special case
-                # combine aiter/anext
+                # Special case: combine aiter and anext
+                # functions into a single requirement
                 function = Constants.AITER_AND_ANEXT
 
-            # Update requirements
             self.add_language_requirement(function, requirement)
 
     def _check_annotation(self, node: ast.AST) -> None:
@@ -425,7 +421,7 @@ class Analyzer(ast.NodeVisitor):
         for name in self._find_annotations(node):
             # Check for generic type hints (PEP 585)
             if name in self.features[Constants.GENERIC_TYPE_HINTS].items:
-                self.add_language_feature(Constants.GENERIC_TYPE_HINTS)
+                self.add_feature_requirement(Constants.GENERIC_TYPE_HINTS)
 
     def _find_annotations(self, node: ast.AST) -> str:
         """ Recursively search a node for annotations.
@@ -453,7 +449,7 @@ class Analyzer(ast.NodeVisitor):
         # Annotation can be a binary operation; i.e str | bytes
         elif isinstance(node, ast.BinOp):
             # Add requirement for union type hints (PEP 604)
-            self.add_language_feature(Constants.UNION_TYPE_HINTING)
+            self.add_feature_requirement(Constants.UNION_TYPE_HINTING)
 
             # Check left and right side annotations
             yield from self._find_annotations(node.left)
