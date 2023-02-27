@@ -48,10 +48,10 @@ class Requirement:
                 Version when feature was removed. Defaults to None.
 
             note (str, optional):
-                optional note or comment. Defaults to None.
+                Optional note or comment. Defaults to None.
 
             items (list[str], optional):
-                optional item list. Defaults to None.
+                Optional item list. Defaults to None.
         """
         assert any((added, deprecated, removed))
 
@@ -60,6 +60,10 @@ class Requirement:
         self.removed = removed
         self.notes = notes
         self.items = items
+
+    def versions(self) -> tuple[str, str, str]:
+        """ Returns a tuple of the version requirements. """
+        return (self.added, self.deprecated, self.removed)
 
     def __lt__(self, other: object) -> bool:
         """ Less than operator is used for sorting requirements. """
@@ -76,14 +80,10 @@ class Requirement:
 
     def __eq__(self, other: object) -> bool:
         """ Compare two requirements. """
-        if isinstance(other, Requirement):
-            return False
+        if not isinstance(other, Requirement):
+            raise TypeError(f'Expected a Requirement, received a {type(other).__name__}')
 
         return str(self) == str(other)
-
-    def versions(self) -> tuple[str, str, str]:
-        """ Returns a tuple of the version requirements. """
-        return (self.added, self.deprecated, self.removed)
 
     def __str__(self) -> str:
         """ Returns a string representation created from the dictionary values. """
