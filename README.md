@@ -63,12 +63,10 @@ Things that are currently **not** checked:
 
     Filename: detect_version.py
     Detected version: 3.10
-
     Requirements:
 
         f-string literals requires 3.6
         union type hinting requires 3.10
-
         argparse requires 3.2
         pathlib requires 3.4
 
