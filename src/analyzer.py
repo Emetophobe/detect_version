@@ -34,6 +34,7 @@ class Analyzer(ast.NodeVisitor):
         self.functions = Changelog('data/functions.json')
         self.modules = Changelog('data/modules.json')
 
+        self.imported = {}
         self.language_requirements = {}
         self.module_requirements = {}
 
@@ -74,7 +75,7 @@ class Analyzer(ast.NodeVisitor):
                 if requirement.deprecated or requirement.removed:
                     warnings[feature] = requirement
 
-            # Print added features
+            # Print required features
             if added:
                 for feature, requirement in added.items():
                     if self.notes and requirement.notes:
@@ -111,7 +112,7 @@ class Analyzer(ast.NodeVisitor):
         super().generic_visit(node)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
-        """ Check "from ... import" statements for changes to built-in modules.
+        """ Check "from import" statements for changes to built-in modules.
 
         Example:
             `from module import a, b, c`
@@ -124,16 +125,20 @@ class Analyzer(ast.NodeVisitor):
                 # Handle wildcard "*" i.e "from module import *"
                 self._check_module(node.module)
             else:
-                # Check both the module and the module import
+                # Check both the module and the imported item
                 self._check_module(node.module)
                 self._check_module(node.module + '.' + alias.name)
+
+                # Store names of imports
+                self.imported[alias.name] = node.module
+
         super().generic_visit(node)
 
     def visit_Attribute(self, node: ast.Attribute) -> None:
-        """ Check attributes for changes to built-in modules.
+        """ Check attribute accesses for changes to built-in modules.
 
         Args:
-            node (ast.Attribute): an attribute access.
+            node (ast.Attribute): an attribute access (Load, Store, Del).
         """
         # Get full attribute name; i.e "self.conn.cursor"
         if attribute_name := self._get_attribute_name(node):
@@ -190,7 +195,7 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.FunctionDef): a function definition.
         """
-        # Check return type for type hints
+        # Check return type for annotations
         self._check_annotation(node.returns)
         super().generic_visit(node)
 
@@ -206,7 +211,7 @@ class Analyzer(ast.NodeVisitor):
         # Add requirement for async/await coroutines (PEP 492)
         self.add_feature_requirement(Constants.ASYNC_AND_AWAIT)
 
-        # Check return type for annotations
+        # Also check return type for annotations
         self._check_annotation(node.returns)
         super().generic_visit(node)
 
@@ -366,7 +371,7 @@ class Analyzer(ast.NodeVisitor):
         if requirement := self.features.get_requirement(feature):
             self.add_language_requirement(feature, requirement)
         else:
-            raise ValueError(f'Could not find a requirement for {feature}.')
+            raise ValueError(f'Could not find a requirement for {feature!r}.')
 
     def update_version(self, version: str) -> None:
         """ Update minimum Python version.
@@ -419,6 +424,10 @@ class Analyzer(ast.NodeVisitor):
         """
         # Search for annotations in all child nodes
         for name in self._find_annotations(node):
+            # Check if the annotation was imported
+            if name in self.imported.keys():
+                name = self.imported[name] + '.' + name
+
             # Check for generic type hints (PEP 585)
             if name in self.features[Constants.GENERIC_TYPE_HINTS].items:
                 self.add_feature_requirement(Constants.GENERIC_TYPE_HINTS)
