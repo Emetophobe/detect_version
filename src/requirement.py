@@ -52,8 +52,13 @@ class Requirement:
 
             items (list[str], optional):
                 Optional item list. Defaults to None.
+
+        Raises:
+            ValueError: if an argument is missing.
         """
-        assert any((added, deprecated, removed))
+        if not any((added, deprecated, removed)):
+            raise ValueError('Require atleast one version (added, deprecated,'
+                             ' or removed).')
 
         self.added = added
         self.deprecated = deprecated
