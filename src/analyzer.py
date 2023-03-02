@@ -109,6 +109,7 @@ class Analyzer(ast.NodeVisitor):
         """
         for alias in node.names:
             self._check_module(alias.name)
+
         super().generic_visit(node)
 
     def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
@@ -125,12 +126,12 @@ class Analyzer(ast.NodeVisitor):
                 # Handle wildcard "*" i.e "from module import *"
                 self._check_module(node.module)
             else:
+                # Store imported items and their modules
+                self.imported[alias.name] = node.module
+
                 # Check both the module and the imported item
                 self._check_module(node.module)
                 self._check_module(node.module + '.' + alias.name)
-
-                # Store names of imports
-                self.imported[alias.name] = node.module
 
         super().generic_visit(node)
 
@@ -140,10 +141,10 @@ class Analyzer(ast.NodeVisitor):
         Args:
             node (ast.Attribute): an attribute access (Load, Store, Del).
         """
-        # Get full attribute name; i.e "self.conn.cursor"
         if attribute_name := self._get_attribute_name(node):
             if not attribute_name.startswith('self.'):
                 self._check_module(attribute_name)
+
         super().generic_visit(node)
 
     def visit_Call(self, node: ast.Call) -> None:
@@ -189,8 +190,8 @@ class Analyzer(ast.NodeVisitor):
     def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
         """ Check function definitions for annotations.
 
-        This method only checks the return type for annotations (arguments are
-        handled by visit_arguments).
+        This method only checks the return type for annotations
+        (arguments are handled by visit_arguments).
 
         Args:
             node (ast.FunctionDef): a function definition.
@@ -202,33 +203,17 @@ class Analyzer(ast.NodeVisitor):
     def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
         """ Check for async functions which were added in Python 3.5 (PEP 492).
 
-        This method also checks the return type for annotations (arguments are
-        handled by visit_arguments).
+        This method also checks the return type for annotations
+        (arguments are handled by visit_arguments).
 
         Args:
-            node (ast.AsyncFunctionDef): an async function.
+            node (ast.AsyncFunctionDef): an async function definition.
         """
         # Add requirement for async/await coroutines (PEP 492)
         self.add_feature_requirement(Constants.ASYNC_AND_AWAIT)
 
         # Also check return type for annotations
         self._check_annotation(node.returns)
-        super().generic_visit(node)
-
-    def visit_arguments(self, node: ast.arguments) -> None:
-        """ Check function arguments for language changes.
-
-        Args:
-            node (ast.arguments): the function arguments.
-        """
-        # Add requirement for positional-only parameters (PEP 570)
-        if node.posonlyargs:
-            self.add_feature_requirement(Constants.POSONLY_ARGUMENTS)
-
-        # Check all arguments for annotations
-        for arg in itertools.chain(node.args, node.posonlyargs, node.kwonlyargs):
-            self._check_annotation(arg.annotation)
-
         super().generic_visit(node)
 
     def visit_AnnAssign(self, node: ast.AnnAssign) -> None:
@@ -308,6 +293,22 @@ class Analyzer(ast.NodeVisitor):
         self.add_feature_requirement(Constants.YIELD_FROM_EXPRESSION)
         super().generic_visit(node)
 
+    def visit_arguments(self, node: ast.arguments) -> None:
+        """ Check function arguments for language changes.
+
+        Args:
+            node (ast.arguments): the function arguments.
+        """
+        # Add requirement for positional-only parameters (PEP 570)
+        if node.posonlyargs:
+            self.add_feature_requirement(Constants.POSONLY_ARGUMENTS)
+
+        # Check all arguments for annotations
+        for arg in itertools.chain(node.args, node.posonlyargs, node.kwonlyargs):
+            self._check_annotation(arg.annotation)
+
+        super().generic_visit(node)
+
     def visit_comprehension(self, node: ast.comprehension) -> None:
         """ Check for async comprehensions (PEP 530).
 
@@ -331,7 +332,7 @@ class Analyzer(ast.NodeVisitor):
         # This is required to traverse child nodes
         super().generic_visit(node)
 
-    def add_language_requirement(self, feature: str, requirement: Requirement):
+    def add_language_requirement(self, feature: str, requirement: Requirement) -> None:
         """ Add a language requirement.
 
         Args:
@@ -345,7 +346,7 @@ class Analyzer(ast.NodeVisitor):
             self.update_version(requirement.added)
             self.language_requirements[feature] = requirement
 
-    def add_module_requirement(self, name: str, requirement: Requirement):
+    def add_module_requirement(self, name: str, requirement: Requirement) -> None:
         """ Add a module requirement.
 
         Args:
@@ -383,7 +384,8 @@ class Analyzer(ast.NodeVisitor):
             self.detected_version = version
 
     def _check_module(self, name: str) -> None:
-        """ Check modules changelog for matching module or attribute.
+        """ Check module requirements. Searches the modules changelog
+        and updates module requirements if found.
 
         Args:
             name (str): name of the module or attribute.
@@ -392,7 +394,8 @@ class Analyzer(ast.NodeVisitor):
             self.add_module_requirement(name, requirement)
 
     def _check_exception(self, exception: str) -> None:
-        """ Check exceptions changelog for matching exception.
+        """ Check exception requirements. Searches the exceptions changelog
+        and updates language requirements if found.
 
         Args:
             exception (str): name of the exception.
@@ -401,7 +404,8 @@ class Analyzer(ast.NodeVisitor):
             self.add_language_requirement(exception, requirement)
 
     def _check_function(self, function: str) -> None:
-        """ Check functions changelog for matching function.
+        """ Check function requirements. Searches the functions changelog
+        and updates language requirements if found.
 
         Args:
             function (str): name of the function.
@@ -415,9 +419,12 @@ class Analyzer(ast.NodeVisitor):
             self.add_language_requirement(function, requirement)
 
     def _check_annotation(self, node: ast.AST) -> None:
-        """ Check annotations for language or feature changes.
+        """ Check annotations for language changes.
 
-        Currently only checks for Type Hinting Generics (PEP 585).
+        Currently only testing for:
+
+          * PEP 585: Type Hinting Generics In Standard Collections
+          * PEP 604: Allow writing union types as X | Y
 
         Args:
             node (ast.AST): the annotation node.
@@ -490,7 +497,7 @@ def dump_node(node: ast.AST) -> None:
     """ Print a node to stdout.
 
     Args:
-        node (ast.AST): an ast node, can be any node type.
+        node (ast.AST): an ast node.
     """
     if node:
         print(ast.dump(node, indent=4))

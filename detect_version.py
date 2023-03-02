@@ -58,6 +58,7 @@ def main():
         '-n', '--notes',
         help='show feature notes',
         action='store_true')
+
     parser.add_argument(
         '-q', '--quiet',
         help='only show minimum version requirements',
@@ -87,8 +88,6 @@ def main():
 
     if len(files) > 1 and args.dump:
         parser.error('Cannot use --dump with multiple files.')
-
-    # TODO: test --target version
 
     # Parse files
     try:
