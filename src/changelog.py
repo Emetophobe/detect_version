@@ -39,8 +39,9 @@ class Changelog:
     def items(self) -> ItemsView:
         return self.changelog.items()
 
-    def __getitem__(self, name: str) -> Optional[Requirement]:
-        return self.get_requirement(name)
+    def __getitem__(self, name: str) -> Requirement:
+        """ Raise KeyError if name is not found. """
+        return Requirement(**self.changelog[name])
 
     def __contains__(self, name: str) -> bool:
         return name in self.changelog.keys()
