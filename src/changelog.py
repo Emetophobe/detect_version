@@ -29,7 +29,7 @@ class Changelog:
             Requirement: The feature requirement, or None if no feature found.
         """
         if changes := self.changelog.get(feature, None):
-            return Requirement(**changes)
+            return Requirement(feature, **changes)
         else:
             return None
 
@@ -41,7 +41,7 @@ class Changelog:
 
     def __getitem__(self, name: str) -> Requirement:
         """ Raise KeyError if name is not found. """
-        return Requirement(**self.changelog[name])
+        return Requirement(name, **self.changelog[name])
 
     def __contains__(self, name: str) -> bool:
         return name in self.changelog.keys()

@@ -4,15 +4,16 @@
 
 import ast
 import argparse
-
 from pathlib import Path
-from src import Analyzer, dump_node
+from typing import Optional
+from src import Analyzer, dump_node, valid_version
 
-# Script version
-__version__ = '0.6.4'
+
+__version__ = '0.7.0'
 
 
 def detect_version(path: str | Path,
+                   target: Optional[str] = None,
                    notes: bool = False,
                    quiet: bool = False
                    ) -> None:
@@ -20,13 +21,14 @@ def detect_version(path: str | Path,
 
     Args:
         path (str | Path): file path of the script.
+        target (str, optional): specify a target version. Defaults to None.
         notes (bool, optional): show extra notes (if any). Defaults to False.
         quiet (bool, optional): only show detected version. Defaults to False.
     """
     with open(path, 'r') as source:
         tree = ast.parse(source.read())
 
-        analyzer = Analyzer(path, notes)
+        analyzer = Analyzer(path, target, notes)
         analyzer.visit(tree)
 
         if quiet:
@@ -55,13 +57,18 @@ def main():
         nargs='+')
 
     parser.add_argument(
+        '-t', '--target',
+        help='specify a target version (default: None)',
+        metavar='version')
+
+    parser.add_argument(
         '-n', '--notes',
-        help='show feature notes',
+        help='show feature notes (default: False)',
         action='store_true')
 
     parser.add_argument(
         '-q', '--quiet',
-        help='only show minimum version requirements',
+        help='only show minimum version requirements (default: False)',
         action='store_true')
 
     parser.add_argument(
@@ -89,13 +96,16 @@ def main():
     if len(files) > 1 and args.dump:
         parser.error('Cannot use --dump with multiple files.')
 
+    if args.target and not valid_version(args.target):
+        parser.error('Invalid target version.')
+
     # Parse files
     try:
         for filename in files:
             if args.dump:
                 dump_file(filename)
             else:
-                detect_version(filename, args.notes, args.quiet)
+                detect_version(filename, args.target, args.notes, args.quiet)
     except OSError as e:
         raise SystemExit(f'Error reading {e.filename} ({e.strerror})')
     except ValueError as e:

@@ -29,6 +29,7 @@ class Requirement:
     """
 
     def __init__(self,
+                 name: str,
                  added: Optional[str] = None,
                  deprecated: Optional[str] = None,
                  removed: Optional[str] = None,
@@ -38,6 +39,9 @@ class Requirement:
         """ Initialize feature requirements.
 
         Args:
+            name (str):
+                Name of the feature or module.
+
             added (str, optional):
                 Version when feature was added. Defaults to None.
 
@@ -60,6 +64,7 @@ class Requirement:
             raise ValueError('Require atleast one version (added, deprecated,'
                              ' or removed).')
 
+        self.name = name
         self.added = added
         self.deprecated = deprecated
         self.removed = removed
@@ -81,7 +86,9 @@ class Requirement:
                 return True
             elif Version(version) > Version(other_ver):
                 return False
-        return True
+
+        # Finally sort by name
+        return self.name < other.name
 
     def __eq__(self, other: object) -> bool:
         """ Compare two requirements. """

@@ -3,11 +3,11 @@
 import ast
 import itertools
 from pathlib import Path
-from operator import itemgetter
-from src import Version
+from typing import Optional
 from src import Changelog
-from src import Requirement
 from src import Constants
+from src import Requirement
+from src import Version
 
 
 class Analyzer(ast.NodeVisitor):
@@ -15,18 +15,22 @@ class Analyzer(ast.NodeVisitor):
 
     def __init__(self,
                  path: str | Path,
+                 target: Optional[str] = None,
                  notes: bool = False
                  ) -> None:
         """ Initialize node analyzer.
 
         Args:
-            path (str | Path): file path of the script.
-            notes (str, optional): Show extra notes. Defaults to False.
+            path (str | Path): path of the script.
+            target (str, optional): target version. Defaults to None.
+            notes (str, optional): show notes or details. Defaults to False.
         """
         self.filename = path
+        self.target = target
         self.notes = notes
 
-        # Set minimum detected version. 3.0 is always the baseline
+        # Set minimum detected version. 3.0 is always the
+        # baseline before the file is scanned.
         self.detected_version = '3.0'
 
         self.features = Changelog('data/language.json')
@@ -35,8 +39,8 @@ class Analyzer(ast.NodeVisitor):
         self.modules = Changelog('data/modules.json')
 
         self.imported = {}
-        self.language_requirements = {}
-        self.module_requirements = {}
+        self.language_requirements = []
+        self.module_requirements = []
 
     def report_version(self) -> None:
         """ Print detected version requirement. """
@@ -44,51 +48,56 @@ class Analyzer(ast.NodeVisitor):
 
     def report(self) -> None:
         """ Print full script requirements. """
-        print()
-        print('File:', self.filename)
+        print('\nFile:', self.filename)
+        if self.target:
+            print('Target version:', self.target)
         print('Detected version:', self.detected_version)
 
-        if not self.language_requirements and not self.module_requirements:
+        # Filter requirements by target version
+        language_requirements = self.filter_requirements(self.language_requirements)
+        module_requirements = self.filter_requirements(self.module_requirements)
+
+        if not language_requirements and not module_requirements:
             print('Requirements: None')
             return
 
-        print('Requirements:')
-        print()
-
+        print('Requirements:\n')
         column = '  {:<30} {:<14} {:<30}'
 
         # Print language and module requirements
-        for requirements in (self.language_requirements, self.module_requirements):
+        for requirements in (language_requirements, module_requirements):
             if not requirements:
                 continue
 
-            requirements = sorted(requirements.items(), key=itemgetter(1, 0))
+            requirements.sort()
 
-            added = {}
-            warnings = {}
+            required = []
+            warnings = []
 
-            # Build dictionary of required and deprecated features
-            for feature, requirement in requirements:
+            # Build list of required and deprecated/removed features
+            for requirement in requirements:
                 if requirement.added:
-                    added[feature] = requirement
+                    required.append(requirement)
 
                 if requirement.deprecated or requirement.removed:
-                    warnings[feature] = requirement
+                    warnings.append(requirement)
 
             # Print required features
-            if added:
-                for feature, requirement in added.items():
+            if required:
+                for requirement in required:
                     if self.notes and requirement.notes:
                         notes = requirement.notes
                     else:
                         notes = ''
 
-                    print(column.format(feature, 'Python ' + requirement.added, notes))
+                    print(column.format(requirement.name,
+                                        'Python ' + requirement.added,
+                                        notes))
 
             # Print deprecated and removed features
             if warnings:
                 print('\nWarning: Found deprecated or removed features:\n')
-                for feature, requirement in warnings.items():
+                for requirement in warnings:
                     description = []
                     if requirement.deprecated:
                         description.append(f'deprecated in {requirement.deprecated}')
@@ -96,7 +105,7 @@ class Analyzer(ast.NodeVisitor):
                     if requirement.removed:
                         description.append(f'removed in {requirement.removed}')
 
-                    print(f'  {feature} is {" and ".join(description)}')
+                    print(f'  {requirement.name} is {" and ".join(description)}')
 
     def visit_Import(self, node: ast.Import) -> None:
         """ Check import statements for changes to built-in modules.
@@ -332,33 +341,25 @@ class Analyzer(ast.NodeVisitor):
         # This is required to traverse child nodes
         super().generic_visit(node)
 
-    def add_language_requirement(self, feature: str, requirement: Requirement) -> None:
+    def add_language_requirement(self, requirement: Requirement) -> None:
         """ Add a language requirement.
 
         Args:
-            feature (str): name of the feature.
-            requirement (Requirement): the feature's requirement.
+            requirement (Requirement): the language requirement.
         """
-        if not requirement:
-            return
-
-        if feature not in self.language_requirements.keys():
+        if requirement and requirement not in self.language_requirements:
             self.update_version(requirement.added)
-            self.language_requirements[feature] = requirement
+            self.language_requirements.append(requirement)
 
-    def add_module_requirement(self, name: str, requirement: Requirement) -> None:
+    def add_module_requirement(self, requirement: Requirement) -> None:
         """ Add a module requirement.
 
         Args:
-            name (str): name of the module or attribute.
-            requirement (Requirement): the feature's requirement.
+            requirement (Requirement): the module requirement.
         """
-        if not requirement:
-            return
-
-        if name not in self.module_requirements.keys():
+        if requirement and requirement not in self.module_requirements:
             self.update_version(requirement.added)
-            self.module_requirements[name] = requirement
+            self.module_requirements.append(requirement)
 
     def add_feature_requirement(self, feature: str) -> None:
         """ Convenience method to add a language requirement by name.
@@ -370,18 +371,41 @@ class Analyzer(ast.NodeVisitor):
             ValueError: if the feature name is invalid.
         """
         if requirement := self.features.get_requirement(feature):
-            self.add_language_requirement(feature, requirement)
+            self.add_language_requirement(requirement)
         else:
             raise ValueError(f'Could not find a requirement for {feature!r}.')
 
     def update_version(self, version: str) -> None:
-        """ Update minimum Python version.
+        """ Update minimum detected version.
 
         Args:
             version (str): the version string.
         """
         if Version(version) > Version(self.detected_version):
             self.detected_version = version
+
+    def filter_requirements(self,
+                            requirements: list[Requirement]
+                            ) -> list[Requirement]:
+        """ Filter requirements based on the target version.
+
+        Args:
+            requirements (dict[str, Requirement]):
+                the language or module requirements.
+
+        Returns:
+            dict[str, Requirement]: the filtered requirements.
+        """
+
+        if not self.target:
+            return requirements
+
+        filtered = []
+        for requirement in requirements:
+            if Version(requirement.added) > Version(self.target):
+                filtered.append(requirement)
+
+        return filtered
 
     def _check_module(self, name: str) -> None:
         """ Check module requirements. Searches the modules changelog
@@ -391,7 +415,7 @@ class Analyzer(ast.NodeVisitor):
             name (str): name of the module or attribute.
         """
         if requirement := self.modules.get_requirement(name):
-            self.add_module_requirement(name, requirement)
+            self.add_module_requirement(requirement)
 
     def _check_exception(self, exception: str) -> None:
         """ Check exception requirements. Searches the exceptions changelog
@@ -401,7 +425,7 @@ class Analyzer(ast.NodeVisitor):
             exception (str): name of the exception.
         """
         if requirement := self.exceptions.get_requirement(exception):
-            self.add_language_requirement(exception, requirement)
+            self.add_language_requirement(requirement)
 
     def _check_function(self, function: str) -> None:
         """ Check function requirements. Searches the functions changelog
@@ -414,9 +438,9 @@ class Analyzer(ast.NodeVisitor):
             if function in ('aiter', 'anext'):
                 # Special case: combine aiter and anext
                 # functions into a single requirement
-                function = Constants.AITER_AND_ANEXT
+                requirement.name = Constants.AITER_AND_ANEXT
 
-            self.add_language_requirement(function, requirement)
+            self.add_language_requirement(requirement)
 
     def _check_annotation(self, node: ast.AST) -> None:
         """ Check annotations for language changes.
