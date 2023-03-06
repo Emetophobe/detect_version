@@ -30,7 +30,8 @@
         "removed": "3.13"
     },
     "argparse": {
-        "added": "3.2"
+        "added": "3.2",
+        "notes": "PEP 389"
     },
     "argparse.BooleanOptionalAction": {
         "added": "3.9"
@@ -91,7 +92,8 @@
         "removed": "3.12"
     },
     "asyncio": {
-        "added": "3.4"
+        "added": "3.4",
+        "notes": "PEP 3156"
     },
     "asyncio.Barrier": {
         "added": "3.11"
@@ -394,7 +396,8 @@
         "added": "3.5"
     },
     "dataclasses": {
-        "added": "3.7"
+        "added": "3.7",
+        "notes": "PEP 557"
     },
     "dataclasses.KW_ONLY": {
         "added": "3.10"
@@ -504,7 +507,8 @@
         "added": "3.4"
     },
     "enum": {
-        "added": "3.4"
+        "added": "3.4",
+        "notes": "PEP 435"
     },
     "enum.EnumCheck": {
         "added": "3.11"
@@ -1001,7 +1005,8 @@
         "added": "3.10"
     },
     "ipaddress": {
-        "added": "3.3"
+        "added": "3.3",
+        "notes": "PEP 3144"
     },
     "itertools.accumulate": {
         "added": "3.2"
@@ -1829,7 +1834,8 @@
         "removed": "3.13"
     },
     "pathlib": {
-        "added": "3.4"
+        "added": "3.4",
+        "notes": "PEP 428"
     },
     "pickle.PickleBuffer": {
         "added": "3.8"
@@ -3100,7 +3106,8 @@
         "added": "3.2"
     },
     "tomllib": {
-        "added": "3.11"
+        "added": "3.11",
+        "notes": "PEP 680"
     },
     "traceback.FrameSummary": {
         "added": "3.5"
@@ -3173,7 +3180,8 @@
         "added": "3.3"
     },
     "types.UnionType": {
-        "added": "3.10"
+        "added": "3.10",
+        "notes": "PEP 604"
     },
     "types.WrapperDescriptorType": {
         "added": "3.7"
@@ -3191,130 +3199,167 @@
         "added": "3.7"
     },
     "typing": {
-        "added": "3.5"
+        "added": "3.5",
+        "notes": "PEP 484"
     },
     "typing.AbstractSet": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Annotated": {
-        "added": "3.9"
+        "added": "3.9",
+        "notes": "PEP 593"
     },
     "typing.AsyncContextManager": {
         "added": "3.6.2",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.AsyncGenerator": {
         "added": "3.6.1",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.AsyncIterable": {
         "added": "3.5.2",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.AsyncIterator": {
         "added": "3.5.2",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Awaitable": {
         "added": "3.5.2",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.ByteString": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Callable": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.ChainMap": {
         "added": "3.6.1",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.ClassVar": {
-        "added": "3.5.3"
+        "added": "3.5.3",
+        "notes": "PEP 526"
     },
     "typing.Collection": {
         "added": "3.6",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Concatenate": {
-        "added": "3.10"
+        "added": "3.10",
+        "notes": "PEP 612"
     },
     "typing.Container": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.ContextManager": {
         "added": "3.6",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Coroutine": {
         "added": "3.5.3",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Counter": {
         "added": "3.6.1",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.DefaultDict": {
         "added": "3.5.2",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Deque": {
         "added": "3.6.1",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Dict": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Final": {
-        "added": "3.8"
+        "added": "3.8",
+        "notes": "PEP 591"
     },
     "typing.ForwardRef": {
         "added": "3.7.4"
     },
     "typing.FrozenSet": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Generator": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.ItemsView": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Iterable": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Iterator": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.KeysView": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.List": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Literal": {
-        "added": "3.8"
+        "added": "3.8",
+        "notes": "PEP 586"
     },
     "typing.LiteralString": {
-        "added": "3.11"
+        "added": "3.11",
+        "notes": "PEP 675"
     },
     "typing.Mapping": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.MappingView": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Match": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.MutableMapping": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.MutableSequence": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.MutableSet": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Never": {
         "added": "3.11"
@@ -3326,41 +3371,53 @@
         "added": "3.6.2"
     },
     "typing.NotRequired": {
-        "added": "3.11"
+        "added": "3.11",
+        "notes": "PEP 655"
     },
     "typing.OrderedDict": {
         "added": "3.7.2",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.ParamSpec": {
-        "added": "3.10"
+        "added": "3.10",
+        "notes": "PEP 612"
     },
     "typing.ParamSpecArgs": {
-        "added": "3.10"
+        "added": "3.10",
+        "notes": "PEP 612"
     },
     "typing.ParamSpecKwargs": {
-        "added": "3.10"
+        "added": "3.10",
+        "notes": "PEP 612"
     },
     "typing.Pattern": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Protocol": {
-        "added": "3.8"
+        "added": "3.8",
+        "notes": "PEP 544"
     },
     "typing.Required": {
-        "added": "3.11"
+        "added": "3.11",
+        "notes": "PEP 655"
     },
     "typing.Reversible": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Self": {
-        "added": "3.11"
+        "added": "3.11",
+        "notes": "PEP 673"
     },
     "typing.Sequence": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Set": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.SupportsIndex": {
         "added": "3.8"
@@ -3373,29 +3430,36 @@
         "deprecated": "3.11"
     },
     "typing.Tuple": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.Type": {
         "added": "3.5.2",
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.TypeAlias": {
-        "added": "3.10"
+        "added": "3.10",
+        "notes": "PEP 613"
     },
     "typing.TypeGuard": {
-        "added": "3.10"
+        "added": "3.10",
+        "notes": "PEP 647"
     },
     "typing.TypeVarTuple": {
-        "added": "3.11"
+        "added": "3.11",
+        "notes": "PEP 646"
     },
     "typing.TypedDict": {
-        "added": "3.8"
+        "added": "3.8",
+        "notes": "PEP 589"
     },
     "typing.Unpack": {
         "added": "3.11"
     },
     "typing.ValuesView": {
-        "deprecated": "3.9"
+        "deprecated": "3.9",
+        "notes": "PEP 585"
     },
     "typing.assert_never": {
         "added": "3.11"
@@ -3407,10 +3471,12 @@
         "added": "3.11"
     },
     "typing.dataclass_transform": {
-        "added": "3.11"
+        "added": "3.11",
+        "notes": "PEP 681"
     },
     "typing.final": {
-        "added": "3.8"
+        "added": "3.8",
+        "notes": "PEP 591"
     },
     "typing.get_args": {
         "added": "3.8"
@@ -3436,7 +3502,8 @@
         "added": "3.11"
     },
     "typing.runtime_checkable": {
-        "added": "3.8"
+        "added": "3.8",
+        "notes": "PEP 544"
     },
     "unicodedata.is_normalized": {
         "added": "3.8"
