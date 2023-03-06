@@ -1,6 +1,5 @@
 TODO list:
 
 1. Unit tests
-2. f-strings support for self-documenting expressions; i.e f"{var=}" (Python 3.8)
-3. Add full support for checking annoations aka type hints (mostly complete)
-4. Design a nicer output format for single files and also a directory of files
+2. Add full support for annotations aka type hints (mostly complete)
+3. Design a nicer output format

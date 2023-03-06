@@ -25,6 +25,9 @@ ASYNC_COMPREHENSIONS = 'asynchronous comprehensions'
 # Python 3.6: PEP 526 - Syntax for Variable Annotations
 VARIABLE_ANNOTATIONS = 'variable annotations'
 
+# Python 3.8: Self-documenting fstring expressions; i.e f"{var=}"
+FSTRING_DEBUGGING = 'f-string debugging'
+
 # Python 3.8: PEP 570 - Positional-Only Parameters
 POSONLY_ARGUMENTS = 'positional-only arguments'
 

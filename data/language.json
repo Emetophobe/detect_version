@@ -18,6 +18,10 @@
         "added": "3.6",
         "notes": "PEP 498"
     },
+    "f-string debugging": {
+        "added": "3.8",
+        "notes": "Example: f\"{name=}\""
+    },
     "variable annotations": {
         "added": "3.6",
         "notes": "PEP 526"

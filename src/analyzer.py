@@ -258,6 +258,14 @@ class Analyzer(ast.NodeVisitor):
             node (ast.JoinedStr): a fstring literal.
         """
         self.add_feature_requirement(Constants.FSTRING_LITERALS)
+
+        # Also check for self-documenting expressions; i.e f"{var=}"
+        for value in node.values:
+            if isinstance(value, ast.Constant) and isinstance(value.value, str):
+                if value.value.endswith('='):
+                    self.add_feature_requirement(Constants.FSTRING_DEBUGGING)
+                    break
+
         super().generic_visit(node)
 
     def visit_NamedExpr(self, node: ast.NamedExpr) -> None:
